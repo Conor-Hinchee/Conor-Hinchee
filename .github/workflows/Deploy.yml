@@ -2,7 +2,6 @@ name: Build and Deploy
 on: 
   push: 
     branches: [ "portfolio/3.x" ]
-  workflow_dispatch: is-it-broken-button
 permissions:
   contents: write
 jobs:
