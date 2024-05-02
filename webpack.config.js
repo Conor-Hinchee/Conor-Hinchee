@@ -10,7 +10,7 @@ module.exports = {
     plugins: [new ESLintPlugin()],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist/Conor-Hinchee/'),
     },
     module: {
         rules: [{
