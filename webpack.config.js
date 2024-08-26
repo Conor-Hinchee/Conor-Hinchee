@@ -4,8 +4,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        index: './src/js/index.js',
-        blocking: './src/js/blocking.js',
+        index: './src/Home/js/index.js',
+        blocking: './src/Home/js/blocking.js',
     },
     plugins: [new ESLintPlugin()],
     output: {
