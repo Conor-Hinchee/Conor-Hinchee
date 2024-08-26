@@ -1,5 +1,5 @@
 {
-    "input": "./src/index.html",
+    "input": "./src/Home/index.html",
     "output": "dist",
     "plugins": {
         "posthtml-modules": {
