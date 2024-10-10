@@ -1,7 +1,7 @@
 {
-  "name": "captnstarburst.github.io",
+  "name": "conorhinchee.com",
   "version": "3.0.0",
-  "description": "Conor Hinchee Home Page",
+  "description": "Conor Hinchee's Home Page",
   "main": "index.js",
   "scripts": {
     "serve": "browser-sync start --server \"dist\" --files \"dist\"",
@@ -13,6 +13,7 @@
     "build:blog": "posthtml -c posthtml-blog.json",
     "watch:html": "onchange \"src/Home/index\" -- npm run build:html ",
     "watch:components": "onchange \"src/components\" -- npm run build:html",
+    "watch:blog": "onchange \"src/blog\" -- npm run build:blog",
     "start": "run-p serve watch:*",
     "build": "run-s build:*",
     "test": "npx playwright test",
@@ -21,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Conor-Hinchee/captnstarburst.github.io.git"
+    "url": "git+https://github.com/Conor-Hinchee/Conor-Hinchee.github.io.git"
   },
   "author": "Conor Hinchee",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Conor-Hinchee/captnstarburst.github.io/issues"
+    "url": "https://github.com/Conor-Hinchee/Conor-Hinchee/issues"
   },
-  "homepage": "https://github.com/Conor-Hinchee/captnstarburst.github.io#readme",
+  "homepage": "https://www.conorhinchee.com",
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
     "@babel/preset-env": "^7.22.9",
