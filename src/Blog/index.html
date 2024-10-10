@@ -5,6 +5,8 @@
     <title>Conor Hinchee | Blog </title>
     <module href="/components/head.html"></module>
 
+    <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0CFE0GWWL"></script>
     <script>
@@ -15,12 +17,18 @@
         gtag('config', 'G-H0CFE0GWWL');
     </script>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+
 </head>
 
 <body>
     <module href="/components/banner.html"></module>
     <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
+        <!-- <zero-md>
+            <script type="text/markdown">
+          # Blog
+            </script>
+        </zero-md> -->
+
         <div id="app" class="w-5/6 m-auto transition-all origin-top">
             <zero-md src="/blog/test.md"></zero-md>
         </div>
