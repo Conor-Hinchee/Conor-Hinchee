@@ -1,5 +1,5 @@
 {
-    "input": "./src/Blog/index.html",
+    "input": "./src/Now/index.html",
     "output": "dist/now",
     "plugins": {
         "posthtml-modules": {
