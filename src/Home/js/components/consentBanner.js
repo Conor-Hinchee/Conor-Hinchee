@@ -25,6 +25,7 @@ const showConsentBannerBar = () => {
 };
 
 const showConsentBannerFull = () => {
+  console.log("showConsentBannerFull");
   window.removeEventListener("scroll", scrollListener);
 
   const banner = document.getElementById("consentBanner");
@@ -39,8 +40,6 @@ const showConsentBannerFull = () => {
 };
 
 const scrollListener = () => {
-  // console.log(timestamp);
-
   if (window.scrollY > 100) {
     showConsentBannerBar();
   }
