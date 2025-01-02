@@ -10,6 +10,7 @@ const hideJumpLinks = () => {
   // show home link
   const breadcrumbNavHome = document.querySelector("#breadcrumbNavHome");
   breadcrumbNavHome.classList.remove("hidden");
+  breadcrumbNavHome.classList.add("block");
 };
 
 const updateBreadcrumb = () => {
