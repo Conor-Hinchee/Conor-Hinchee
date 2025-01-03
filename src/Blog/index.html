@@ -1,52 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Conor Hinchee | Blog</title>
-    <module href="/components/head.html"></module>
 
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/zero-md@3?register"
-    ></script>
+<head>
+  <title>Conor Hinchee | Blog</title>
+  <module href="/components/head.html"></module>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+</head>
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-H0CFE0GWWL"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+<body>
+  <module href="/components/banner.html"></module>
+  <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
+    <div id="app" class="w-5/6 m-auto transition-all origin-top">
+      <module href="/components/breadcrumb-nav.html"></module>
+      <h1>Blog Title!!</h1>
+      <noscript>
+        Read posts on github: github.com/Conor-Hinchee/Conor-Hinchee/blob/portfolio/3.x/dist/blog.
+      </noscript>
+      <zero-md class="mt-60" src="/blog/2025/resolution.md"></zero-md>
+    </div>
+    <module href="/components/consent.html"></module>
+  </main>
+  <footer class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white">
+    <module href="/components/footer.html"></module>
+  </footer>
+</body>
 
-      gtag("config", "G-H0CFE0GWWL");
-    </script>
-  </head>
-
-  <body>
-    <module href="/components/banner.html"></module>
-    <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
-      <!-- <zero-md>
-            <script type="text/markdown">
-          # Blog
-            </script>
-        </zero-md> -->
-
-      <div id="app" class="w-5/6 m-auto transition-all origin-top">
-        <noscript>
-          All blogs posts are written in markdown so if you don't want to turn
-          on javascript go to github and read it.
-        </noscript>
-        <zero-md src="/blog/test.md"></zero-md>
-      </div>
-      <module href="/components/consent.html"></module>
-    </main>
-    <footer
-      class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white"
-    >
-      <module href="/components/footer.html"></module>
-    </footer>
-  </body>
 </html>
