@@ -11,8 +11,24 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Say Hi 👋
-        run: echo Hello, world! 🌎
+      - name: Setup Node.js 📦
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies 😰
+        run: npm install
+
+      - name: Build 🔨
+        run: npm run build
+
+      # - name: Commit and Push Changes 🛳  ️
+      #   run: |
+      #     git config --global user.name 'GitHub Actions'
+      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      #     git add dist/
+      #     git commit -m "chore: update build artifacts [skip ci]" || echo "No changes to commit"
+      #     git push
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
