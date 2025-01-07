@@ -1,3 +1,6 @@
+// import { Mobile_Width } from "../constants";
+import { DEBUG_LOG } from "../constants";
+
 const CONSENT_DECLINED = {
   ad_storage: "denied",
   ad_user_data: "denied",
@@ -12,77 +15,62 @@ const CONSENT_ACCEPTED = {
   analytics_storage: "granted",
 };
 
-const showConsentBannerPeak = () => {
-  const banner = document.getElementById("consentBanner");
-  banner.style.transitionDuration = "1.3s";
-  banner.style.opacity = "1";
-  banner.addEventListener("transitionend", () => {
-    const event = new Event("consentBannerPeakComplete");
-    banner.dispatchEvent(event);
-  }, { once: true });
-};
+// const showConsentBannerPeak = () => {
+//   const banner = document.getElementById("consentBanner");
+//   banner.style.opacity = "1";
+//   banner.addEventListener("transitionend", () => {
+//     const event = new Event("consentBannerPeak");
+//     banner.dispatchEvent(event);
+//   }, { once: true });
+// };
 
 const showConsentBannerBar = () => {
   const banner = document.getElementById("consentBanner");
-  banner.style.transitionDuration = "1.3s";
-  banner.style.width = "100%";
+  banner.style.transitionDuration = "1.5s";
+  banner.style.opacity = "1";
   banner.addEventListener("transitionend", () => {
-    const event = new Event("consentBannerBarComplete");
+    const event = new Event("consentBannerBar");
     banner.dispatchEvent(event);
   }, { once: true });
 };
 
 const showConsentBannerFull = () => {
-  window.removeEventListener("scroll", scrollListener);
 
   const banner = document.getElementById("consentBanner");
   const consentTitle = document.getElementById("consentTitle");
-  consentTitle.style.transitionDelay = "1s";
-  consentTitle.style.transitionDuration = "2.5s";
-  consentTitle.style.width = "50%";
 
-  banner.style.transitionDuration = ".5s";
+  consentTitle.style.transitionDuration = "1.5s";
+  consentTitle.style.opacity = "0";
+
+  banner.style.transitionDuration = "1.5s";
   banner.style.height = "250px";
-  banner.style.width = "100%";
+
   banner.addEventListener("transitionend", () => {
-    const event = new Event("consentBannerFullComplete");
+    const event = new Event("consentBannerFull");
     banner.dispatchEvent(event);
   }, { once: true });
-
 };
 
 const showConsentContent = () => {
+  const consentTitle = document.getElementById("consentTitle");
+  consentTitle.style.display = "none";
   const consentContent = document.getElementById("consentContent");
-  // const consentTitle = document.getElementById("consentTitle");
+
   consentContent.classList.remove("hidden");
-
-  consentContent.style.transitionDuration = "1.5s";
-  // consentTitle.style.transitionDuration = "1.5s";
-  // consentTitle.style.width = "50%";
-  consentContent.style.width = "50%";
   consentContent.style.opacity = "1";
-
 };
 
 const scrollListener = () => {
-  if (window.scrollY > 100) {
+  if (window.scrollY > 200) {
     showConsentBannerBar();
-  }
-
-  if (window.scrollY > 500) {
-    showConsentBannerFull();
     window.removeEventListener("scroll", scrollListener);
   }
 };
 
 const eventConductorSteve = (event) => {
-  console.log("event", event, event.type);
-  if (event.type === "consentBannerPeakComplete") {
-    // placeholder for future animations.
-  }
+  DEBUG_LOG({ logLevel: "info", message: `EVENT CONDUCTOR STEVE 🗣️ :  Consent Banner State is now =  ${event.type}` });
 
-  if (event.type === "consentBannerFullComplete") {
-    // setTimeout(showConsentBannerFull, 2000);
+  if (event.type === "consentBannerFull") {
     showConsentContent();
   }
 };
@@ -93,30 +81,8 @@ const gtag = (args) => {
   window.dataLayer.push(args);
 };
 
-const initConsentBanner = () => {
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-
-  const localStorageConsent = localStorage.getItem("gtagConsent");
-  if (localStorageConsent !== null) {
-    const consent = JSON.parse(localStorageConsent);
-    console.log("consent", consent);
-    gtag("consent", "update", { ...consent });
-    return;
-  }
-
-  // init with declined consent and show the banner
-  gtag("consent", "default", { ...CONSENT_DECLINED });
-
-  // const timestamp = new Date().getTime();
-
-  window.addEventListener("scroll", scrollListener);
-
+const initConsentListeners = () => {
   const banner = document.querySelector("#consentBanner");
-  setTimeout(showConsentBannerPeak, 1000);
-  banner.addEventListener("click", () => {
-    showConsentBannerFull();
-  });
 
   document.getElementById("cookieConsent").addEventListener("click", () => {
     gtag("consent", "update", { ...CONSENT_ACCEPTED });
@@ -130,9 +96,39 @@ const initConsentBanner = () => {
     banner.style.display = "none";
   });
 
-  banner.addEventListener("consentBannerPeakComplete", eventConductorSteve);
-  banner.addEventListener("consentBannerBarComplete", eventConductorSteve);
-  banner.addEventListener("consentBannerFullComplete", eventConductorSteve);
+  banner.addEventListener("click", () => {
+    showConsentBannerFull();
+  });
+  banner.addEventListener("consentBannerBar", eventConductorSteve);
+  banner.addEventListener("consentBannerFull", eventConductorSteve);
+
+};
+
+const initConsentBanner = () => {
+  // Define dataLayer and the gtag function.
+  window.dataLayer = window.dataLayer || [];
+
+  // User has been here before
+  const localStorageConsent = localStorage.getItem("gtagConsent");
+  if (localStorageConsent !== null) {
+    const consent = JSON.parse(localStorageConsent);
+    DEBUG_LOG({ logLevel: "info", message: `Loaded consent from localStorage: ${JSON.stringify(consent)}` });
+    gtag("consent", "update", { ...consent });
+    return;
+  }
+
+  // init with declined consent and show the banner
+  gtag("consent", "default", { ...CONSENT_DECLINED });
+
+  initConsentListeners();
+
+  // if scroll y is already greater than 200, show the full banner
+  if (window.scrollY > 200) {
+    showConsentBannerBar();
+    return;
+  }
+
+  window.addEventListener("scroll", scrollListener);
 
 };
 

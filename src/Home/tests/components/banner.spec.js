@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("banner component", () => {
-  test.describe('If the theme in local storage === "light",', () => {
+  test.describe("If the theme in local storage === \"light\",", () => {
     test.beforeEach(async ({ page }) => {
       await page.addInitScript(() => {
         window.localStorage.setItem("theme", "light");
@@ -14,15 +14,9 @@ test.describe("banner component", () => {
       expect(await page.isVisible("#lightModeItem")).toBe(false);
     });
 
-    // test('It should change the theme to dark when clicking the dark-mode button', async({page}) => {
-    //     await page.isVisible('#darkModeItem');
-    //     // page.getBy.click()
-    //     page.getByRole('button', { name: 'Switch site to dark-mode' }).click();
-
-    // });
   });
 
-  test.describe('If the theme in local storage === "dark",', () => {
+  test.describe("If the theme in local storage === \"dark\",", () => {
     test.beforeEach(async ({ page }) => {
       await page.addInitScript(() => {
         window.localStorage.setItem("theme", "dark");
