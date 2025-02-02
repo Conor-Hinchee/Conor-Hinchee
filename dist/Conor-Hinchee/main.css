@@ -582,6 +582,10 @@ video {
   left: 0px;
 }
 
+.right-1 {
+  right: 0.25rem;
+}
+
 .top-20 {
   top: 5rem;
 }
@@ -1851,13 +1855,11 @@ video {
 }
 
 .skull {
-  background-image: url("../images/skull.svg");
-  background-repeat: no-repeat;
+  background-color: #fff !important;
 }
 
 .worm {
-  background-image: url("../images/worm.svg");
-  background-repeat: no-repeat;
+  background-color: #292b2a !important;
 }
 
 .hover\:scale-125:hover {
