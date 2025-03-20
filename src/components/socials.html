@@ -1,43 +1,128 @@
-<section
-  id="socials"
-  class="font-mono dark:text-white mt-28 flex flex-row justify-around"
->
-  <!-- <h2 id="projectsSectionHeader" class="text-center text-3xl">
-    The Socials
-  </h2> -->
-  <a
-    href="https://github.com/Conor-Hinchee"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="w-20 h-40 rounded-full m-4 hover:scale-125"
-  >
-    <module href="/components/icons/github-logo.svg"></module>
-  </a>
-  <a
-    href="https://github.com/Conor-Hinchee/Conor-Hinchee/blob/portfolio/3.x/dist/Conor-Hinchee/Conor%20Hinchee%20Resume%202024.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="w-20 h-40 rounded-full m-4 hover:scale-125"
-  >
-    <module href="/components/icons/address-card.svg"></module>
-  </a>
-  <a
-    href="https://www.linkedin.com/in/conor-hinchee/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="w-20 h-40 rounded-full m-4 hover:scale-125"
-  >
-    <module href="/components/icons/linkedin-logo.svg"></module>
-  </a>
-  <!-- <button class="w-20 h-40  rounded-full m-4">
-    <module href="/components/icons/npm-logo.svg"></module>
-  </button> -->
-  <a
-    href="https://www.linkedin.com/in/conor-hinchee/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="w-20 h-40 rounded-full m-4 hover:scale-125"
-  >
-    <module href="/components/icons/envelope.svg"></module>
-  </a>
+<section id="socials" class="font-mono dark:text-white mt-28">
+  <h2 class="text-center text-3xl mb-8">CONNECT WITH ME</h2>
+  
+  <div class="flex flex-wrap justify-center items-center gap-8 max-w-2xl mx-auto">
+    <!-- GitHub -->
+    <a
+      href="https://github.com/Conor-Hinchee"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-icon-link group"
+      aria-label="GitHub Profile"
+    >
+      <div class="social-icon-wrapper">
+        <module href="/components/icons/github-logo.svg"></module>
+        <span class="social-icon-label">GitHub</span>
+      </div>
+    </a>
+
+    <!-- Resume -->
+    <a
+      href="https://github.com/Conor-Hinchee/Conor-Hinchee/blob/portfolio/3.x/dist/Conor-Hinchee/Conor%20Hinchee%20Resume%202024.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-icon-link group"
+      aria-label="Resume"
+    >
+      <div class="social-icon-wrapper">
+        <module href="/components/icons/address-card.svg"></module>
+        <span class="social-icon-label">Resume</span>
+      </div>
+    </a>
+
+    <!-- LinkedIn -->
+    <a
+      href="https://www.linkedin.com/in/conor-hinchee/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-icon-link group"
+      aria-label="LinkedIn Profile"
+    >
+      <div class="social-icon-wrapper">
+        <module href="/components/icons/linkedin-logo.svg"></module>
+        <span class="social-icon-label">LinkedIn</span>
+      </div>
+    </a>
+
+    <!-- Email -->
+    <a
+      href="mailto:your-email@example.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-icon-link group"
+      aria-label="Email Me"
+    >
+      <div class="social-icon-wrapper">
+        <module href="/components/icons/envelope.svg"></module>
+        <span class="social-icon-label">Email</span>
+      </div>
+    </a>
+  </div>
 </section>
+
+<style>
+  .social-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    transition: transform 0.3s ease;
+  }
+  
+  .social-icon-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+    height: 100px;
+  }
+  
+  .social-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+  }
+  
+  .social-icon-link:hover {
+    transform: translateY(-8px);
+  }
+  
+  .social-icon-link:hover .social-icon-wrapper::after {
+    width: 100%;
+  }
+  
+  .social-icon-label {
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+  
+  .social-icon-link:hover .social-icon-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .social-icon-link:nth-child(1):hover .social-icon-wrapper::after {
+    background-color: #2ea44f;
+  }
+  
+  .social-icon-link:nth-child(2):hover .social-icon-wrapper::after {
+    background-color: #ff5722;
+  }
+  
+  .social-icon-link:nth-child(3):hover .social-icon-wrapper::after {
+    background-color: #0077b5;
+  }
+  
+  .social-icon-link:nth-child(4):hover .social-icon-wrapper::after {
+    background-color: #ea4335;
+  }
+</style>
