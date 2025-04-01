@@ -1,32 +1,33 @@
+const Desktop_Width = 1028;
 const Tablet_Width = 768;
 const Mobile_Width = 480;
 
 const getDeviceType = (screenWidth) => {
-    if(screenWidth > Tablet_Width){
+    if (screenWidth > Tablet_Width) {
         return 'desktop';
-    } else if(screenWidth <= Tablet_Width && screenWidth > Mobile_Width){
+    } else if (screenWidth <= Tablet_Width && screenWidth > Mobile_Width) {
         return 'tablet';
-    } else if(screenWidth <= Mobile_Width){
+    } else if (screenWidth <= Mobile_Width) {
         return 'mobile';
     }
 };
 
-const changeTheme = (event = {}, override = '' ) => {
+const changeTheme = (event = {}, override = '') => {
     const { setTheme } = event?.target?.dataset || '';
 
-    if(override === 'dark' || setTheme === 'dark'){
+    if (override === 'dark' || setTheme === 'dark') {
         document.documentElement.classList.add('dark');
         localStorage.setItem('theme', 'dark');
 
         // set the theme to dark, reverse the icon to light
         const lightModeItem = document.querySelector('#lightModeItem');
         const darkModeItem = document.querySelector('#darkModeItem');
-        const mainElement =  document.querySelector('main');
+        const mainElement = document.querySelector('main');
         const allOandI = document.querySelectorAll('.OandI');
 
         mainElement.classList.replace('bgGridWhite', 'bgGridDark');
 
-        if(lightModeItem.classList.contains('hidden')){
+        if (lightModeItem.classList.contains('hidden')) {
             lightModeItem.classList.toggle('hidden');
             lightModeItem.classList.toggle('flex');
             darkModeItem.classList.toggle('hidden');
@@ -34,33 +35,33 @@ const changeTheme = (event = {}, override = '' ) => {
 
         }
 
-        if(allOandI.length){
+        if (allOandI.length) {
             allOandI.forEach(oAndI => {
                 oAndI.classList.replace('OandIAnimationLightMode', 'OandIAnimationDarkMode');
             });
         }
     }
 
-    if(override === 'light' || setTheme === 'light'){
+    if (override === 'light' || setTheme === 'light') {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
 
         // set the theme to light, reverse the icon to dark
         const lightModeItem = document.querySelector('#lightModeItem');
         const darkModeItem = document.querySelector('#darkModeItem');
-        const mainElement =  document.querySelector('main');
+        const mainElement = document.querySelector('main');
         const allOandI = document.querySelectorAll('.OandI');
 
         mainElement.classList.replace('bgGridDark', 'bgGridWhite');
 
-        if(darkModeItem.classList.contains('hidden')){
+        if (darkModeItem.classList.contains('hidden')) {
             lightModeItem.classList.toggle('hidden');
             lightModeItem.classList.toggle('flex');
             darkModeItem.classList.toggle('hidden');
             darkModeItem.classList.toggle('flex');
         }
 
-        if(allOandI.length){
+        if (allOandI.length) {
             allOandI.forEach(oAndI => {
                 oAndI.classList.replace('OandIAnimationDarkMode', 'OandIAnimationLightMode');
             });
@@ -74,51 +75,81 @@ const setLayoutIconAriaPressed = (layout) => {
     const tabletLayoutButton = document.querySelector('#tabletLayoutButton');
     const mobileLayoutButton = document.querySelector('#mobileLayoutButton');
 
-    if(layout === 'desktop'){
+    if (layout === 'desktop') {
         desktopLayoutButton.setAttribute('aria-pressed', 'true');
         tabletLayoutButton.setAttribute('aria-pressed', 'false');
         mobileLayoutButton.setAttribute('aria-pressed', 'false');
     }
-    if(layout === 'tablet'){
+    if (layout === 'tablet') {
         desktopLayoutButton.setAttribute('aria-pressed', 'false');
         tabletLayoutButton.setAttribute('aria-pressed', 'true');
         mobileLayoutButton.setAttribute('aria-pressed', 'false');
     }
-    if(layout === 'mobile'){
+    if (layout === 'mobile') {
         desktopLayoutButton.setAttribute('aria-pressed', 'false');
         tabletLayoutButton.setAttribute('aria-pressed', 'false');
         mobileLayoutButton.setAttribute('aria-pressed', 'true');
     }
 };
 
-const handleDesktopIconClick = () => {
-    setLayoutIconAriaPressed('desktop');
+const scaleAppWidth = (targetWidth) => {
+    const currentWidth = window.innerWidth;
+    const deviceType = getDeviceType(currentWidth);
+
+    // let nextScale = targetWidth / currentWidth;
+    let nextScale = currentWidth / targetWidth;
+
+    if (targetWidth <= Mobile_Width && deviceType === 'mobile') {
+        nextScale = 1;
+        removeResizeListener();
+    }
+
+    if (targetWidth <= Tablet_Width && deviceType === 'tablet') {
+        nextScale = 1;
+        removeResizeListener();
+    }
+
+    if (targetWidth > Tablet_Width && deviceType === 'desktop') {
+        nextScale = 1;
+        removeResizeListener();
+    }
+
+    const app = document.querySelector('#app');
+    app.style.transform = 'scale(' + nextScale + ')';
 };
 
-const handleTabletIconClick = () => { 
-   setLayoutIconAriaPressed('tablet');
+const resizeHandler = () => {
+    let resizeTimer;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        const screenWidth = window.innerWidth;
+        const deviceType = getDeviceType(screenWidth);
+        setLayoutIconAriaPressed(deviceType);
+    }, 250);
+};
+
+const handleDesktopIconClick = () => {
+    setLayoutIconAriaPressed('desktop');
+    scaleAppWidth(Desktop_Width);
+};
+
+const handleTabletIconClick = () => {
+    setLayoutIconAriaPressed('tablet');
+    scaleAppWidth(Tablet_Width);
 };
 
 const handleMobileIconClick = () => {
     setLayoutIconAriaPressed('mobile');
+    scaleAppWidth(Mobile_Width);
 };
 
-const resizeListener = () => {
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const screenWidth = window.innerWidth;
-            const deviceType = getDeviceType(screenWidth);
-            setLayoutIconAriaPressed(deviceType);
-        }, 250);
-    });
+const resizeListener = () => window.addEventListener('resize', resizeHandler);
 
-};
+const removeResizeListener = () => window.removeEventListener('resize', resizeHandler);
 
 const setClickListeners = () => {
     const editPageButton = document.querySelector('#editPageButton');
-    editPageButton.addEventListener('click', () => {});
+    editPageButton.addEventListener('click', () => { });
 
     const desktopLayoutButton = document.querySelector('#desktopLayoutButton');
     const tabletLayoutButton = document.querySelector('#tabletLayoutButton');
@@ -131,7 +162,7 @@ const setClickListeners = () => {
     const darkModeItem = document.querySelector('#darkModeItem');
     const darkModeButton = darkModeItem.firstElementChild;
     darkModeButton.addEventListener('click', changeTheme);
-    
+
     const lightModeItem = document.querySelector('#lightModeItem');
     const lightModeButton = lightModeItem.firstElementChild;
     lightModeButton.addEventListener('click', changeTheme);
@@ -149,6 +180,5 @@ const initBanner = () => {
     setClickListeners();
     resizeListener();
 };
-
 
 export default initBanner;
