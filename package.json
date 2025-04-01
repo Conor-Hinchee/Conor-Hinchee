@@ -8,7 +8,7 @@
     "build:tailwind": "npx tailwindcss -i ./src/Home/css/main.css -o ./dist/Conor-Hinchee/main.css",
     "watch:tailwind": "npx tailwindcss -i ./src/Home/css/main.css -o ./dist/Conor-Hinchee/main.css -w",
     "build:js": "webpack --mode=production",
-    "watch:js": "onchange \"src/js\" -- webpack --mode=development",
+    "watch:js": "onchange \"src/Home/js\" -- webpack --mode=development",
     "build:html": "posthtml -c posthtml.json",
     "build:blog": "posthtml -c posthtml-blog.json",
     "watch:html": "onchange \"src/Home/index\" -- npm run build:html ",

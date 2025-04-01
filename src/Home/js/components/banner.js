@@ -2,15 +2,15 @@ const Desktop_Width = 1028;
 const Tablet_Width = 768;
 const Mobile_Width = 480;
 
-const getDeviceType = (screenWidth) => {
-    if (screenWidth > Tablet_Width) {
-        return "desktop";
-    } else if (screenWidth <= Tablet_Width && screenWidth > Mobile_Width) {
-        return "tablet";
-    } else if (screenWidth <= Mobile_Width) {
-        return "mobile";
-    }
-};
+// const getDeviceType = (screenWidth) => {
+//     if (screenWidth > Tablet_Width) {
+//         return "desktop";
+//     } else if (screenWidth <= Tablet_Width && screenWidth > Mobile_Width) {
+//         return "tablet";
+//     } else if (screenWidth <= Mobile_Width) {
+//         return "mobile";
+//     }
+// };
 
 const changeTheme = (event = {}, override = "") => {
     const { setTheme } = event?.target?.dataset || "";
@@ -96,74 +96,71 @@ const setLayoutIconAriaPressed = (layout) => {
     }
 };
 
-const scaleAppWidth = (targetWidth) => {
-    const currentWidth = window.innerWidth;
-    const deviceType = getDeviceType(currentWidth);
-
-    // let nextScale = targetWidth / currentWidth;
-    let nextScale = currentWidth / targetWidth;
-
-    if (targetWidth <= Mobile_Width && deviceType === "mobile") {
-        nextScale = 1;
-        removeResizeListener();
-    }
-
-    if (targetWidth <= Tablet_Width && deviceType === "tablet") {
-        nextScale = 1;
-        removeResizeListener();
-    }
-
-    if (targetWidth > Tablet_Width && deviceType === "desktop") {
-        nextScale = 1;
-        removeResizeListener();
-    }
-
+const showFrame = () => {
     const app = document.querySelector("#app");
-    app.style.display = "none";
-    console.log(nextScale);
+    const frame = document.querySelector("#frame");
 
-    const iframe = document.createElement("iframe");
-    iframe.src = "https://www.conorhinchee.com/";
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none"; // Optional: Remove border for a cleaner look
+    // fade the opacity of the app to zero using CSS transitions
+    app.style.transition = "opacity 1s ease-out";
+    app.style.opacity = 0;
 
-    const main = document.querySelector("main");
-    main.appendChild(iframe);
+    frame.style.opacity = 0;
+    frame.classList.toggle("hidden");
+    frame.style.transition = "opacity 2s ease-in";
+    frame.style.opacity = 1;
+    // fadeOut();
+};
+
+const generateFrame = () => {
+    showFrame();
+
+    // const app = document.querySelector("#app");
+    // app.style.display = "none";
+    // // console.log(nextScale);
+
+    // const iframe = document.createElement("iframe");
+    // iframe.src = "https://conorhinchee.com/";
+    // // iframe.style.width = "100%";
+    // iframe.style.width = Tablet_Width + "px";
+    // iframe.style.height = "100%";
+    // iframe.style.border = "none"; // Optional: Remove border for a cleaner look
+
+    // const main = document.querySelector("main");
+    // main.appendChild(iframe);
     // app.style.display = "block"; // Make sure the app is visible again
 
     //   app.style.transform = "scale(" + nextScale + ")";
 };
 
-const resizeHandler = () => {
-    let resizeTimer;
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        const screenWidth = window.innerWidth;
-        const deviceType = getDeviceType(screenWidth);
-        setLayoutIconAriaPressed(deviceType);
-    }, 250);
-};
+// const resizeHandler = () => {
+//     let resizeTimer;
+//     clearTimeout(resizeTimer);
+//     resizeTimer = setTimeout(() => {
+//         const screenWidth = window.innerWidth;
+//         const deviceType = getDeviceType(screenWidth);
+//         setLayoutIconAriaPressed(deviceType);
+//     }, 250);
+// };
 
 const handleDesktopIconClick = () => {
     setLayoutIconAriaPressed("desktop");
-    scaleAppWidth(Desktop_Width);
+    generateFrame(Desktop_Width);
 };
 
 const handleTabletIconClick = () => {
     setLayoutIconAriaPressed("tablet");
-    scaleAppWidth(Tablet_Width);
+    generateFrame(Tablet_Width);
 };
 
 const handleMobileIconClick = () => {
     setLayoutIconAriaPressed("mobile");
-    scaleAppWidth(Mobile_Width);
+    generateFrame(Mobile_Width);
 };
 
-const resizeListener = () => window.addEventListener("resize", resizeHandler);
+// const resizeListener = () => window.addEventListener("resize", resizeHandler);
 
-const removeResizeListener = () =>
-    window.removeEventListener("resize", resizeHandler);
+// const removeResizeListener = () =>
+//     window.removeEventListener("resize", resizeHandler);
 
 const setClickListeners = () => {
     const editPageButton = document.querySelector("#editPageButton");
@@ -186,17 +183,32 @@ const setClickListeners = () => {
     lightModeButton.addEventListener("click", changeTheme);
 };
 
+const hideBanner = () => {
+    const banner = document.querySelector("header");
+    banner.style.display = "none";
+};
+
 const initBanner = () => {
     const currentTheme = localStorage.getItem("theme");
     changeTheme(null, currentTheme);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isIframe = urlParams.get("iframe") === "true";
+
+    if (isIframe) {
+        hideBanner();
+    } else {
+        setClickListeners();
+    }
+
     // initial screen width
-    const screenWidth = window.innerWidth;
+    // const screenWidth = window.innerWidth;
 
-    const deviceType = getDeviceType(screenWidth);
-    setLayoutIconAriaPressed(deviceType);
+    // const deviceType = getDeviceType(screenWidth);
+    // setLayoutIconAriaPressed(deviceType);
 
-    setClickListeners();
-    resizeListener();
+
+    // resizeListener();
 };
 
 export default initBanner;
