@@ -1,16 +1,4 @@
-const Desktop_Width = 1028;
-const Tablet_Width = 768;
-const Mobile_Width = 480;
-
-// const getDeviceType = (screenWidth) => {
-//     if (screenWidth > Tablet_Width) {
-//         return "desktop";
-//     } else if (screenWidth <= Tablet_Width && screenWidth > Mobile_Width) {
-//         return "tablet";
-//     } else if (screenWidth <= Mobile_Width) {
-//         return "mobile";
-//     }
-// };
+import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
 
 const changeTheme = (event = {}, override = "") => {
     const { setTheme } = event?.target?.dataset || "";
@@ -116,7 +104,7 @@ const generateFrame = () => {
 
     // const app = document.querySelector("#app");
     // app.style.display = "none";
-    // // console.log(nextScale);
+    // // //DEBUG_LOG(nextScale);
 
     // const iframe = document.createElement("iframe");
     // iframe.src = "https://conorhinchee.com/";
