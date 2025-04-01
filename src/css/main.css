@@ -64,6 +64,13 @@
 	transform: rotate(150deg);
 }
 
+.noScrollBar {
+	scrollbar-width: none;  /* Firefox */
+	&::-webkit-scrollbar { 
+	  display: none;  /* Safari and Chrome */
+	}
+  }
+
 .T {
 	border-radius: 1em;
 	font-size: 2em;
