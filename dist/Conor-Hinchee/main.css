@@ -1109,14 +1109,60 @@ video {
 
 .bgGridWhite {
   background-color: transparent;
-  background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent);
+  background-image: linear-gradient(
+      0deg,
+      transparent 24%,
+      rgba(0, 0, 0, 0.05) 25%,
+      rgba(0, 0, 0, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(0, 0, 0, 0.05) 75%,
+      rgba(0, 0, 0, 0.05) 76%,
+      transparent 77%,
+      transparent
+    ),
+    linear-gradient(
+      90deg,
+      transparent 24%,
+      rgba(0, 0, 0, 0.05) 25%,
+      rgba(0, 0, 0, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(0, 0, 0, 0.05) 75%,
+      rgba(0, 0, 0, 0.05) 76%,
+      transparent 77%,
+      transparent
+    );
   height: 100%;
   background-size: 50px 50px;
 }
 
 .bgGridDark {
   background-color: transparent;
-  background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+  background-image: linear-gradient(
+      0deg,
+      transparent 24%,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(255, 255, 255, 0.05) 75%,
+      rgba(255, 255, 255, 0.05) 76%,
+      transparent 77%,
+      transparent
+    ),
+    linear-gradient(
+      90deg,
+      transparent 24%,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(255, 255, 255, 0.05) 75%,
+      rgba(255, 255, 255, 0.05) 76%,
+      transparent 77%,
+      transparent
+    );
   height: 100%;
   background-size: 50px 50px;
 }
@@ -1177,7 +1223,7 @@ video {
   padding: 0.5em 0;
   text-align: center;
   width: 100%;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
 }
 
 .C {
@@ -1188,7 +1234,7 @@ video {
   text-align: center;
   width: 100%;
   margin-top: -6em;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
 }
 
 .K {
@@ -1199,7 +1245,7 @@ video {
   text-align: center;
   width: 100%;
   margin-top: -2em;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
 }
 
 .circle {
@@ -1226,7 +1272,7 @@ video {
   z-index: 2;
   text-align: center;
   width: 2em;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
   animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0, 1, 0.4, 1);
@@ -1712,11 +1758,11 @@ video {
 
 @keyframes activateDark {
   0% {
-    color: #FFF;
+    color: #fff;
   }
 
   8% {
-    color: #FFF;
+    color: #fff;
   }
 
   11% {
@@ -1728,7 +1774,7 @@ video {
   }
 
   100% {
-    color: #FFF;
+    color: #fff;
   }
 }
 
@@ -1742,11 +1788,11 @@ video {
   }
 
   11% {
-    color: #FFF;
+    color: #fff;
   }
 
   99% {
-    color: #FFF;
+    color: #fff;
   }
 
   100% {
@@ -1755,12 +1801,12 @@ video {
 }
 
 .skull {
-  background-image: url('../images/skull.svg');
+  background-image: url("../images/skull.svg");
   background-repeat: no-repeat;
 }
 
 .worm {
-  background-image: url('../images/worm.svg');
+  background-image: url("../images/worm.svg");
   background-repeat: no-repeat;
 }
 

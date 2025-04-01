@@ -1,7 +1,7 @@
 name: Build and Deploy
-on: 
-  push: 
-    branches: [ "portfolio/3.x" ]
+on:
+  push:
+    branches: ["portfolio/3.x"]
 permissions:
   contents: write
 jobs:
@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-      
+
       - name: Say Hi 👋
         run: echo Hello, world! 🌎
-  
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:

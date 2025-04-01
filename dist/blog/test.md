@@ -27,13 +27,13 @@ For handling images in React Native, you don't need any additional packages, as 
 Now, let's create a full-screen background image. Open the `App.js` file in your project and modify it as follows:
 
 ```javascript
-import React from 'react';
-import { StyleSheet, ImageBackground, View, Text } from 'react-native';
+import React from "react";
+import { StyleSheet, ImageBackground, View, Text } from "react-native";
 
 const App = () => {
   return (
     <ImageBackground
-      source={{ uri: 'https://example.com/your-image-url.jpg' }}
+      source={{ uri: "https://example.com/your-image-url.jpg" }}
       style={styles.backgroundImage}
     >
       <View style={styles.contentContainer}>
@@ -46,18 +46,18 @@ const App = () => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+    resizeMode: "cover",
+    justifyContent: "center",
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
