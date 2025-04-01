@@ -1,6 +1,6 @@
 {
-    "input": "./src/Home/index.html",
-    "output": "dist",
+    "input": "./src/Blog/index.html",
+    "output": "dist/blog",
     "plugins": {
         "posthtml-modules": {
             "root": "./src",
