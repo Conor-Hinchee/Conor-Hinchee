@@ -1,12 +1,16 @@
 const DEFAULT_BREADCRUMB = "navigate";
 
+// TODO RENAME FUNCTION
 const hideJumpLinks = () => {
   const jumpLinks = document.querySelectorAll(".jumplink");
   jumpLinks.forEach((jumpLink) => {
     jumpLink.classList.add("hidden");
   });
-};
 
+  // show home link
+  const breadcrumbNavHome = document.querySelector("#breadcrumbNavHome");
+  breadcrumbNavHome.classList.remove("hidden");
+};
 
 const updateBreadcrumb = () => {
   const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
@@ -23,7 +27,7 @@ const updateBreadcrumb = () => {
     breadcrumbNavButton.innerHTML = path.replaceAll("/", "");
     hideJumpLinks();
     //patch placement of breadcrumb dropdown
-    breadcrumbDropdown.style.bottom = "-200%";
+    breadcrumbDropdown.style.bottom = "-270%";
   } else {
     breadcrumbNavButton.innerHTML = DEFAULT_BREADCRUMB;
     //patch placement of breadcrumb dropdown
