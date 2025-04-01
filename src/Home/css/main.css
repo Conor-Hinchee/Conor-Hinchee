@@ -738,11 +738,9 @@
 }
 
 .skull {
-  background-image: url("../images/skull.svg");
-  background-repeat: no-repeat;
+  background-color: #fff !important;
 }
 
 .worm {
-  background-image: url("../images/worm.svg");
-  background-repeat: no-repeat;
+  background-color: #292b2a !important;
 }
