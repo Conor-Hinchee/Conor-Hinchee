@@ -1,0 +1,98 @@
+{
+  "selectedTemplate": 7,
+  "headings": {
+    "projects": "",
+    "awards": "",
+    "work": "Work Experience"
+  },
+  "basics": {
+    "name": "Conor Hinchee",
+    "phone": "7406162248",
+    "website": "https://conorhinchee.com/",
+    "email": "conorphinchee@gmail.com",
+    "location": {
+      "address": "Zanesville, Ohio"
+    }
+  },
+  "education": [
+    {
+      "location": "Clovis, NM",
+      "endDate": "May 2009",
+      "institution": "Clovis High School",
+      "studyType": "High School Diploma"
+    }
+  ],
+  "work": [
+    {
+      "location": "Columbus, Ohio",
+      "position": "Ecommerce UI Engineer",
+      "website": "",
+      "endDate": "Present",
+      "highlights": [
+        "Led the integration of Google Retail Search to enhance search functionality, resulting in an improved user experience and increased conversion rates. ",
+        "Maintainer of Express open-source project, collaborating closely with the community to address issues and enhance the project's overall functionality.",
+        "Mentored junior developers, fostering their professional growth and contributing to a strong team dynamic. ",
+        "Participated in on-call rotations and incident management, ensuring the stability and performance of the website."
+      ],
+      "company": "Express",
+      "startDate": "June 2021"
+    },
+    {
+      "highlights": [
+        "Led the architecture and delivery of the initial product, ensuring a robust foundation for future development.",
+        "Developed engaging user experiences on the web, focusing on intuitive design and seamless interaction.",
+        "Built, Tested, and Deployed backend services and APIs for client interaction, ensuring reliability and performance."
+      ],
+      "company": "Resolvve",
+      "location": "Columbus, Ohio",
+      "startDate": "January 2019",
+      "endDate": "January 2021",
+      "position": "Web Application Developer"
+    },
+    {
+      "highlights": [
+        "Provided exceptional customer service by successfully de-escalating customers, ensuring positive outcomes and maintaining customer satisfaction."
+      ],
+      "company": "Spectrum",
+      "position": " Customer Service Representative",
+      "location": "Zanesville, Ohio",
+      "startDate": "July 2017",
+      "endDate": "March 2021"
+    }
+  ],
+  "skills": [
+    {
+      "level": "",
+      "keywords": [
+        "HTML5, CSS3, JavaScript, Typescript, React, Node, Jest, React Testing Library, GraphQL, Apollo Server, Apollo Client, Git, SASS, NPM, Storybook,  Webpack"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "",
+      "description": "",
+      "url": "",
+      "keywords": [
+        ""
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "title": "",
+      "date": "",
+      "awarder": "",
+      "summary": ""
+    }
+  ],
+  "sections": [
+    "templates",
+    "profile",
+    "skills",
+    "work",
+    "projects",
+    "awards",
+    "education"
+  ]
+}
