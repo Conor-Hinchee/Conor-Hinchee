@@ -29,6 +29,8 @@
       "website": "",
       "endDate": "Present",
       "highlights": [
+        "Tech Stack - React, Typescript, Webpack, Jest, React Testing Library,  Apollo Server, Apollo Client, GCP, GitHub Actions",
+        null,
         "Led the integration of Google Retail Search to enhance search functionality, resulting in an improved user experience and increased conversion rates. ",
         "Maintainer of Express open-source project, collaborating closely with the community to address issues and enhance the project's overall functionality.",
         "Mentored junior developers, fostering their professional growth and contributing to a strong team dynamic. ",
@@ -39,6 +41,7 @@
     },
     {
       "highlights": [
+        "Tech Stack - React, Bootstrap, Stripe, Node, GCP, Firebase",
         "Led the architecture and delivery of the initial product, ensuring a robust foundation for future development.",
         "Developed engaging user experiences on the web, focusing on intuitive design and seamless interaction.",
         "Built, Tested, and Deployed backend services and APIs for client interaction, ensuring reliability and performance."
