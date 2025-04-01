@@ -22,7 +22,12 @@
         ],
         "quotes": [
             "error",
-            "single"
+            "double"
         ]
-    }
+    },
+    "ignorePatterns": [
+        "dist/",
+        "*.html",
+        "*.css"
+    ]
 }

@@ -18,7 +18,7 @@
     "build": "run-s build:*",
     "test": "npx playwright test",
     "test-ui": "npx playwright test --ui",
-    "lint": "npx prettier . --write && npx eslint . --fix",
+    "lint": "npx prettier . --write && npx eslint .",
     "report": "npx playwright show-report"
   },
   "repository": {
