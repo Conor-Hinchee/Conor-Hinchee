@@ -102,20 +102,20 @@ const showFrame = () => {
 const generateFrame = () => {
     showFrame();
 
-    // const app = document.querySelector("#app");
-    // app.style.display = "none";
-    // // //DEBUG_LOG(nextScale);
+    const app = document.querySelector("#app");
+    app.style.display = "none";
+    // //DEBUG_LOG(nextScale);
 
-    // const iframe = document.createElement("iframe");
-    // iframe.src = "https://conorhinchee.com/";
-    // // iframe.style.width = "100%";
-    // iframe.style.width = Tablet_Width + "px";
-    // iframe.style.height = "100%";
-    // iframe.style.border = "none"; // Optional: Remove border for a cleaner look
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://conorhinchee.com/";
+    // iframe.style.width = "100%";
+    iframe.style.width = Tablet_Width + "px";
+    iframe.style.height = "100%";
+    iframe.style.border = "none"; // Optional: Remove border for a cleaner look
 
-    // const main = document.querySelector("main");
-    // main.appendChild(iframe);
-    // app.style.display = "block"; // Make sure the app is visible again
+    const main = document.querySelector("main");
+    main.appendChild(iframe);
+    app.style.display = "block"; // Make sure the app is visible again
 
     //   app.style.transform = "scale(" + nextScale + ")";
 };
