@@ -624,6 +624,10 @@ video {
   margin-bottom: 2.75rem;
 }
 
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -634,6 +638,10 @@ video {
 
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .mb-8 {
@@ -652,12 +660,12 @@ video {
   margin-top: 5rem;
 }
 
-.mt-28 {
-  margin-top: 7rem;
+.mt-24 {
+  margin-top: 6rem;
 }
 
-.mt-32 {
-  margin-top: 8rem;
+.mt-28 {
+  margin-top: 7rem;
 }
 
 .mt-4 {
@@ -744,10 +752,6 @@ video {
   width: 5rem;
 }
 
-.w-3\/4 {
-  width: 75%;
-}
-
 .w-44 {
   width: 11rem;
 }
@@ -806,6 +810,14 @@ video {
 
 .snap-always {
   scroll-snap-stop: always;
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .grid-cols-4 {
@@ -987,24 +999,24 @@ video {
   padding-bottom: 1.5rem;
 }
 
-.pb-8 {
-  padding-bottom: 2rem;
-}
-
 .pt-16 {
   padding-top: 4rem;
 }
 
-.pt-24 {
-  padding-top: 6rem;
+.pt-8 {
+  padding-top: 2rem;
 }
 
-.pt-3 {
-  padding-top: 0.75rem;
+.text-left {
+  text-align: left;
 }
 
 .text-center {
   text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
 }
 
 .font-mono {
@@ -1080,6 +1092,10 @@ video {
 
 .underline {
   text-decoration-line: underline;
+}
+
+.decoration-2 {
+  text-decoration-thickness: 2px;
 }
 
 .underline-offset-2 {
@@ -2043,5 +2059,13 @@ video {
 @media (min-width: 1024px) {
   .lg\:mb-8 {
     margin-bottom: 2rem;
+  }
+
+  .lg\:w-3\/4 {
+    width: 75%;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 }
