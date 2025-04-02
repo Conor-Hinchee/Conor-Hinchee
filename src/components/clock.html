@@ -1,0 +1,142 @@
+<div class="clock-container">
+    <div class="clock">
+      <!-- Hour markers -->
+      <div class="hour-marker hour-marker-12"></div>
+      <div class="hour-marker hour-marker-3"></div>
+      <div class="hour-marker hour-marker-6"></div>
+      <div class="hour-marker hour-marker-9"></div>
+      <!-- Additional markers for better visual reference -->
+      <div class="hour-marker hour-marker-1"></div>
+      <div class="hour-marker hour-marker-2"></div>
+      <div class="hour-marker hour-marker-4"></div>
+      <div class="hour-marker hour-marker-5"></div>
+      <div class="hour-marker hour-marker-7"></div>
+      <div class="hour-marker hour-marker-8"></div>
+      <div class="hour-marker hour-marker-10"></div>
+      <div class="hour-marker hour-marker-11"></div>
+      
+      <!-- Clock hands -->
+      <div class="hand second-hand" id="secondHand"></div>
+      
+      <!-- Center dot -->
+      <div class="center-dot"></div>
+    </div>
+  </div>
+  
+  <style>
+    .clock-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 2rem 0;
+    }
+  
+    .clock {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 4px solid currentColor;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  
+    .hour-marker {
+      position: absolute;
+      background-color: currentColor;
+    }
+  
+    /* Main hour markers (12, 3, 6, 9) */
+    .hour-marker-12, .hour-marker-6 {
+      width: 4px;
+      height: 12px;
+      left: calc(50% - 2px);
+    }
+    
+    .hour-marker-3, .hour-marker-9 {
+      width: 12px;
+      height: 4px;
+      top: calc(50% - 2px);
+    }
+    
+    .hour-marker-12 {
+      top: 10px;
+    }
+    
+    .hour-marker-3 {
+      right: 10px;
+    }
+    
+    .hour-marker-6 {
+      bottom: 10px;
+    }
+    
+    .hour-marker-9 {
+      left: 10px;
+    }
+  
+    /* Other hour markers */
+    .hour-marker-1, .hour-marker-2, .hour-marker-4, .hour-marker-5,
+    .hour-marker-7, .hour-marker-8, .hour-marker-10, .hour-marker-11 {
+      width: 3px;
+      height: 8px;
+      transform-origin: center 100px;
+    }
+  
+    .hour-marker-1 { transform: rotate(30deg); left: calc(50% - 1.5px); top: 15px; }
+    .hour-marker-2 { transform: rotate(60deg); left: calc(50% - 1.5px); top: 15px; }
+    .hour-marker-4 { transform: rotate(120deg); left: calc(50% - 1.5px); top: -15px; }
+    .hour-marker-5 { transform: rotate(150deg); left: calc(50% - 1.5px); top: -15px; }
+    .hour-marker-7 { transform: rotate(210deg); left: calc(50% - 1.5px); top: -15px; }
+    .hour-marker-8 { transform: rotate(240deg); left: calc(50% - 1.5px); top: -15px; }
+    .hour-marker-10 { transform: rotate(300deg); left: calc(50% - 1.5px); top: 15px; }
+    .hour-marker-11 { transform: rotate(330deg); left: calc(50% - 1.5px); top: 15px; }
+  
+    .hand {
+      position: absolute;
+      transform-origin: bottom center;
+      bottom: 50%;
+      left: 50%;
+      background-color: currentColor;
+    }
+  
+    .second-hand {
+      width: 1px;
+      height: 85px;
+      transform: translateX(-50%);
+      background-color: #ff5722;
+    }
+  
+    .center-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ff5722;
+      top: calc(50% - 5px);
+      left: calc(50% - 5px);
+    }
+  </style>
+  
+  <script>
+    // Function to update the second hand
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      
+      // Calculate the rotation for the second hand (6 degrees per second)
+      const secondDegrees = ((seconds / 60) * 360);
+      
+      // Apply the rotation to the second hand
+      const secondHand = document.getElementById('secondHand');
+      if (secondHand) {
+        secondHand.style.transform = `translateX(-50%) rotate(${secondDegrees}deg)`;
+      }
+    }
+    
+    // Update the clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+  
