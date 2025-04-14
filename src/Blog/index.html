@@ -12,17 +12,35 @@
   <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
     <div id="app" class="w-5/6 m-auto transition-all origin-top">
       <module href="/components/breadcrumb-nav.html"></module>
-      <h1>Blog Title!!</h1>
       <noscript>
-        Read posts on github: github.com/Conor-Hinchee/Conor-Hinchee/blob/portfolio/3.x/dist/blog.
+        Read posts on github: github.com/Conor-Hinchee
       </noscript>
-      <zero-md class="mt-60" src="/blog/content/2025-resolution.md"></zero-md>
+      <div class="mt-24" id="blog-post"></div>
     </div>
     <module href="/components/consent.html"></module>
   </main>
   <footer class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white">
     <module href="/components/footer.html"></module>
   </footer>
+  <script>
+    const initMarkdown = () => {
+      const theme = localStorage.getItem("theme");
+      const blogPostContainer = document.getElementById("blog-post");
+
+      if (blogPostContainer) {
+        blogPostContainer.innerHTML = `
+          <zero-md src="/blog/content/2025-resolution.md">
+            <template>
+              <link id="markdown-theme" rel="stylesheet" href="/blog/github-markdown-${theme}.css" />
+            </template>
+          </zero-md>
+        `;
+      }
+    };
+
+    initMarkdown();
+
+  </script>
 </body>
 
 </html>
