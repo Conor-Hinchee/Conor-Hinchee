@@ -1,6 +1,5 @@
 const DEFAULT_BREADCRUMB = "navigate";
 
-// TODO RENAME FUNCTION
 const hideJumpLinks = () => {
   const jumpLinks = document.querySelectorAll(".jumplink");
   jumpLinks.forEach((jumpLink) => {
@@ -11,6 +10,34 @@ const hideJumpLinks = () => {
   const breadcrumbNavHome = document.querySelector("#breadcrumbNavHome");
   breadcrumbNavHome.classList.remove("hidden");
   breadcrumbNavHome.classList.add("block");
+};
+
+const showExtraSeparator = () => {
+  const breadcrumbNavExtraSeperator = document.querySelector(
+    "#breadcrumb-Nav-Separator"
+  );
+  breadcrumbNavExtraSeperator.classList.remove("hidden");
+  breadcrumbNavExtraSeperator.classList.add("block");
+};
+
+const showBreadcrumbBlog = () => {
+  const breadcrumbNavBlog = document.querySelector("#breadcrumb-Nav-blog");
+  breadcrumbNavBlog.classList.remove("hidden");
+  breadcrumbNavBlog.classList.add("block");
+};
+
+const handleBlogRouting = () => {
+  const path = window.location.pathname;
+  const searchParams = new URLSearchParams(window.location.search);
+  
+  if (path.includes("/blog/")) {
+    if (!searchParams.has("post")) {
+      const newUrl = "/blog?post=latest";
+      window.history.replaceState({}, "", newUrl);
+      return true; // indicate that redirect happened
+    }
+  }
+  return false;
 };
 
 const updateBreadcrumb = () => {
@@ -29,6 +56,13 @@ const updateBreadcrumb = () => {
     hideJumpLinks();
     //patch placement of breadcrumb dropdown
     breadcrumbDropdown.style.bottom = "-270%";
+
+    if(path.includes("/blog/")){
+      showExtraSeparator();
+      showBreadcrumbBlog();
+      handleBlogRouting();
+    }
+    
   } else {
     breadcrumbNavButton.innerHTML = DEFAULT_BREADCRUMB;
     //patch placement of breadcrumb dropdown
@@ -36,16 +70,31 @@ const updateBreadcrumb = () => {
   }
 };
 
-const initBreadcrumb = () => {
-  const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
+const toggleMainDropDown = () => {
   const breadcrumbDropdown = document.querySelector("#breadcrumbNavDropdown");
-
+  const body = document.querySelector("body");
+  
+  breadcrumbDropdown.classList.toggle("invisible");
   updateBreadcrumb();
 
-  breadcrumbNavButton.addEventListener("click", () => {
-    breadcrumbDropdown.classList.toggle("invisible");
-    updateBreadcrumb();
-  });
+  if (!breadcrumbDropdown.classList.contains("invisible")) {
+    setTimeout(() => {
+      const bodyListener = (e) => {
+        if (!breadcrumbDropdown.contains(e.target)) {
+          breadcrumbDropdown.classList.add("invisible");
+          body.removeEventListener("click", bodyListener);
+        }
+      };
+      body.addEventListener("click", bodyListener);
+    }, 0);
+  }
+};
+
+const initBreadcrumb = () => {
+  const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
+
+  updateBreadcrumb();
+  breadcrumbNavButton.addEventListener("click", toggleMainDropDown);
 };
 
 export default initBreadcrumb;
