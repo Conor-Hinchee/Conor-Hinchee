@@ -54,16 +54,43 @@
         </div>
       </div>
     </li>
-    <li class="hidden" role="presentation">
+    <li class="hidden" role="presentation" id="breadcrumb-Nav-Separator">
       <span class="mx-2 text-gray-400">/</span>
     </li>
-    <li class="hidden">
+    <li class="hidden" id="breadcrumb-Nav-revision">
       <div class="flex items-center">
         <button
           class="inline-flex items-center justify-center h-9 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus: focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
           <module href="/components/icons/git-merge.svg"></module>
           <span>&nbsp; Revision v3.0</span>
         </button>
+      </div>
+    </li>
+    <li class="hidden" id="breadcrumb-Nav-blog">
+      <div class="flex items-center relative">
+        <button
+        class="inline-flex items-center justify-center h-9 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus: focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"> 
+          <span class="mr-2">Post: Latest </span>
+          <module href="/components/icons/chevron-down.svg"></module>
+        </button>
+
+        <div
+          class="invisible absolute z-10 mt-48 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+          id="breadcrumbBlogDropdown">
+          <ul class="text-sm text-gray-700 dark:text-gray-200">
+            <li>
+              <a href="/" id="breadcrumbNavHome"
+                class="hidden px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Home
+            </li>
+            <li>
+              <a href="/blog" id="breadcrumbNavBlog"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Blog</a>
+          </ul>
+        </div>
+      </div>
+      <div class="flex items-center">
+
       </div>
     </li>
   </ol>
