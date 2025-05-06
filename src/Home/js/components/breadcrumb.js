@@ -24,6 +24,7 @@ const showBreadcrumbBlog = () => {
   const breadcrumbNavBlog = document.querySelector("#breadcrumb-Nav-blog");
   breadcrumbNavBlog.classList.remove("hidden");
   breadcrumbNavBlog.classList.add("block");
+  breadcrumbNavBlog.addEventListener("click", toggleBlogDropdown);
 };
 
 const handleBlogRouting = () => {
@@ -49,6 +50,7 @@ const updateBreadcrumb = () => {
 
   if (id.length > 1) {
     breadcrumbNavButton.innerHTML = "#" + id[1];
+    // TODO REPLACE WITH UPDATING THE MARGIN TOP OF THE DROPDOWN #breadcrumbBlogDropdown ?
     //patch placement of breadcrumb dropdown
     breadcrumbDropdown.style.bottom = "-500%";
   } else if (path !== "/") {
@@ -88,6 +90,26 @@ const toggleMainDropDown = () => {
       body.addEventListener("click", bodyListener);
     }, 0);
   }
+};
+
+const toggleBlogDropdown = () => {
+  const breadcrumbDropdown = document.querySelector("#breadcrumbBlogDropdown");
+  // const body = document.querySelector("body");
+  
+  breadcrumbDropdown.classList.toggle("invisible");
+  // updateBreadcrumb();
+
+  // if (!breadcrumbDropdown.classList.contains("invisible")) {
+  //   setTimeout(() => {
+  //     const bodyListener = (e) => {
+  //       if (!breadcrumbDropdown.contains(e.target)) {
+  //         breadcrumbDropdown.classList.add("invisible");
+  //         body.removeEventListener("click", bodyListener);
+  //       }
+  //     };
+  //     body.addEventListener("click", bodyListener);
+  //   }, 0);
+  // }
 };
 
 const initBreadcrumb = () => {
