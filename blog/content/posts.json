@@ -1,0 +1,25 @@
+{
+    "posts": [
+        {
+            "id": "2025-resolution",
+            "title": "2025 New Year Resolution",
+            "date": "2025-01-01",
+            "content": "",
+            "tags": ["Personal", "2025", "New Year"]
+        },
+        {
+            "id": "exponential-backoff-gtm",
+            "title": "Implementing Exponential Backoff with Google Tag Manager",
+            "date": "2025-01-15",
+            "content": "",
+            "tags": ["JavaScript", "GTM", "Performance", "Analytics"]
+        },
+        {
+            "id": "React-Portals",
+            "title": "Using React Portals for Modal Components",
+            "date": "2025-01-30",
+            "content": "",
+            "tags": ["React", "Frontend", "Web Development", "UI"]
+        }
+    ]
+}
