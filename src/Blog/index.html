@@ -23,23 +23,69 @@
     <module href="/components/footer.html"></module>
   </footer>
   <script>
-    const initMarkdown = () => {
+    const initMarkdown = async () => {
       const theme = localStorage.getItem("theme");
       const blogPostContainer = document.getElementById("blog-post");
-
-      if (blogPostContainer) {
-        blogPostContainer.innerHTML = `
-          <zero-md src="/blog/content/2025-resolution.md">
-            <template>
-              <link id="markdown-theme" rel="stylesheet" href="/blog/github-markdown-${theme}.css" />
-            </template>
-          </zero-md>
-        `;
+      
+      try {
+        // Fetch all posts data from JSON file
+        const response = await fetch('/blog/content/posts.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts data');
+        }
+        
+        const data = await response.json();
+        const posts = data.posts || [];
+        
+        // Get post ID from URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        let postId = urlParams.get('post') || 'latest';
+        
+        // If postId is 'latest', use the most recent post
+        if (postId === 'latest') {
+          // Sort posts by date (newest first)
+          posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+          postId = posts[0]?.id || '2025-resolution';
+        }
+        
+        // Find the requested post
+        const post = posts.find(p => p.id === postId) || posts[0];
+        
+        // Update page title based on post
+        if (post && post.title) {
+          document.title = `Conor Hinchee | Blog | ${post.title}`;
+        }
+        
+        // Render the markdown file
+        if (blogPostContainer) {
+          blogPostContainer.innerHTML = `
+            <zero-md src="/blog/content/${post.id}.md">
+              <template>
+                <link id="markdown-theme" rel="stylesheet" href="/blog/github-markdown-${theme}.css" />
+              </template>
+            </zero-md>
+          `;
+        }
+      } catch (error) {
+        console.error('Error loading blog post:', error);
+        
+        // Fallback to default post if there's an error
+        if (blogPostContainer) {
+          blogPostContainer.innerHTML = `
+            <zero-md src="/blog/content/2025-resolution.md">
+              <template>
+                <link id="markdown-theme" rel="stylesheet" href="/blog/github-markdown-${theme}.css" />
+              </template>
+            </zero-md>
+          `;
+        }
       }
     };
+    
+    // Initialize the blog
     initMarkdown();
-
   </script>
+  
 </body>
 
 </html>
