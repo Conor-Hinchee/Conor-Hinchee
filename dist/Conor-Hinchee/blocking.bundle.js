@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
  * This devtool is neither made for production nor for readable output files.
@@ -30,3 +31,6 @@ eval("function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iter
 /******/ 	
 /******/ })()
 ;
+=======
+(()=>{var e,t,a=function(){document.documentElement.classList.add("dark")},r=function(){document.documentElement.classList.remove("dark")};!function(){try{if("dark"===localStorage.getItem("theme"))return void a();if("light"===localStorage.getItem("theme"))return void r();if(window.matchMedia&&!localStorage.getItem("theme")){if("dark"==(null!==(e=(t=window).matchMedia)&&void 0!==e&&e.call(t,"(prefers-color-scheme: dark)").matches?"dark":"light"))return void a();r()}}catch(e){console.error("Error initializing theme:",e),r()}var e,t}(),null===(e=(t=window).matchMedia)||void 0===e||e.call(t,"(prefers-color-scheme: dark)").addEventListener("change",(function(e){localStorage.getItem("theme")||(e.matches?a():r())}))})();
+>>>>>>> 2025
