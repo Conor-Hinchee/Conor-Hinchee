@@ -1,0 +1,42 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "Understanding JavaScript Closures",
+            "author": "John Doe",
+            "date": "2023-10-01",
+            "content": "Closures are a fundamental concept in JavaScript that allow functions to access variables from an enclosing scope...",
+            "tags": ["JavaScript", "Programming", "Closures"],
+            "comments": [
+                {
+                    "id": 101,
+                    "author": "Jane Smith",
+                    "date": "2023-10-02",
+                    "content": "Great explanation! Closures always confused me, but this helped a lot."
+                },
+                {
+                    "id": 102,
+                    "author": "Bob Johnson",
+                    "date": "2023-10-03",
+                    "content": "Could you provide more examples of practical use cases for closures?"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "A Beginner's Guide to Python",
+            "author": "Alice Brown",
+            "date": "2023-09-25",
+            "content": "Python is a versatile and beginner-friendly programming language that is widely used in various fields...",
+            "tags": ["Python", "Programming", "Beginner"],
+            "comments": [
+                {
+                    "id": 201,
+                    "author": "Charlie Davis",
+                    "date": "2023-09-26",
+                    "content": "This guide is perfect for someone just starting out with Python. Thanks!"
+                }
+            ]
+        }
+    ]
+}
