@@ -4,7 +4,7 @@ First off, I hate _your_ UI carousels. You hate _my_ UI carousels. And the users
 
 This being the year of our lord 2025, I am hopeful that we will soon transcend the tired UI carousel of the past. But sometimes, they _are_ the right UI for the job—if only because users are trained to expect them..
 
-So when I was tasked with rebuilding the user experience on the e-commerce product page, it might be surprising that I didn’t reach for a library; *especially* as an active maintainer of [Pure React Carousel](https://express-labs.github.io/pure-react-carousel/). 
+So when I was tasked with rebuilding the user experience on the e-commerce product page, it might be surprising that I didn’t reach for a library; _especially_ as an active maintainer of [Pure React Carousel](https://express-labs.github.io/pure-react-carousel/).
 
 ### Libraries 🧐
 
@@ -13,14 +13,15 @@ There are a ton of carousel libraries out there: [Swiper](https://swiperjs.com/)
 Now, I haven’t used all of these—and I’m sure some of them are excellent. But as I audited my options, most of them were either **too big**, **too opinionated**, or **too inflexible** for the exact UX I was building.
 
 In the past, these libraries made sense—handling touch events, accessibility quirks, arrow logic, and more. But modern CSS has changed the game. Scroll behavior, snapping, and overflow are now Modern _default browser features_. You can build a usable, responsive carousel with just a div inside a div—no JavaScript required.
- 
+
 ## **Div in a div 🪵**
 
-So, just like the many grey beards that came before me, I decided to reinvent the wheel. 
+So, just like the many grey beards that came before me, I decided to reinvent the wheel.
 
 Only this time, the wheel is just a div in a div—and thanks to modern CSS, it rolls pretty damn smoothly. With a bit of scroll-snap, some flexbox, and a few browser niceties, you can build a functional, responsive, swipeable carousel with _no JavaScript at all_.
 
 No event listeners. No refs. No “isDragging” state bugs. Just HTML and CSS doing what they were always meant to do .
+
 ### THE CODE:
 
 ```
@@ -82,20 +83,10 @@ No event listeners. No refs. No “isDragging” state bugs. Just HTML and CSS d
 
 ### To Production 🚀
 
-Well, not so fast Production-ready carousels aren’t just scrollable—they’re **navigable**, **announced**, and **intentionally interactive**. If thats news to you, you should check out one of the libraries listed above!  
+Well, not so fast Production-ready carousels aren’t just scrollable—they’re **navigable**, **announced**, and **intentionally interactive**. If thats news to you, you should check out one of the libraries listed above!
 
 ## **What I Gained**
 
 - **Better UX**: Users have an improved experience
-    
 - **Team confidence**: Everyone can read and modify the carousel without having a library abstraction
-    
 - **Satisfaction**: Building the thing felt better than duct-taping a lib again.
-
-
-
-
-
-
-
-
