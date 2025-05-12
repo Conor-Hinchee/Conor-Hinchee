@@ -20,6 +20,13 @@
             "date": "2025-01-30",
             "content": "",
             "tags": ["React", "Frontend", "Web Development", "UI"]
+        },
+        {
+            "id": "Div-in-a-Div",
+            "title": "Div in a Div. A vanilla approach to Web Carousels 🪵.",
+            "date": "2025-05-12",
+            "content": "",
+            "tags": ["React", "Frontend", "Web Development", "UI"]
         }
     ]
 }
