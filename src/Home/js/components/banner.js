@@ -1,4 +1,4 @@
-import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
+// import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
 
 const changeTheme = (event = {}, override = "") => {
     const { setTheme } = event?.target?.dataset || "";
@@ -69,63 +69,63 @@ const changeTheme = (event = {}, override = "") => {
     
 };
 
-const setLayoutIconAriaPressed = (layout) => {
-    const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
-    const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
-    const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
+// const setLayoutIconAriaPressed = (layout) => {
+//     const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
+//     const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
+//     const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
 
-    if (layout === "desktop") {
-        desktopLayoutButton.setAttribute("aria-pressed", "true");
-        tabletLayoutButton.setAttribute("aria-pressed", "false");
-        mobileLayoutButton.setAttribute("aria-pressed", "false");
-    }
-    if (layout === "tablet") {
-        desktopLayoutButton.setAttribute("aria-pressed", "false");
-        tabletLayoutButton.setAttribute("aria-pressed", "true");
-        mobileLayoutButton.setAttribute("aria-pressed", "false");
-    }
-    if (layout === "mobile") {
-        desktopLayoutButton.setAttribute("aria-pressed", "false");
-        tabletLayoutButton.setAttribute("aria-pressed", "false");
-        mobileLayoutButton.setAttribute("aria-pressed", "true");
-    }
-};
+//     if (layout === "desktop") {
+//         desktopLayoutButton.setAttribute("aria-pressed", "true");
+//         tabletLayoutButton.setAttribute("aria-pressed", "false");
+//         mobileLayoutButton.setAttribute("aria-pressed", "false");
+//     }
+//     if (layout === "tablet") {
+//         desktopLayoutButton.setAttribute("aria-pressed", "false");
+//         tabletLayoutButton.setAttribute("aria-pressed", "true");
+//         mobileLayoutButton.setAttribute("aria-pressed", "false");
+//     }
+//     if (layout === "mobile") {
+//         desktopLayoutButton.setAttribute("aria-pressed", "false");
+//         tabletLayoutButton.setAttribute("aria-pressed", "false");
+//         mobileLayoutButton.setAttribute("aria-pressed", "true");
+//     }
+// };
 
-const showFrame = () => {
-    const app = document.querySelector("#app");
-    const frame = document.querySelector("#frame");
+// const showFrame = () => {
+//     const app = document.querySelector("#app");
+//     const frame = document.querySelector("#frame");
 
-    // fade the opacity of the app to zero using CSS transitions
-    app.style.transition = "opacity 1s ease-out";
-    app.style.opacity = 0;
+//     // fade the opacity of the app to zero using CSS transitions
+//     app.style.transition = "opacity 1s ease-out";
+//     app.style.opacity = 0;
 
-    frame.style.opacity = 0;
-    frame.classList.toggle("hidden");
-    frame.style.transition = "opacity 2s ease-in";
-    frame.style.opacity = 1;
-    // fadeOut();
-};
+//     frame.style.opacity = 0;
+//     frame.classList.toggle("hidden");
+//     frame.style.transition = "opacity 2s ease-in";
+//     frame.style.opacity = 1;
+//     // fadeOut();
+// };
 
-const generateFrame = () => {
-    showFrame();
+// const generateFrame = () => {
+//     showFrame();
 
-    // const app = document.querySelector("#app");
-    // app.style.display = "none";
-    // // //DEBUG_LOG(nextScale);
+//     // const app = document.querySelector("#app");
+//     // app.style.display = "none";
+//     // // //DEBUG_LOG(nextScale);
 
-    // const iframe = document.createElement("iframe");
-    // iframe.src = "https://conorhinchee.com/";
-    // // iframe.style.width = "100%";
-    // iframe.style.width = Tablet_Width + "px";
-    // iframe.style.height = "100%";
-    // iframe.style.border = "none"; // Optional: Remove border for a cleaner look
+//     // const iframe = document.createElement("iframe");
+//     // iframe.src = "https://conorhinchee.com/";
+//     // // iframe.style.width = "100%";
+//     // iframe.style.width = Tablet_Width + "px";
+//     // iframe.style.height = "100%";
+//     // iframe.style.border = "none"; // Optional: Remove border for a cleaner look
 
-    // const main = document.querySelector("main");
-    // main.appendChild(iframe);
-    // app.style.display = "block"; // Make sure the app is visible again
+//     // const main = document.querySelector("main");
+//     // main.appendChild(iframe);
+//     // app.style.display = "block"; // Make sure the app is visible again
 
-    //   app.style.transform = "scale(" + nextScale + ")";
-};
+//     //   app.style.transform = "scale(" + nextScale + ")";
+// };
 
 // const resizeHandler = () => {
 //     let resizeTimer;
@@ -137,20 +137,20 @@ const generateFrame = () => {
 //     }, 250);
 // };
 
-const handleDesktopIconClick = () => {
-    setLayoutIconAriaPressed("desktop");
-    generateFrame(Desktop_Width);
-};
+// const handleDesktopIconClick = () => {
+//     setLayoutIconAriaPressed("desktop");
+//     generateFrame(Desktop_Width);
+// };
 
-const handleTabletIconClick = () => {
-    setLayoutIconAriaPressed("tablet");
-    generateFrame(Tablet_Width);
-};
+// const handleTabletIconClick = () => {
+//     setLayoutIconAriaPressed("tablet");
+//     generateFrame(Tablet_Width);
+// };
 
-const handleMobileIconClick = () => {
-    setLayoutIconAriaPressed("mobile");
-    generateFrame(Mobile_Width);
-};
+// const handleMobileIconClick = () => {
+//     setLayoutIconAriaPressed("mobile");
+//     generateFrame(Mobile_Width);
+// };
 
 // const resizeListener = () => window.addEventListener("resize", resizeHandler);
 
@@ -158,16 +158,16 @@ const handleMobileIconClick = () => {
 //     window.removeEventListener("resize", resizeHandler);
 
 const setClickListeners = () => {
-    const editPageButton = document.querySelector("#editPageButton");
-    editPageButton.addEventListener("click", () => { });
+    // const editPageButton = document.querySelector("#editPageButton");
+    // editPageButton.addEventListener("click", () => { });
 
-    const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
-    const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
-    const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
+    // const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
+    // const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
+    // const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
 
-    desktopLayoutButton.addEventListener("click", handleDesktopIconClick);
-    tabletLayoutButton.addEventListener("click", handleTabletIconClick);
-    mobileLayoutButton.addEventListener("click", handleMobileIconClick);
+    // desktopLayoutButton.addEventListener("click", handleDesktopIconClick);
+    // tabletLayoutButton.addEventListener("click", handleTabletIconClick);
+    // mobileLayoutButton.addEventListener("click", handleMobileIconClick);
 
     const darkModeItem = document.querySelector("#darkModeItem");
     const darkModeButton = darkModeItem.firstElementChild;
