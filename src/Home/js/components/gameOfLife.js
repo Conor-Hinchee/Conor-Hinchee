@@ -1,7 +1,7 @@
 const Cell_Width = 10;
 const Cell_Height = 10;
 const TickRateMS = 250;
-const Seed = 8; // we use to seed the board 2 is 50%. 4 is 25%. 8 is 12.5 % ...
+const Seed = 4; // we use to seed the board 2 is 50%. 4 is 25%. 8 is 12.5 % ...
 let Game_Board = [];
 
 const initCells = (totalCells) => {
@@ -19,162 +19,28 @@ const initCells = (totalCells) => {
 };
 
 const initNeighbors = (index, rows, columns) => {
-  const cornerTopLeft = 0;
-  const cornerTopRight = columns - 1;
-  const cornerBottomLeft = columns * rows - columns;
-  const cornerBottomRight = (columns * rows) - 1;
-
-   // Top left corner
-    if (index === cornerTopLeft) {
-      return [
-        index + 1, // right
-        index + columns, // bottom
-        index + columns + 1, // bottom right
-        cornerTopRight, // wrap right
-        cornerTopRight + columns, // wrap right bottom
-        cornerBottomLeft, // wrap bottom
-        cornerBottomLeft + 1, // wrap bottom right
-        cornerBottomRight // wrap bottom right corner
-      ];
-      // return [
-      //   index + 1,
-      //   cornerTopRight,
-      //   cornerTopRight + 1,
-      //   cornerTopRight + 2,
-      //   cornerTopRight + columns,
-      //   cornerBottomLeft,
-      //   cornerBottomRight,
-      // ];
-    }
+  const row = Math.floor(index / columns);
+  const col = index % columns;
   
-    // // Top right corner
-    if (index === cornerTopRight) {
-      return [
-        cornerTopLeft, // wrap left
-        index + columns - 1, // bottom left
-        index + columns, // bottom
-        cornerBottomRight - columns + 1, // wrap bottom left
-        cornerBottomRight, // wrap bottom right
-        index - 1, // left
-        cornerBottomLeft, // wrap bottom left corner
-        cornerBottomLeft - 1 // wrap bottom far left
-      ];
-      // return [
-      //   cornerTopLeft,
-      //   index + 1,
-      //   index + 1 + columns,
-      //   index + 1 + columns - 1,
-      //   index - 1,
-      //   cornerBottomRight - 1,
-      //   cornerBottomRight,
-      //   cornerBottomLeft,
-      // ];
-    }
+  const neighbors = [];
   
-    // // Bottom left corner 
-    if (index === cornerBottomLeft) {
-      return [
-        index + 1, // right neighbor
-        index - columns, // top neighbor
-        index - columns + 1, // top right neighbor
-        cornerTopLeft, // wrap to top left
-        cornerTopLeft + 1, // wrap to first row right
-        cornerBottomRight, // wrap to bottom right
-        cornerTopRight, // wrap to top right
-        cornerBottomRight - columns + 1 // wrap right neighbor
-      ];
-      // return [
-      //   index + 1,
-      //   cornerTopLeft + 1,
-      //   cornerTopLeft,
-      //   cornerTopRight,
-      //   cornerBottomRight,
-      //   index - 1,
-      //   index - columns,
-      //   index - columns + 1,
-      // ];
+  // Check all 8 directions with wrapping
+  for (let dRow = -1; dRow <= 1; dRow++) {
+    for (let dCol = -1; dCol <= 1; dCol++) {
+      // Skip the center cell itself
+      if (dRow === 0 && dCol === 0) continue;
+      
+      // Calculate neighbor position with wrapping
+      let neighborRow = (row + dRow + rows) % rows;
+      let neighborCol = (col + dCol + columns) % columns;
+      
+      // Convert back to index
+      const neighborIndex = neighborRow * columns + neighborCol;
+      neighbors.push(neighborIndex);
     }
+  }
   
-    // // Bottom right corner
-    if (index === cornerBottomRight) {
-      return [
-        cornerBottomLeft, // wrap left
-        index - 1, // left 
-        index - columns - 1, // top left
-        index - columns, // top
-        cornerTopRight, // wrap top right
-        cornerTopLeft, // wrap top left
-        cornerTopLeft + 1, // wrap top left+1
-        cornerTopRight - 1 // wrap top right-1
-      ];
-    }
-  
-  // top
-  if (index > cornerTopLeft && index < cornerTopRight) {
-    return [
-      index + 1,
-      index + 1 + columns,
-      index + columns,
-      index - 1 + columns,
-      index - 1,
-      cornerBottomRight - (columns - (index - 1)),
-      cornerBottomRight - (columns - index),
-      cornerBottomRight - (columns - (index + 1)),
-    ];
-  }
-
-  //left side
-  if (index % columns === 0) {
-    return [
-      index + 1,
-      index + 1 + columns,
-      index + columns,
-      index + columns + columns - 1,
-      index + columns - 1,
-      index - 1,
-      index - 1 - columns + 1,
-      index - 1 - columns + 2,
-    ];
-  }
-
-  //right side
-  if ((index - cornerTopRight) % columns === 0) {
-    return [
-      index - columns + 1,
-      index + columns,
-      index + columns - 1,
-      index - 1,
-      index - 1 - columns,
-      index - columns,
-      index + 1,
-      index - columns - columns + 2,
-    ];
-  }
-
-  // bottom
-  if (index > cornerBottomLeft) {
-    return [
-      index + 1,
-      index - (index + 1 - columns),
-      index - 1 - (index + 1 - columns),
-      index - 2 - (index + 1 - columns),
-      index - 1,
-      index - columns - 1,
-      index - columns,
-      index - columns + 1,
-    ];
-  }
-
-  return [
-    index + 1,
-    index + columns,
-    index + columns - 1,
-    index + columns - 2,
-    index - 1,
-    index - 1 - columns,
-    index - columns,
-    index - columns + 1,
-  ];
+  return neighbors;
 };
 
 const drawBoard = () => {
@@ -240,7 +106,8 @@ const paintBoard = () => {
 };
 
 const play = () => {
-  const gameBoardCopy = [...Game_Board];
+  // Create a deep copy of the board state
+  const gameBoardCopy = Game_Board.map(cell => ({...cell}));
 
   Game_Board.forEach((cell, i) => {
     const { alive, age, neighbors } = cell;
@@ -270,7 +137,7 @@ const play = () => {
     }
   });
 
-  Game_Board = [...gameBoardCopy];
+  Game_Board = gameBoardCopy;
   paintBoard();
 };
 

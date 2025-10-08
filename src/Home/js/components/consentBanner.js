@@ -26,7 +26,7 @@ const CONSENT_ACCEPTED = {
 
 const showConsentBannerBar = () => {
   const banner = document.getElementById("consentBanner");
-  banner.style.transitionDuration = "1.5s";
+  banner.style.transitionDuration = "1s";
   banner.style.opacity = "1";
   banner.addEventListener("transitionend", () => {
     const event = new Event("consentBannerBar");
@@ -75,7 +75,7 @@ const eventConductorSteve = (event) => {
   }
 };
 
-const gtag = (args) => {
+const track = (args) => {
   // ensure that the data layer is defined
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(args);
@@ -85,14 +85,14 @@ const initConsentListeners = () => {
   const banner = document.querySelector("#consentBanner");
 
   document.getElementById("cookieConsent").addEventListener("click", () => {
-    gtag("consent", "update", { ...CONSENT_ACCEPTED });
-    localStorage.setItem("gtagConsent", JSON.stringify(CONSENT_ACCEPTED));
+    track("consent", "update", { ...CONSENT_ACCEPTED });
+    localStorage.setItem("trackConsent", JSON.stringify(CONSENT_ACCEPTED));
     banner.style.display = "none";
   });
 
   document.getElementById("cookieDecline").addEventListener("click", () => {
-    gtag("consent", "update", { ...CONSENT_DECLINED });
-    localStorage.setItem("gtagConsent", JSON.stringify(CONSENT_DECLINED));
+    track("consent", "update", { ...CONSENT_DECLINED });
+    localStorage.setItem("trackConsent", JSON.stringify(CONSENT_DECLINED));
     banner.style.display = "none";
   });
 
@@ -105,20 +105,20 @@ const initConsentListeners = () => {
 };
 
 const initConsentBanner = () => {
-  // Define dataLayer and the gtag function.
+  // Define dataLayer and the track function.
   window.dataLayer = window.dataLayer || [];
 
   // User has been here before
-  const localStorageConsent = localStorage.getItem("gtagConsent");
+  const localStorageConsent = localStorage.getItem("trackConsent");
   if (localStorageConsent !== null) {
     const consent = JSON.parse(localStorageConsent);
     DEBUG_LOG({ logLevel: "info", message: `Loaded consent from localStorage: ${JSON.stringify(consent)}` });
-    gtag("consent", "update", { ...consent });
+    track("consent", "update", { ...consent });
     return;
   }
 
   // init with declined consent and show the banner
-  gtag("consent", "default", { ...CONSENT_DECLINED });
+  track("consent", "default", { ...CONSENT_DECLINED });
 
   initConsentListeners();
 
