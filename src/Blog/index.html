@@ -28,7 +28,8 @@
   </footer>
   <script>
     const initMarkdown = async () => {
-      const theme = localStorage.getItem("theme");
+      // Get theme from localStorage, default to 'light' if not set
+      const theme = localStorage.getItem("theme") || "light";
       const blogPostContainer = document.getElementById("blog-post");
       // Selectors for breadcrumb elements that will be updated
       const breadcrumbBlogDropdownUL = document.querySelector('#breadcrumbBlogDropdown ul');
