@@ -43,21 +43,15 @@ const handleBlogRouting = () => {
 
 const updateBreadcrumb = () => {
   const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
-  const breadcrumbDropdown = document.querySelector("#breadcrumbNavDropdown");
   const path = window.location.pathname;
   const fullUrl = window.location.href;
   const id = fullUrl.split("#");
 
   if (id.length > 1) {
     breadcrumbNavButton.innerHTML = "#" + id[1];
-    // TODO REPLACE WITH UPDATING THE MARGIN TOP OF THE DROPDOWN #breadcrumbBlogDropdown ?
-    //patch placement of breadcrumb dropdown
-    breadcrumbDropdown.style.bottom = "-500%";
   } else if (path !== "/") {
     breadcrumbNavButton.innerHTML = path.replaceAll("/", "");
     hideJumpLinks();
-    //patch placement of breadcrumb dropdown
-    breadcrumbDropdown.style.bottom = "-270%";
 
     if(path.includes("/blog/")){
       showExtraSeparator();
@@ -67,8 +61,6 @@ const updateBreadcrumb = () => {
     
   } else {
     breadcrumbNavButton.innerHTML = DEFAULT_BREADCRUMB;
-    //patch placement of breadcrumb dropdown
-    breadcrumbDropdown.style.bottom = "-500%";
   }
 };
 

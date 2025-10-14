@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body, html {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}
+
 @media (min-width: 552px) {
   .unset-edit-button {
     all: unset;
