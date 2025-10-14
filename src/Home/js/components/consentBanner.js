@@ -39,11 +39,19 @@ const showConsentBannerFull = () => {
   const banner = document.getElementById("consentBanner");
   const consentTitle = document.getElementById("consentTitle");
 
-  consentTitle.style.transitionDuration = "1.5s";
+  // Add smooth easing to banner expansion
+  banner.style.transition = "height 0.5s ease-in-out, background-color 0.3s, color 0.3s, border-color 0.3s";
+  
+  // Fade out title quickly
+  consentTitle.style.transitionDuration = "0.2s";
   consentTitle.style.opacity = "0";
 
-  banner.style.transitionDuration = "1.5s";
+  // Expand banner height with easing
   banner.style.height = "250px";
+  
+  // Mark banner as expanded and lock it to page theme
+  bannerIsExpanded = true;
+  setBannerToPageTheme();
 
   banner.addEventListener("transitionend", () => {
     const event = new Event("consentBannerFull");
@@ -57,13 +65,101 @@ const showConsentContent = () => {
   const consentContent = document.getElementById("consentContent");
 
   consentContent.classList.remove("hidden");
+  
+  // Add smooth transition and fade in content
+  consentContent.style.transition = "opacity 0.4s ease-in";
   consentContent.style.opacity = "1";
+};
+
+let lastScrollY = window.scrollY;
+let bannerInLightMode = false;
+let hasPassedThreshold = false;
+let pageIsDarkMode = document.documentElement.classList.contains("dark");
+let bannerIsExpanded = false;
+
+const setBannerToDarkMode = () => {
+  const banner = document.getElementById("consentBanner");
+  banner.style.backgroundColor = "black";
+  banner.style.color = "white";
+  banner.style.borderColor = "white";
+  bannerInLightMode = false;
+};
+
+const setBannerToLightMode = () => {
+  const banner = document.getElementById("consentBanner");
+  banner.style.backgroundColor = "white";
+  banner.style.color = "black";
+  banner.style.borderColor = "black";
+  bannerInLightMode = true;
+};
+
+const setBannerToPageTheme = () => {
+  pageIsDarkMode = document.documentElement.classList.contains("dark");
+  if (pageIsDarkMode) {
+    setBannerToDarkMode();
+  } else {
+    setBannerToLightMode();
+  }
+};
+
+const setBannerToInverseTheme = () => {
+  pageIsDarkMode = document.documentElement.classList.contains("dark");
+  if (pageIsDarkMode) {
+    setBannerToLightMode();
+  } else {
+    setBannerToDarkMode();
+  }
+};
+
+const updateBannerColorOnScroll = () => {
+  // Don't change colors if banner is expanded
+  if (bannerIsExpanded) {
+    return;
+  }
+  
+  const currentScrollY = window.scrollY;
+  const isScrollingDown = currentScrollY > lastScrollY;
+  
+  lastScrollY = currentScrollY;
+  
+  // Update page theme status
+  pageIsDarkMode = document.documentElement.classList.contains("dark");
+  
+  // If scrolling down
+  if (isScrollingDown) {
+    // Check if we should invert (first time past 400px OR already passed threshold)
+    if (currentScrollY > 400 || hasPassedThreshold) {
+      setBannerToInverseTheme();
+      hasPassedThreshold = true;
+    }
+  }
+  // If scrolling up, return to page theme
+  else if (!isScrollingDown) {
+    // Check if banner is in inverse mode
+    const bannerIsInverse = pageIsDarkMode ? bannerInLightMode : !bannerInLightMode;
+    if (bannerIsInverse) {
+      setBannerToPageTheme();
+    }
+  }
 };
 
 const scrollListener = () => {
   if (window.scrollY > 200) {
     showConsentBannerBar();
     window.removeEventListener("scroll", scrollListener);
+    
+    // Set initial banner state based on current scroll position
+    if (window.scrollY > 400) {
+      // Spawning in past the threshold, start in inverse theme
+      setBannerToInverseTheme();
+      hasPassedThreshold = true;
+    } else {
+      // Spawning in before threshold, start with page theme
+      setBannerToPageTheme();
+    }
+    
+    // Add the color transition scroll listener after banner appears
+    window.addEventListener("scroll", updateBannerColorOnScroll);
   }
 };
 
@@ -122,9 +218,22 @@ const initConsentBanner = () => {
 
   initConsentListeners();
 
-  // if scroll y is already greater than 200, show the full banner
+  // if scroll y is already greater than 200, show the banner
   if (window.scrollY > 200) {
     showConsentBannerBar();
+    
+    // Set initial banner state based on current scroll position
+    if (window.scrollY > 400) {
+      // Already scrolled past threshold, start in inverse theme
+      setBannerToInverseTheme();
+      hasPassedThreshold = true;
+    } else {
+      // Before threshold, start with page theme
+      setBannerToPageTheme();
+    }
+    
+    // Add the color transition scroll listener
+    window.addEventListener("scroll", updateBannerColorOnScroll);
     return;
   }
 
