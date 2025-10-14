@@ -859,6 +859,10 @@ body, html {
   max-width: 72rem;
 }
 
+.max-w-\[200px\] {
+  max-width: 200px;
+}
+
 .origin-top {
   transform-origin: top;
 }
@@ -958,6 +962,12 @@ body, html {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rounded-full {
@@ -2318,6 +2328,14 @@ body, html {
 @media (min-width: 640px) {
   .sm\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .sm\:inline {
+    display: inline;
+  }
+
+  .sm\:max-w-none {
+    max-width: none;
   }
 
   .sm\:grid-cols-1 {
