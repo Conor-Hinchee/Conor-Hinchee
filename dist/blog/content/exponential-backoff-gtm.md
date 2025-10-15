@@ -1,22 +1,18 @@
-# 📈 Improving Web Reliability with Exponential Backoff in Google Tag Manager
+# 📈 Exponential Backoff in Google Tag Manager
 
 When working with third-party scripts like Zendesk Chat (`zE`) in dynamic environments, race conditions can cause your customizations to fail if the required DOM or scripts haven’t loaded yet. This is especially relevant when injecting code via **Google Tag Manager (GTM)**, where load timing is unpredictable.
-
-In this post, we’ll walk through a real-world workaround for binding a click event to a dynamically rendered chat button using **exponential backoff**, a retry mechanism that waits progressively longer between each attempt. This approach ensures reliable execution without hammering the browser with continuous retries.
 
 ---
 
 ## ✅ What We’re Solving
-
-Some CTAs on your site, like _“Chat with us now”_, are dynamically loaded. Attempting to bind event listeners before the DOM element exists—or before Zendesk’s `zE` is ready—will silently fail. A simple fix would be retrying after a delay, but that can lead to performance issues if not done thoughtfully.
+ 
+Attempting to bind event listeners before the DOM element exists—or before they are ready it will ready—will silently fail. A simple fix would be retrying after a delay, but that can lead to performance issues if not done thoughtfully.
 
 Enter: **Exponential Backoff**.
 
 ---
 
-## 🔧 Refactored Script
-
-Here’s a more generic version of the original code. This makes the exponential backoff utility reusable and adds flexibility for other elements or scripts.
+## 🔧 Exponential Backoff
 
 ```html
 <script>
@@ -47,27 +43,17 @@ Here’s a more generic version of the original code. This makes the exponential
     retry();
   }
 
-  function waitForChatButton(callback) {
-    if (!window.zE || typeof window.zE !== "function") {
-      return callback(new Error("zE not ready"));
-    }
+  function waitForElement(callback) {
 
-    const ctas = document.querySelectorAll('[data-type="ctas"]');
-    if (ctas.length === 0) {
-      return callback(new Error("CTAs not found"));
-    }
-
-    const chatButton = Array.from(ctas).find(
-      (el) => el.text === "Chat with us now"
-    );
-    if (!chatButton) {
-      return callback(new Error("Chat CTA not found"));
+    const dynamicElement = document.querySelector('#dynamic-element');
+    if (!dynamicElement) {
+      return callback(new Error("element does not exist"));
     }
 
     try {
-      chatButton.href = "javascript:void(0)";
-      chatButton.addEventListener("click", () => {
-        window.zE("messenger", "open");
+      dynamicElement.href = "javascript:void(0)";
+      dynamicElement.addEventListener("click", () => {
+        console.log('handling click');
       });
       callback(null); // success
     } catch (err) {
@@ -75,10 +61,10 @@ Here’s a more generic version of the original code. This makes the exponential
     }
   }
 
-  exponentialBackoff(waitForChatButton, {
+  exponentialBackoff(waitForElement, {
     maxRetries: 5,
     baseDelay: 500,
-    label: "Chat Button Patch",
+    label: "Adding listener to element",
   });
 </script>
 ```
@@ -105,19 +91,5 @@ Exponential backoff gives these dependencies time to load without resorting to i
 
 ---
 
-## 🔄 Where Else Could You Use This?
-
-This backoff pattern is helpful when:
-
-- Waiting for analytics scripts (e.g., GA4, Segment)
-- Retrying flaky API calls
-- Binding events to lazy-loaded components
-- Fixing race conditions in A/B testing setups
-
----
-
-## 🧠 Final Thoughts
 
 When you're working with third-party scripts and GTM, load order isn’t guaranteed. Adding a reusable exponential backoff utility to your toolbox ensures resilience in environments where timing is unpredictable.
-
-Want a downloadable version of the snippet for local use or version control? Let me know!
