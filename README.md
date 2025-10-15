@@ -8,6 +8,8 @@ I love writing code and building cool things. I live in Ohio 🌰, where I work 
 
 - Been here before? Check out what I am doing [now](https://www.conorhinchee.com/now) 🕰️.    
 
+<!-- - Let's connect on [LinkedIn](https://www.linkedin.com/in/conorhinchee/)💼. -->
+
 - Follow me on [x](https://x.com/_DrunkWaffles_) 🧇, where I ramble about code, tech, and a bit of nonsense. 
 
 - Check out my [website](https://conorhinchee.com) 🕸️ for more about me!
