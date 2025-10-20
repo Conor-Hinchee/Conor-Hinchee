@@ -8,17 +8,18 @@
 <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet" />
 
 <script>
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: "default_consent",
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-    functionality_storage: "denied",
-    personalization_storage: "denied",
-    security_storage: "denied"
-  });
+  // Keep a list of callbacks waiting for consent changes
+  const consentListeners = [];
+
+  // GTM template will call this to subscribe
+  window.addConsentListenerExample = (callback) => {
+    consentListeners.push(callback);
+  };
+
+  // Your banner calls this when user updates consent
+  window.onConsentChange = (consent) => {
+    consentListeners.forEach((cb) => cb(consent));
+  };
 </script>
 
 <!-- Google Tag Manager -->
