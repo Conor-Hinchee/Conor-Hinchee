@@ -5,23 +5,17 @@ const COOKIE_NAME = "cookie-consent";
 const COOKIE_EXPIRATION_DAYS = 180; 
 
 const CONSENT_DECLINED = {
-  adConsentGranted: false,
-  adUserDataConsentGranted: false,
-  adPersonalizationConsentGranted: false,
-  analyticsConsentGranted: false,
-  functionalityConsentGranted: false,
-  personalizationConsentGranted: false,
-  securityConsentGranted: false,
+  ad_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+  analytics_storage: "denied",
 };
 
 const CONSENT_ACCEPTED = {
-  adConsentGranted: true,
-  adUserDataConsentGranted: true,
-  adPersonalizationConsentGranted: true,
-  analyticsConsentGranted: true,
-  functionalityConsentGranted: true,
-  personalizationConsentGranted: true,
-  securityConsentGranted: true,
+  ad_storage: "granted",
+  ad_user_data: "granted",
+  ad_personalization: "granted",
+  analytics_storage: "granted",
 };
 
 const setCookie = (name, value, days) => {
@@ -41,15 +35,19 @@ const getCookie = (name) => {
 };
 
 const notifyGTM = (consent) => {
-  if (typeof window.addConsentListenerExample === "function") {
-    window.addConsentListenerExample(consent);
-  }
-
   window.dataLayer = window.dataLayer || [];
+  
+  // Use GTM's consent mode API
   window.dataLayer.push({
     event: "consent_update",
-    consent,
+    ...consent,
   });
+  
+  // Also trigger the gtag consent update if available
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", consent);
+  }
+  
   DEBUG_LOG({
     logLevel: "info",
     message: `Pushed consent update to GTM: ${JSON.stringify(consent)}`,
