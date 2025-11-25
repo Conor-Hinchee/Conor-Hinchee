@@ -16,56 +16,49 @@ Enter: **Exponential Backoff**.
 
 ```html
 <script>
-  function exponentialBackoff(
-    actionFn,
-    { maxRetries = 5, baseDelay = 500, label = "Backoff" } = {}
-  ) {
-    let attempt = 0;
 
-    const retry = () => {
+function exponentialBackoff(action, maxRetries, baseDelay, label) {
+    var attempt = 0;
+
+    function retry ()  {
       if (attempt >= maxRetries) {
-        console.warn(`[${label}] Max retries reached. Aborting.`);
+        console.warn(label + 'Max retries reached. Aborting.');
         return;
       }
 
-      actionFn((error) => {
+      action(function (error) {
         if (error) {
           attempt++;
-          const delay = Math.pow(2, attempt) * baseDelay;
-          console.log(`[${label}] Retrying in ${delay}ms (Attempt ${attempt})`);
+          var delay = Math.pow(2, attempt) * baseDelay;
+        console.log(
+          "Retrying in " + delay + "ms ("+ label +": " + attempt + ")"
+        );
           setTimeout(retry, delay);
         } else {
-          console.log(`[${label}] Succeeded on attempt ${attempt + 1}`);
+           console.log(label + ": succeeded on attempt " + (attempt + 1));
         }
       });
     };
 
     retry();
+}
+  
+function waitForSomething(callback) {
+
+  var dynamicElement = document.querySelector('#something');
+  if (!dynamicElement) {
+    return callback(new Error("main product list not present"));
   }
 
-  function waitForElement(callback) {
-
-    const dynamicElement = document.querySelector('#dynamic-element');
-    if (!dynamicElement) {
-      return callback(new Error("element does not exist"));
-    }
-
-    try {
-      dynamicElement.href = "javascript:void(0)";
-      dynamicElement.addEventListener("click", () => {
-        console.log('handling click');
-      });
-      callback(null); // success
-    } catch (err) {
-      callback(err);
-    }
+  try {
+    // do business logic here
+    callback(null); // success
+  } catch (err) {
+    callback(err);
   }
+}
 
-  exponentialBackoff(waitForElement, {
-    maxRetries: 5,
-    baseDelay: 500,
-    label: "Adding listener to element",
-  });
+exponentialBackoff(waitForSomething, 5, 500, "ExponentialBackOFF X");
 </script>
 ```
 
