@@ -43,11 +43,6 @@ const notifyGTM = (consent) => {
     ...consent,
   });
   
-  // Also trigger the gtag consent update if available
-  if (typeof window.gtag === "function") {
-    window.gtag("consent", "update", consent);
-  }
-  
   DEBUG_LOG({
     logLevel: "info",
     message: `Pushed consent update to GTM: ${JSON.stringify(consent)}`,
