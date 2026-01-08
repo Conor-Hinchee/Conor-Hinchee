@@ -1,72 +1,71 @@
 // import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
 
 const changeTheme = (event = {}, override = "") => {
-    const { setTheme } = event?.target?.dataset || "";
+  const { setTheme } = event?.target?.dataset || "";
 
-    if (override === "dark" || setTheme === "dark") {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
+  if (override === "dark" || setTheme === "dark") {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
 
-        // set the theme to dark, reverse the icon to light
-        const lightModeItem = document.querySelector("#lightModeItem");
-        const darkModeItem = document.querySelector("#darkModeItem");
-        const mainElement = document.querySelector("main");
-        const allOandI = document.querySelectorAll(".OandI");
+    // set the theme to dark, reverse the icon to light
+    const lightModeItem = document.querySelector("#lightModeItem");
+    const darkModeItem = document.querySelector("#darkModeItem");
+    const mainElement = document.querySelector("main");
+    const allOandI = document.querySelectorAll(".OandI");
 
-        mainElement.classList.replace("bgGridWhite", "bgGridDark");
+    mainElement.classList.replace("bgGridWhite", "bgGridDark");
 
-        if (lightModeItem.classList.contains("hidden")) {
-            lightModeItem.classList.toggle("hidden");
-            lightModeItem.classList.toggle("flex");
-            darkModeItem.classList.toggle("hidden");
-            darkModeItem.classList.toggle("flex");
-        }
-
-        if (allOandI.length) {
-            allOandI.forEach((oAndI) => {
-                oAndI.classList.replace(
-                    "OandIAnimationLightMode",
-                    "OandIAnimationDarkMode",
-                );
-            });
-        }
+    if (lightModeItem.classList.contains("hidden")) {
+      lightModeItem.classList.toggle("hidden");
+      lightModeItem.classList.toggle("flex");
+      darkModeItem.classList.toggle("hidden");
+      darkModeItem.classList.toggle("flex");
     }
 
-    if (override === "light" || setTheme === "light") {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
+    if (allOandI.length) {
+      allOandI.forEach((oAndI) => {
+        oAndI.classList.replace(
+          "OandIAnimationLightMode",
+          "OandIAnimationDarkMode",
+        );
+      });
+    }
+  }
 
-        // set the theme to light, reverse the icon to dark
-        const lightModeItem = document.querySelector("#lightModeItem");
-        const darkModeItem = document.querySelector("#darkModeItem");
-        const mainElement = document.querySelector("main");
-        const allOandI = document.querySelectorAll(".OandI");
+  if (override === "light" || setTheme === "light") {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
 
-        mainElement.classList.replace("bgGridDark", "bgGridWhite");
+    // set the theme to light, reverse the icon to dark
+    const lightModeItem = document.querySelector("#lightModeItem");
+    const darkModeItem = document.querySelector("#darkModeItem");
+    const mainElement = document.querySelector("main");
+    const allOandI = document.querySelectorAll(".OandI");
 
-        if (darkModeItem.classList.contains("hidden")) {
-            lightModeItem.classList.toggle("hidden");
-            lightModeItem.classList.toggle("flex");
-            darkModeItem.classList.toggle("hidden");
-            darkModeItem.classList.toggle("flex");
-        }
+    mainElement.classList.replace("bgGridDark", "bgGridWhite");
 
-        if (allOandI.length) {
-            allOandI.forEach((oAndI) => {
-                oAndI.classList.replace(
-                    "OandIAnimationDarkMode",
-                    "OandIAnimationLightMode",
-                );
-            });
-        }
+    if (darkModeItem.classList.contains("hidden")) {
+      lightModeItem.classList.toggle("hidden");
+      lightModeItem.classList.toggle("flex");
+      darkModeItem.classList.toggle("hidden");
+      darkModeItem.classList.toggle("flex");
     }
 
-    // hard refresh the page on the blog to get the theme change
-    // TODO create an event around the user interacting with the page
-    if(window.location.href.includes("blog") && !!setTheme) {
-        window.location.reload();
+    if (allOandI.length) {
+      allOandI.forEach((oAndI) => {
+        oAndI.classList.replace(
+          "OandIAnimationDarkMode",
+          "OandIAnimationLightMode",
+        );
+      });
     }
-    
+  }
+
+  // hard refresh the page on the blog to get the theme change
+  // TODO create an event around the user interacting with the page
+  if (window.location.href.includes("blog") && !!setTheme) {
+    window.location.reload();
+  }
 };
 
 // const setLayoutIconAriaPressed = (layout) => {
@@ -158,52 +157,51 @@ const changeTheme = (event = {}, override = "") => {
 //     window.removeEventListener("resize", resizeHandler);
 
 const setClickListeners = () => {
-    // const editPageButton = document.querySelector("#editPageButton");
-    // editPageButton.addEventListener("click", () => { });
+  // const editPageButton = document.querySelector("#editPageButton");
+  // editPageButton.addEventListener("click", () => { });
 
-    // const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
-    // const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
-    // const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
+  // const desktopLayoutButton = document.querySelector("#desktopLayoutButton");
+  // const tabletLayoutButton = document.querySelector("#tabletLayoutButton");
+  // const mobileLayoutButton = document.querySelector("#mobileLayoutButton");
 
-    // desktopLayoutButton.addEventListener("click", handleDesktopIconClick);
-    // tabletLayoutButton.addEventListener("click", handleTabletIconClick);
-    // mobileLayoutButton.addEventListener("click", handleMobileIconClick);
+  // desktopLayoutButton.addEventListener("click", handleDesktopIconClick);
+  // tabletLayoutButton.addEventListener("click", handleTabletIconClick);
+  // mobileLayoutButton.addEventListener("click", handleMobileIconClick);
 
-    const darkModeItem = document.querySelector("#darkModeItem");
-    const darkModeButton = darkModeItem.firstElementChild;
-    darkModeButton.addEventListener("click", changeTheme);
+  const darkModeItem = document.querySelector("#darkModeItem");
+  const darkModeButton = darkModeItem.firstElementChild;
+  darkModeButton.addEventListener("click", changeTheme);
 
-    const lightModeItem = document.querySelector("#lightModeItem");
-    const lightModeButton = lightModeItem.firstElementChild;
-    lightModeButton.addEventListener("click", changeTheme);
+  const lightModeItem = document.querySelector("#lightModeItem");
+  const lightModeButton = lightModeItem.firstElementChild;
+  lightModeButton.addEventListener("click", changeTheme);
 };
 
 const hideBanner = () => {
-    const banner = document.querySelector("header");
-    banner.style.display = "none";
+  const banner = document.querySelector("header");
+  banner.style.display = "none";
 };
 
 const initBanner = () => {
-    const currentTheme = localStorage.getItem("theme");
-    changeTheme(null, currentTheme);
+  const currentTheme = localStorage.getItem("theme");
+  changeTheme(null, currentTheme);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const isIframe = urlParams.get("iframe") === "true";
+  const urlParams = new URLSearchParams(window.location.search);
+  const isIframe = urlParams.get("iframe") === "true";
 
-    if (isIframe) {
-        hideBanner();
-    } else {
-        setClickListeners();
-    }
+  if (isIframe) {
+    hideBanner();
+  } else {
+    setClickListeners();
+  }
 
-    // initial screen width
-    // const screenWidth = window.innerWidth;
+  // initial screen width
+  // const screenWidth = window.innerWidth;
 
-    // const deviceType = getDeviceType(screenWidth);
-    // setLayoutIconAriaPressed(deviceType);
+  // const deviceType = getDeviceType(screenWidth);
+  // setLayoutIconAriaPressed(deviceType);
 
-
-    // resizeListener();
+  // resizeListener();
 };
 
 export default initBanner;

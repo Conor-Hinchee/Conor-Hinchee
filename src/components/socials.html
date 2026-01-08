@@ -1,7 +1,9 @@
 <section id="socials" class="font-mono dark:text-white mt-28">
   <h2 class="text-center text-3xl mb-8">CONNECT WITH ME</h2>
-  
-  <div class="flex flex-wrap justify-center items-center gap-8 max-w-2xl mx-auto">
+
+  <div
+    class="flex flex-wrap justify-center items-center gap-8 max-w-2xl mx-auto"
+  >
     <!-- GitHub -->
     <a
       href="https://github.com/Conor-Hinchee"
@@ -84,7 +86,7 @@
     width: 80px;
     transition: transform 0.3s ease;
   }
-  
+
   .social-icon-wrapper {
     position: relative;
     display: flex;
@@ -93,9 +95,9 @@
     width: 60px;
     height: 100px;
   }
-  
+
   .social-icon-wrapper::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -15px;
     left: 50%;
@@ -105,44 +107,44 @@
     transform: translateX(-50%);
     transition: width 0.3s ease;
   }
-  
+
   .social-icon-link:hover {
     transform: translateY(-8px);
   }
-  
+
   .social-icon-link:hover .social-icon-wrapper::after {
     width: 100%;
   }
-  
+
   .social-icon-label {
     margin-top: 20px;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s ease;
   }
-  
+
   .social-icon-link:hover .social-icon-label {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   .social-icon-link:nth-child(1):hover .social-icon-wrapper::after {
     background-color: #2ea44f;
   }
-  
+
   .social-icon-link:nth-child(2):hover .social-icon-wrapper::after {
     background-color: #ff5722;
   }
-  
+
   .social-icon-link:nth-child(3):hover .social-icon-wrapper::after {
     background-color: #0077b5;
   }
-  
+
   .social-icon-link:nth-child(4):hover .social-icon-wrapper::after {
     background-color: #ea4335;
   }
-  
+
   .social-icon-link:nth-child(5):hover .social-icon-wrapper::after {
-    background-color: #1DA1F2;
+    background-color: #1da1f2;
   }
 </style>

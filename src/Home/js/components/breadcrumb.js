@@ -14,7 +14,7 @@ const hideJumpLinks = () => {
 
 const showExtraSeparator = () => {
   const breadcrumbNavExtraSeperator = document.querySelector(
-    "#breadcrumb-Nav-Separator"
+    "#breadcrumb-Nav-Separator",
   );
   breadcrumbNavExtraSeperator.classList.remove("hidden");
   breadcrumbNavExtraSeperator.classList.add("block");
@@ -30,7 +30,7 @@ const showBreadcrumbBlog = () => {
 const handleBlogRouting = () => {
   const path = window.location.pathname;
   const searchParams = new URLSearchParams(window.location.search);
-  
+
   if (path.includes("/blog/")) {
     if (!searchParams.has("post")) {
       const newUrl = "/blog?post=latest";
@@ -53,12 +53,11 @@ const updateBreadcrumb = () => {
     breadcrumbNavButton.innerHTML = path.replaceAll("/", "");
     hideJumpLinks();
 
-    if(path.includes("/blog/")){
+    if (path.includes("/blog/")) {
       showExtraSeparator();
       showBreadcrumbBlog();
       handleBlogRouting();
     }
-    
   } else {
     breadcrumbNavButton.innerHTML = DEFAULT_BREADCRUMB;
   }
@@ -67,7 +66,7 @@ const updateBreadcrumb = () => {
 const toggleMainDropDown = () => {
   const breadcrumbDropdown = document.querySelector("#breadcrumbNavDropdown");
   const body = document.querySelector("body");
-  
+
   breadcrumbDropdown.classList.toggle("invisible");
   updateBreadcrumb();
 
@@ -87,7 +86,7 @@ const toggleMainDropDown = () => {
 const toggleBlogDropdown = () => {
   const breadcrumbDropdown = document.querySelector("#breadcrumbBlogDropdown");
   // const body = document.querySelector("body");
-  
+
   breadcrumbDropdown.classList.toggle("invisible");
   // updateBreadcrumb();
 

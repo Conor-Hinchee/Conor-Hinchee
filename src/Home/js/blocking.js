@@ -12,7 +12,7 @@ const useLightMode = () => {
 const updateBgGrid = (theme) => {
   const mainElement = document.querySelector("main");
   if (!mainElement) return;
-  
+
   if (theme === "dark") {
     if (mainElement.classList.contains("bgGridWhite")) {
       mainElement.classList.replace("bgGridWhite", "bgGridDark");
@@ -49,7 +49,7 @@ const watchOSTheme = () => {
 const initTheme = () => {
   try {
     let currentTheme = "light";
-    
+
     if (localStorage.getItem("theme") === "dark") {
       useDarkMode();
       currentTheme = "dark";
@@ -66,10 +66,12 @@ const initTheme = () => {
         currentTheme = "light";
       }
     }
-    
+
     // Update bgGrid after DOM is ready
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => updateBgGrid(currentTheme));
+      document.addEventListener("DOMContentLoaded", () =>
+        updateBgGrid(currentTheme),
+      );
     } else {
       updateBgGrid(currentTheme);
     }
@@ -77,7 +79,9 @@ const initTheme = () => {
     console.error("Error initializing theme:", e);
     useLightMode();
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => updateBgGrid("light"));
+      document.addEventListener("DOMContentLoaded", () =>
+        updateBgGrid("light"),
+      );
     } else {
       updateBgGrid("light");
     }

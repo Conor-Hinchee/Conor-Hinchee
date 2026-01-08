@@ -1,4 +1,3 @@
-
 # Using React Portals with Refs Instead of IDs
 
 When working with React Portals, it's common to attach them to a DOM element using an ID. However, there are scenarios where you might want to attach a portal to a dynamically referenced DOM element instead. This approach can provide more flexibility and eliminate the need for static IDs.
@@ -20,11 +19,8 @@ Additionally, if the referenced element is conditionally rendered, it may not ex
 To reliably attach a portal to a referenced element, we need to:
 
 1. Create a `div` element dynamically.
-    
 2. Append it to the referenced container.
-    
 3. Remove it on unmount to prevent memory leaks.
-    
 
 Here’s an improved implementation:
 
@@ -110,11 +106,8 @@ export default ExamplePortal;
 ## Why This Works
 
 - **Ensures the target exists**: The portal container is only created when the reference is available.
-    
 - **Avoids memory leaks**: The dynamically created `div` is removed on unmount.
-    
 - **No need for IDs**: The portal attaches dynamically using refs, improving reusability and maintainability.
-    
 
 ## Conclusion
 

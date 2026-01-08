@@ -1,11 +1,11 @@
 {
-    "input": "./src/Now/index.html",
-    "output": "dist/now",
-    "plugins": {
-        "posthtml-modules": {
-            "root": "./src",
-            "initial": true
-        },
-        "htmlnano": {}
-    }
+  "input": "./src/Now/index.html",
+  "output": "dist/now",
+  "plugins": {
+    "posthtml-modules": {
+      "root": "./src",
+      "initial": true
+    },
+    "htmlnano": {}
+  }
 }

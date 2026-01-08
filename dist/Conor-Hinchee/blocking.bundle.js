@@ -1,1 +1,60 @@
-(()=>{var e,t,a=function(){document.documentElement.classList.add("dark")},r=function(){document.documentElement.classList.remove("dark")},n=function(e){var t=document.querySelector("main");t&&("dark"===e?t.classList.contains("bgGridWhite")&&t.classList.replace("bgGridWhite","bgGridDark"):t.classList.contains("bgGridDark")&&t.classList.replace("bgGridDark","bgGridWhite"))};!function(){try{var e="light";"dark"===localStorage.getItem("theme")?(a(),e="dark"):"light"===localStorage.getItem("theme")?(r(),e="light"):window.matchMedia&&!localStorage.getItem("theme")&&("dark"==(null!==(t=(i=window).matchMedia)&&void 0!==t&&t.call(i,"(prefers-color-scheme: dark)").matches?"dark":"light")?(a(),e="dark"):(r(),e="light")),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",(function(){return n(e)})):n(e)}catch(e){console.error("Error initializing theme:",e),r(),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",(function(){return n("light")})):n("light")}var t,i}(),null===(e=(t=window).matchMedia)||void 0===e||e.call(t,"(prefers-color-scheme: dark)").addEventListener("change",(function(e){localStorage.getItem("theme")||(e.matches?(a(),n("dark")):(r(),n("light")))}))})();
+(() => {
+  var e,
+    t,
+    a = function () {
+      document.documentElement.classList.add("dark");
+    },
+    r = function () {
+      document.documentElement.classList.remove("dark");
+    },
+    n = function (e) {
+      var t = document.querySelector("main");
+      t &&
+        ("dark" === e
+          ? t.classList.contains("bgGridWhite") &&
+            t.classList.replace("bgGridWhite", "bgGridDark")
+          : t.classList.contains("bgGridDark") &&
+            t.classList.replace("bgGridDark", "bgGridWhite"));
+    };
+  !(function () {
+    try {
+      var e = "light";
+      "dark" === localStorage.getItem("theme")
+        ? (a(), (e = "dark"))
+        : "light" === localStorage.getItem("theme")
+          ? (r(), (e = "light"))
+          : window.matchMedia &&
+            !localStorage.getItem("theme") &&
+            ("dark" ==
+            (null !== (t = (i = window).matchMedia) &&
+            void 0 !== t &&
+            t.call(i, "(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light")
+              ? (a(), (e = "dark"))
+              : (r(), (e = "light"))),
+        "loading" === document.readyState
+          ? document.addEventListener("DOMContentLoaded", function () {
+              return n(e);
+            })
+          : n(e);
+    } catch (e) {
+      console.error("Error initializing theme:", e),
+        r(),
+        "loading" === document.readyState
+          ? document.addEventListener("DOMContentLoaded", function () {
+              return n("light");
+            })
+          : n("light");
+    }
+    var t, i;
+  })(),
+    null === (e = (t = window).matchMedia) ||
+      void 0 === e ||
+      e
+        .call(t, "(prefers-color-scheme: dark)")
+        .addEventListener("change", function (e) {
+          localStorage.getItem("theme") ||
+            (e.matches ? (a(), n("dark")) : (r(), n("light")));
+        });
+})();

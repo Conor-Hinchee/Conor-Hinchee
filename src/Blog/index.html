@@ -1,134 +1,155 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <title>Conor Hinchee | Blog</title>
+    <module href="/components/head.html"></module>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/zero-md@3?register"
+    ></script>
+  </head>
 
-<head>
-  <title>Conor Hinchee | Blog</title>
-  <module href="/components/head.html"></module>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
-</head>
-
-<body>
+  <body>
     <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5LVHRXL" height="0" width="0"
-      style="display: none; visibility: hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <module href="/components/banner.html"></module>
-  <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
-    <div id="app" class="w-5/6 m-auto transition-all origin-top">
-      <module href="/components/breadcrumb-nav.html"></module>
-      <noscript>
-        Read posts on github: github.com/Conor-Hinchee
-      </noscript>
-      <div class="mt-24" id="blog-post"></div>
-    </div>
-    <module href="/components/consent.html"></module>
-  </main>
-  <footer class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white">
-    <module href="/components/footer.html"></module>
-  </footer>
-  <script>
-    const initMarkdown = async () => {
-      // Get theme from localStorage, default to 'light' if not set
-      const theme = localStorage.getItem("theme") || "light";
-      const blogPostContainer = document.getElementById("blog-post");
-      // Selectors for breadcrumb elements that will be updated
-      const breadcrumbBlogDropdownUL = document.querySelector('#breadcrumbBlogDropdown ul');
-      const currentPostButtonSpan = document.querySelector('#breadcrumb-Nav-blog button span.mr-2');
-      
-      try {
-        // Fetch all posts data from JSON file
-        const response = await fetch('/blog/content/posts.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts data');
-        }
-        
-        const data = await response.json();
-        let allPosts = data.posts || []; // Full list of posts, might be empty
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-N5LVHRXL"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <module href="/components/banner.html"></module>
+    <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
+      <div id="app" class="w-5/6 m-auto transition-all origin-top">
+        <module href="/components/breadcrumb-nav.html"></module>
+        <noscript> Read posts on github: github.com/Conor-Hinchee </noscript>
+        <div class="mt-24" id="blog-post"></div>
+      </div>
+      <module href="/components/consent.html"></module>
+    </main>
+    <footer
+      class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white"
+    >
+      <module href="/components/footer.html"></module>
+    </footer>
+    <script>
+      const initMarkdown = async () => {
+        // Get theme from localStorage, default to 'light' if not set
+        const theme = localStorage.getItem("theme") || "light";
+        const blogPostContainer = document.getElementById("blog-post");
+        // Selectors for breadcrumb elements that will be updated
+        const breadcrumbBlogDropdownUL = document.querySelector(
+          "#breadcrumbBlogDropdown ul",
+        );
+        const currentPostButtonSpan = document.querySelector(
+          "#breadcrumb-Nav-blog button span.mr-2",
+        );
 
-        // Sort all posts by date (newest first) for consistent dropdown order and 'latest' logic
-        allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        let requestedPostId = urlParams.get('post'); // Could be an ID, 'latest', or null
-        
-        let currentPost; // The post object for the content being displayed (title, ID for MD file)
-        let actualPostIdToLoad; // The ID of the .md file to load
-
-        if (requestedPostId && requestedPostId !== 'latest') {
-          // User requested a specific post ID
-          currentPost = allPosts.find(p => p.id === requestedPostId);
-          // If specific post not found, currentPost will be undefined here
-        }
-        
-        // If 'latest' was requested (e.g. /blog/?post=latest), 
-        // OR if no post ID in URL (requestedPostId is null),
-        // OR if a specific post ID was requested but not found (currentPost is undefined from the block above):
-        if (!currentPost || requestedPostId === 'latest' || !requestedPostId) { 
-          if (allPosts.length > 0) {
-            currentPost = allPosts[0]; // Default to the most recent post
+        try {
+          // Fetch all posts data from JSON file
+          const response = await fetch("/blog/content/posts.json");
+          if (!response.ok) {
+            throw new Error("Failed to fetch posts data");
           }
-          // If allPosts is empty, currentPost remains undefined here.
-        }
 
-        // Fallback if no posts are available OR currentPost is still not determined
-        // (e.g., specific ID requested, not found, AND allPosts is empty or was empty from start)
-        if (!currentPost) {
-          currentPost = { id: '2025-resolution', title: 'Default Post', date: new Date().toISOString() }; 
-          actualPostIdToLoad = '2025-resolution'; // The MD file to load for fallback
-        } else {
-          actualPostIdToLoad = currentPost.id; // The ID of the post to load
-        }
-        
-        // Update page title based on the determined current post
-        if (currentPost && currentPost.title) {
-          document.title = `Conor Hinchee | Blog | ${currentPost.title}`;
-        }
-        
-        // Populate breadcrumb dropdown with all available posts
-        if (breadcrumbBlogDropdownUL) {
-          breadcrumbBlogDropdownUL.innerHTML = ''; // Clear any existing static/dynamic items
-          if (allPosts.length > 0) {
-            allPosts.forEach(p => {
-              const listItem = document.createElement('li');
-              const link = document.createElement('a');
-              link.href = `/blog/?post=${p.id}`;
-              link.className = 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
-              link.textContent = p.title; // Assumes p.title exists in posts.json objects
-              listItem.appendChild(link);
-              breadcrumbBlogDropdownUL.appendChild(listItem);
-            });
+          const data = await response.json();
+          let allPosts = data.posts || []; // Full list of posts, might be empty
+
+          // Sort all posts by date (newest first) for consistent dropdown order and 'latest' logic
+          allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          const urlParams = new URLSearchParams(window.location.search);
+          let requestedPostId = urlParams.get("post"); // Could be an ID, 'latest', or null
+
+          let currentPost; // The post object for the content being displayed (title, ID for MD file)
+          let actualPostIdToLoad; // The ID of the .md file to load
+
+          if (requestedPostId && requestedPostId !== "latest") {
+            // User requested a specific post ID
+            currentPost = allPosts.find((p) => p.id === requestedPostId);
+            // If specific post not found, currentPost will be undefined here
+          }
+
+          // If 'latest' was requested (e.g. /blog/?post=latest),
+          // OR if no post ID in URL (requestedPostId is null),
+          // OR if a specific post ID was requested but not found (currentPost is undefined from the block above):
+          if (
+            !currentPost ||
+            requestedPostId === "latest" ||
+            !requestedPostId
+          ) {
+            if (allPosts.length > 0) {
+              currentPost = allPosts[0]; // Default to the most recent post
+            }
+            // If allPosts is empty, currentPost remains undefined here.
+          }
+
+          // Fallback if no posts are available OR currentPost is still not determined
+          // (e.g., specific ID requested, not found, AND allPosts is empty or was empty from start)
+          if (!currentPost) {
+            currentPost = {
+              id: "2025-resolution",
+              title: "Default Post",
+              date: new Date().toISOString(),
+            };
+            actualPostIdToLoad = "2025-resolution"; // The MD file to load for fallback
           } else {
-            // If there are no posts, display a message in the dropdown
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<span class="block px-4 py-2 text-gray-400">No posts available</span>`;
-            breadcrumbBlogDropdownUL.appendChild(listItem);
+            actualPostIdToLoad = currentPost.id; // The ID of the post to load
           }
-        }
 
-        // Update breadcrumb button text to show the current post's title
-        if (currentPostButtonSpan && currentPost && currentPost.title) {
-          currentPostButtonSpan.textContent = `Post: ${currentPost.title}`;
-        } else if (currentPostButtonSpan) {
-          // Fallback text if title is somehow missing (should be rare with the logic above)
-          currentPostButtonSpan.textContent = `Post: N/A`;
-        }
-        
-        // Render the markdown file for the determined post (using actualPostIdToLoad)
-        if (blogPostContainer) {
-          blogPostContainer.innerHTML = `
+          // Update page title based on the determined current post
+          if (currentPost && currentPost.title) {
+            document.title = `Conor Hinchee | Blog | ${currentPost.title}`;
+          }
+
+          // Populate breadcrumb dropdown with all available posts
+          if (breadcrumbBlogDropdownUL) {
+            breadcrumbBlogDropdownUL.innerHTML = ""; // Clear any existing static/dynamic items
+            if (allPosts.length > 0) {
+              allPosts.forEach((p) => {
+                const listItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = `/blog/?post=${p.id}`;
+                link.className =
+                  "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white";
+                link.textContent = p.title; // Assumes p.title exists in posts.json objects
+                listItem.appendChild(link);
+                breadcrumbBlogDropdownUL.appendChild(listItem);
+              });
+            } else {
+              // If there are no posts, display a message in the dropdown
+              const listItem = document.createElement("li");
+              listItem.innerHTML = `<span class="block px-4 py-2 text-gray-400">No posts available</span>`;
+              breadcrumbBlogDropdownUL.appendChild(listItem);
+            }
+          }
+
+          // Update breadcrumb button text to show the current post's title
+          if (currentPostButtonSpan && currentPost && currentPost.title) {
+            currentPostButtonSpan.textContent = `Post: ${currentPost.title}`;
+          } else if (currentPostButtonSpan) {
+            // Fallback text if title is somehow missing (should be rare with the logic above)
+            currentPostButtonSpan.textContent = `Post: N/A`;
+          }
+
+          // Render the markdown file for the determined post (using actualPostIdToLoad)
+          if (blogPostContainer) {
+            blogPostContainer.innerHTML = `
             <zero-md src="/blog/content/${actualPostIdToLoad}.md">
               <template>
                 <link id="markdown-theme" rel="stylesheet" href="/blog/github-markdown-${theme}.css" />
               </template>
             </zero-md>
           `;
-        }
-      } catch (error) {
-        console.error('Error loading blog post:', error);
-        
-        // Fallback to default post display and breadcrumb text on error
-        if (blogPostContainer) {
-          blogPostContainer.innerHTML = `
+          }
+        } catch (error) {
+          console.error("Error loading blog post:", error);
+
+          // Fallback to default post display and breadcrumb text on error
+          if (blogPostContainer) {
+            blogPostContainer.innerHTML = `
             <p class="text-red-500 dark:text-red-400">Error loading post. Displaying default content.</p>
             <zero-md src="/blog/content/2025-resolution.md">
               <template>
@@ -136,20 +157,19 @@
               </template>
             </zero-md>
           `;
+          }
+          if (currentPostButtonSpan) {
+            currentPostButtonSpan.textContent = "Post: Error";
+          }
+          if (breadcrumbBlogDropdownUL) {
+            breadcrumbBlogDropdownUL.innerHTML =
+              '<li><a href="/blog/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Blog Home (Error)</a></li>';
+          }
         }
-        if (currentPostButtonSpan) {
-            currentPostButtonSpan.textContent = 'Post: Error';
-        }
-        if (breadcrumbBlogDropdownUL) {
-            breadcrumbBlogDropdownUL.innerHTML = '<li><a href="/blog/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Blog Home (Error)</a></li>';
-        }
-      }
-    };
-    
-    // Initialize the blog
-    initMarkdown();
-  </script>
-  
-</body>
+      };
 
+      // Initialize the blog
+      initMarkdown();
+    </script>
+  </body>
 </html>

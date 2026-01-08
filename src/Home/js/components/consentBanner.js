@@ -2,7 +2,7 @@
 import { DEBUG_LOG } from "../constants";
 
 const COOKIE_NAME = "cookie-consent";
-const COOKIE_EXPIRATION_DAYS = 180; 
+const COOKIE_EXPIRATION_DAYS = 180;
 
 const CONSENT_DECLINED = {
   ad_storage: "denied",
@@ -21,7 +21,7 @@ const CONSENT_ACCEPTED = {
 const setCookie = (name, value, days) => {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${encodeURIComponent(
-    JSON.stringify(value)
+    JSON.stringify(value),
   )}; expires=${expires}; path=/; SameSite=Lax`;
 };
 
@@ -36,13 +36,13 @@ const getCookie = (name) => {
 
 const notifyGTM = (consent) => {
   window.dataLayer = window.dataLayer || [];
-  
+
   // Use GTM's consent mode API
   window.dataLayer.push({
     event: "consent_update",
     ...consent,
   });
-  
+
   DEBUG_LOG({
     logLevel: "info",
     message: `Pushed consent update to GTM: ${JSON.stringify(consent)}`,
@@ -59,7 +59,7 @@ const showConsentBannerBar = () => {
       const event = new Event("consentBannerBar");
       banner.dispatchEvent(event);
     },
-    { once: true }
+    { once: true },
   );
 };
 
@@ -82,7 +82,7 @@ const showConsentBannerFull = () => {
       const event = new Event("consentBannerFull");
       banner.dispatchEvent(event);
     },
-    { once: true }
+    { once: true },
   );
 };
 
@@ -233,7 +233,6 @@ const initConsentBanner = () => {
   setCookie(COOKIE_NAME, CONSENT_DECLINED, COOKIE_EXPIRATION_DAYS);
   notifyGTM(CONSENT_DECLINED);
   initConsentListeners();
-
 
   if (window.scrollY > 200) {
     showConsentBannerBar();

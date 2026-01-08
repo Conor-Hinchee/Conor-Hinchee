@@ -21,25 +21,25 @@ const initCells = (totalCells) => {
 const initNeighbors = (index, rows, columns) => {
   const row = Math.floor(index / columns);
   const col = index % columns;
-  
+
   const neighbors = [];
-  
+
   // Check all 8 directions with wrapping
   for (let dRow = -1; dRow <= 1; dRow++) {
     for (let dCol = -1; dCol <= 1; dCol++) {
       // Skip the center cell itself
       if (dRow === 0 && dCol === 0) continue;
-      
+
       // Calculate neighbor position with wrapping
       let neighborRow = (row + dRow + rows) % rows;
       let neighborCol = (col + dCol + columns) % columns;
-      
+
       // Convert back to index
       const neighborIndex = neighborRow * columns + neighborCol;
       neighbors.push(neighborIndex);
     }
   }
-  
+
   return neighbors;
 };
 
@@ -107,7 +107,7 @@ const paintBoard = () => {
 
 const play = () => {
   // Create a deep copy of the board state
-  const gameBoardCopy = Game_Board.map(cell => ({...cell}));
+  const gameBoardCopy = Game_Board.map((cell) => ({ ...cell }));
 
   Game_Board.forEach((cell, i) => {
     const { alive, age, neighbors } = cell;

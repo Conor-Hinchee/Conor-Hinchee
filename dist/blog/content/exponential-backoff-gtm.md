@@ -5,7 +5,7 @@ When working with third-party scripts like Zendesk Chat (`zE`) in dynamic enviro
 ---
 
 ## ✅ What We’re Solving
- 
+
 Attempting to bind event listeners before the DOM element exists—or before they are ready it will ready—will silently fail. A simple fix would be retrying after a delay, but that can lead to performance issues if not done thoughtfully.
 
 Enter: **Exponential Backoff**.
@@ -16,13 +16,12 @@ Enter: **Exponential Backoff**.
 
 ```html
 <script>
-
-function exponentialBackoff(action, maxRetries, baseDelay, label) {
+  function exponentialBackoff(action, maxRetries, baseDelay, label) {
     var attempt = 0;
 
-    function retry ()  {
+    function retry() {
       if (attempt >= maxRetries) {
-        console.warn(label + 'Max retries reached. Aborting.');
+        console.warn(label + "Max retries reached. Aborting.");
         return;
       }
 
@@ -30,35 +29,34 @@ function exponentialBackoff(action, maxRetries, baseDelay, label) {
         if (error) {
           attempt++;
           var delay = Math.pow(2, attempt) * baseDelay;
-        console.log(
-          "Retrying in " + delay + "ms ("+ label +": " + attempt + ")"
-        );
+          console.log(
+            "Retrying in " + delay + "ms (" + label + ": " + attempt + ")",
+          );
           setTimeout(retry, delay);
         } else {
-           console.log(label + ": succeeded on attempt " + (attempt + 1));
+          console.log(label + ": succeeded on attempt " + (attempt + 1));
         }
       });
-    };
+    }
 
     retry();
-}
-  
-function waitForSomething(callback) {
-
-  var dynamicElement = document.querySelector('#something');
-  if (!dynamicElement) {
-    return callback(new Error("main product list not present"));
   }
 
-  try {
-    // do business logic here
-    callback(null); // success
-  } catch (err) {
-    callback(err);
-  }
-}
+  function waitForSomething(callback) {
+    var dynamicElement = document.querySelector("#something");
+    if (!dynamicElement) {
+      return callback(new Error("main product list not present"));
+    }
 
-exponentialBackoff(waitForSomething, 5, 500, "ExponentialBackOFF X");
+    try {
+      // do business logic here
+      callback(null); // success
+    } catch (err) {
+      callback(err);
+    }
+  }
+
+  exponentialBackoff(waitForSomething, 5, 500, "ExponentialBackOFF X");
 </script>
 ```
 
@@ -83,6 +81,5 @@ Exponential backoff gives these dependencies time to load without resorting to i
 3. **Preview & Test**: Ensure that the chat button behaves as expected across slow and fast page loads.
 
 ---
-
 
 When you're working with third-party scripts and GTM, load order isn’t guaranteed. Adding a reusable exponential backoff utility to your toolbox ensures resilience in environments where timing is unpredictable.

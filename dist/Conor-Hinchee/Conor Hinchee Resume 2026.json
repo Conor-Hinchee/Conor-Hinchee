@@ -80,9 +80,7 @@
       "name": "Backend & API:"
     },
     {
-      "keywords": [
-        "Git, NPM, GitHub, GitHub Actions, Google Cloud"
-      ],
+      "keywords": ["Git, NPM, GitHub, GitHub Actions, Google Cloud"],
       "name": "Tooling:"
     },
     {
@@ -97,9 +95,7 @@
       "name": "",
       "description": "",
       "url": "",
-      "keywords": [
-        ""
-      ]
+      "keywords": [""]
     }
   ],
   "awards": [
