@@ -207,23 +207,6 @@
   -moz-transform: rotate(30deg) translate(2.5em) rotate(90deg);
   -ms-transform: rotate(30deg) translate(2.5em) rotate(90deg);
   -webkit-transform: rotate(30deg) translate(2.5em) rotate(90deg);
-
-.curl-only {
-  font-family: "VT323", monospace;
-  white-space: pre;
-  font-size: 16px;
-  line-height: 1.2;
-  padding: 1.5rem;
-  color: #111111;
-  background: #f3f4f6;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-@media screen {
-  .curl-only {
-    display: none;
-  }
-}
   transform: rotate(30deg) translate(2.5em) rotate(90deg);
 }
 
@@ -305,6 +288,28 @@
   -ms-transform: rotate(330deg) translate(2.5em) rotate(90deg);
   -webkit-transform: rotate(330deg) translate(2.5em) rotate(90deg);
   transform: rotate(330deg) translate(2.5em) rotate(90deg);
+}
+
+.curl-only {
+  font-family: "VT323", monospace;
+  white-space: pre;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 1.5rem;
+  color: #111111;
+  background: #f3f4f6;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@media screen {
+  .curl-only {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 }
 
 @keyframes ticktock {
