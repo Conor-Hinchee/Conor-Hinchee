@@ -1,7 +1,7 @@
 name: Build and Deploy
 on:
   push:
-    branches: ["2025"]
+    branches: ["2026"]
 permissions:
   contents: write
 jobs:
