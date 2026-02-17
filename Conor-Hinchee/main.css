@@ -1955,6 +1955,21 @@ body, html {
 
 .OandI:nth-of-type(2) {
   animation-delay: 1s;
+  .curl-only {
+    font-family: "VT323", monospace;
+    white-space: pre;
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 1.5rem;
+    color: #111111;
+    background: #f3f4f6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  @media screen {
+    .curl-only {
+      display: none;
+    }
+  }
   transform: rotate(30deg) translate(2.5em) rotate(90deg);
 }
 
