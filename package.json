@@ -37,6 +37,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
     "@babel/preset-env": "^7.22.9",
+    "@tailwindcss/cli": "^4.2.2",
     "@playwright/test": "^1.36.2",
     "autoprefixer": "^10.4.27",
     "babel-loader": "^9.1.3",
