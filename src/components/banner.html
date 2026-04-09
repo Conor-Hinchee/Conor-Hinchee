@@ -1,5 +1,7 @@
 <header
   class="w-full p-4 border border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700 bg-g"
+  data-pretext="fade-in"
+  data-pretext-delay="0"
 >
   <menu class="grid grid-cols-4">
     <li class="col-span-1">
@@ -43,7 +45,8 @@
     <li class="flex justify-end col-span-1" id="darkModeItem">
       <button
         data-set-theme="dark"
-        class="inline-flex items-center justify-center h-9 mr-3 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        class="inline-flex items-center justify-center h-9 mr-3 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 pretext-color-transition"
+        data-pretext-hover="scale"
       >
         <module href="/components/icons/moon.svg"></module>
         <span class="sr-only">Switch site to dark-mode</span>
@@ -52,7 +55,8 @@
     <li class="justify-end col-span-1 hidden" id="lightModeItem">
       <button
         data-set-theme="light"
-        class="inline-flex items-center justify-center h-9 mr-3 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        class="inline-flex items-center justify-center h-9 mr-3 px-3 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 pretext-color-transition"
+        data-pretext-hover="scale"
       >
         <module href="/components/icons/lightbulb.svg"></module>
         <span class="sr-only">Switch site to light-mode</span>

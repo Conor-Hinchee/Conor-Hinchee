@@ -85,9 +85,51 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Enhanced hover effects for buttons and interactive elements */
+  [data-pretext-hover="pulse"]:hover {
+    animation: pretext-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  [data-pretext-hover="glow-border"]:hover {
+    border-color: currentColor;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
   /* Color transition utility */
   .pretext-color-transition {
-    transition: color 0.4s ease, background-color 0.4s ease;
+    transition: color 0.4s ease, background-color 0.4s ease, border-color 0.3s ease;
+  }
+
+  /* Pulse animation for interactive elements */
+  @keyframes pretext-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  /* Smooth fade on scroll for long text blocks */
+  [data-pretext="fade-in-scroll"]:not(.pretext-active) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* Additional color transitions for links and interactive text */
+  a.pretext-color-transition,
+  button.pretext-color-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Gradient text effect on hover */
+  [data-pretext-hover="gradient-text"]:hover {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.4s ease;
   }
 
   /* Performance optimizations */
