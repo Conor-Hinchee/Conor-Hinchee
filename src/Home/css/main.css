@@ -9,6 +9,95 @@
   }
 }
 
+/* Pretext Framework - Interactive Text Effects */
+@layer utilities {
+  /* Base state for all animated elements */
+  [data-pretext] {
+    will-change: opacity, transform;
+  }
+
+  /* Initial hidden states */
+  [data-pretext="fade-in"]:not(.pretext-active) {
+    opacity: 0;
+  }
+
+  [data-pretext="fade-in-up"]:not(.pretext-active) {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  [data-pretext="fade-in-left"]:not(.pretext-active) {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  [data-pretext="fade-in-right"]:not(.pretext-active) {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  [data-pretext="slide-in"]:not(.pretext-active) {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  [data-pretext="stagger-in"]:not(.pretext-active) [data-pretext-item] {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  /* Active (visible) states with smooth transitions */
+  [data-pretext].pretext-active {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-pretext="stagger-in"].pretext-active [data-pretext-item] {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover effects */
+  [data-pretext-hover="glow-rune"]:hover span {
+    text-shadow: 0 0 12px rgba(200, 168, 78, 0.8);
+    transform: scale(1.1);
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  [data-pretext-hover="lift"]:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-pretext-hover="glow"]:hover {
+    box-shadow: 0 0 20px currentColor;
+    transition: box-shadow 0.3s ease;
+  }
+
+  [data-pretext-hover="scale"]:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Color transition utility */
+  .pretext-color-transition {
+    transition: color 0.4s ease, background-color 0.4s ease;
+  }
+
+  /* Performance optimizations */
+  [data-pretext],
+  [data-pretext-item] {
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
 @media (min-width: 552px) {
   .unset-edit-button {
     all: unset;
