@@ -106,7 +106,7 @@ export default function initRippleText() {
       marginBottom: 24
     },
     {
-      text: "I am currently architecting AI-powered systems and building multi-agent orchestration platforms 🤖, pushing the boundaries of what's possible with Discord bots, persistent memory systems, and autonomous task execution 🚀.",
+      text: "I'm currently architecting AI-powered systems and building multi-agent orchestration platforms 🤖, with persistent memory and autonomous task execution 🚀.",
       fontSize: 1.125,
       align: "center",
       widthRatio: 0.75,
@@ -184,8 +184,8 @@ export default function initRippleText() {
           x = (pixelWidth - maxWidth) / 2;
         }
 
-        for (let i = 0; i < line.length; i++) {
-          const char = line[i];
+        const glyphs = Array.from(line);
+        for (const char of glyphs) {
           const isEmoji = emojiRegex.test(char);
           if (isEmoji) {
             ctx.font = `${fontWeight}${fontPixels}px ${emojiFontFamily}`;

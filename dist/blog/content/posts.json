@@ -1,6 +1,13 @@
 {
     "posts": [
         {
+            "id": "2026-resolution",
+            "title": "2026 New Year Resolution",
+            "date": "2026-01-01",
+            "content": "",
+            "tags": ["Personal", "2026", "New Year"]
+        },
+        {
             "id": "2025-resolution",
             "title": "2025 New Year Resolution",
             "date": "2025-01-01",
