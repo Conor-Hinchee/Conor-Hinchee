@@ -3,6 +3,9 @@ const Cell_Height = 10;
 const TickRateMS = 250;
 const Seed = 4; // we use to seed the board 2 is 50%. 4 is 25%. 8 is 12.5 % ...
 let Game_Board = [];
+let gameSimulationInterval = null;
+let isSimulationPaused = false;
+let intersectionObserver = null;
 
 const initCells = (totalCells) => {
   const array = new Uint8Array(totalCells);
@@ -63,9 +66,32 @@ const drawBoard = () => {
     div.style.border = "1px solid black";
     div.style.flexGrow = "0";
     div.style.flexShrink = "0";
+    div.style.cursor = "pointer";
+    div.style.transition = "all 150ms ease";
 
     const cellClass = cell.alive ? "worm" : "skull";
     div.classList.add(cellClass);
+
+    // Add hover effect
+    div.addEventListener("mouseenter", () => {
+      div.style.opacity = "0.8";
+      div.style.transform = "scale(0.95)";
+    });
+
+    div.addEventListener("mouseleave", () => {
+      div.style.opacity = "1";
+      div.style.transform = "scale(1)";
+    });
+
+    // Add click handler to toggle cell
+    div.addEventListener("click", () => {
+      cell.alive = !cell.alive;
+      cell.age = cell.alive ? 0 : -1;
+      const newClass = cell.alive ? "worm" : "skull";
+      const oldClass = cell.alive ? "skull" : "worm";
+      div.classList.remove(oldClass);
+      div.classList.add(newClass);
+    });
 
     cell.domItem = div;
     cell.neighbors = [...initNeighbors(index, rows, columns)];
@@ -141,12 +167,84 @@ const play = () => {
   paintBoard();
 };
 
+const pauseSimulation = () => {
+  if (!isSimulationPaused && gameSimulationInterval !== null) {
+    clearInterval(gameSimulationInterval);
+    isSimulationPaused = true;
+  }
+};
+
+const resumeSimulation = () => {
+  if (isSimulationPaused) {
+    gameSimulationInterval = setInterval(play, TickRateMS);
+    isSimulationPaused = false;
+  }
+};
+
+const resetGame = () => {
+  const box = document.querySelector("#gameOfLife");
+
+  // Clear the board
+  Game_Board = [];
+  box.innerHTML = '<div class="sr-only">Conway\'s Game Of Life</div>';
+
+  // Reinitialize the game
+  drawBoard();
+};
+
+const initIntersectionObserver = () => {
+  const box = document.querySelector("#gameOfLife");
+  if (!box) return;
+
+  // Configure observer to detect when element enters/leaves viewport
+  const observerOptions = {
+    root: null, // Use viewport as root
+    threshold: 0, // Trigger when any part of the element is visible
+  };
+
+  // Create observer callback
+  const observerCallback = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Element is now visible in viewport
+        resumeSimulation();
+      } else {
+        // Element is no longer visible in viewport
+        pauseSimulation();
+      }
+    });
+  };
+
+  // Create and start observing
+  intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+  intersectionObserver.observe(box);
+};
+
+const cleanupIntersectionObserver = () => {
+  if (intersectionObserver) {
+    intersectionObserver.disconnect();
+    intersectionObserver = null;
+  }
+};
+
 const initGameOfLife = () => {
   const box = document.querySelector("#gameOfLife");
 
   if (!box) return;
   drawBoard();
-  setInterval(play, TickRateMS);
+
+  // Start the simulation
+  gameSimulationInterval = setInterval(play, TickRateMS);
+
+  // Initialize viewport detection
+  initIntersectionObserver();
+
+  // Attach reset button handler
+  const resetButton = document.querySelector("#gameOfLifeReset");
+  if (resetButton) {
+    resetButton.addEventListener("click", resetGame);
+  }
 };
 
 export default initGameOfLife;
+export { cleanupIntersectionObserver, pauseSimulation, resumeSimulation };
