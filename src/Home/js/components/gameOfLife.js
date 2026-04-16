@@ -85,10 +85,11 @@ const drawBoard = () => {
 
     // Add click handler to toggle cell
     div.addEventListener("click", () => {
-      cell.alive = !cell.alive;
-      cell.age = cell.alive ? 0 : -1;
-      const newClass = cell.alive ? "worm" : "skull";
-      const oldClass = cell.alive ? "skull" : "worm";
+      const currentCell = Game_Board[index];
+      currentCell.alive = !currentCell.alive;
+      currentCell.age = currentCell.alive ? 0 : -1;
+      const newClass = currentCell.alive ? "worm" : "skull";
+      const oldClass = currentCell.alive ? "skull" : "worm";
       div.classList.remove(oldClass);
       div.classList.add(newClass);
     });
@@ -184,12 +185,20 @@ const resumeSimulation = () => {
 const resetGame = () => {
   const box = document.querySelector("#gameOfLife");
 
+  // Stop any running simulation
+  if (gameSimulationInterval !== null) {
+    clearInterval(gameSimulationInterval);
+    gameSimulationInterval = null;
+  }
+  isSimulationPaused = false;
+
   // Clear the board
   Game_Board = [];
   box.innerHTML = "<div class=\"sr-only\">Conway's Game Of Life</div>";
 
   // Reinitialize the game
   drawBoard();
+  gameSimulationInterval = setInterval(play, TickRateMS);
 };
 
 const initIntersectionObserver = () => {
