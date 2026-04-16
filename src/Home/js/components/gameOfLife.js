@@ -186,7 +186,7 @@ const resetGame = () => {
 
   // Clear the board
   Game_Board = [];
-  box.innerHTML = '<div class="sr-only">Conway\'s Game Of Life</div>';
+  box.innerHTML = "<div class=\"sr-only\">Conway's Game Of Life</div>";
 
   // Reinitialize the game
   drawBoard();
