@@ -32,13 +32,58 @@
       <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-6">Self-Aware Productivity Bot</p>
 
       <!-- Tech badges -->
+      <style>
+        .odin-tech-badge {
+          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+          cursor: default;
+          user-select: none;
+        }
+        .odin-tech-badge:hover,
+        .odin-tech-badge.touch-active {
+          transform: scale(1.08);
+        }
+        .odin-tech-badge--primary:hover,
+        .odin-tech-badge--primary.touch-active {
+          box-shadow: 0 0 12px rgba(200, 168, 78, 0.55), 0 0 4px rgba(200, 168, 78, 0.3);
+          background-color: #d9b85a;
+        }
+        .odin-tech-badge--outline:hover,
+        .odin-tech-badge--outline.touch-active {
+          color: #c8a84e;
+          border-color: rgba(200, 168, 78, 0.7);
+          box-shadow: 0 0 10px rgba(200, 168, 78, 0.3), inset 0 0 6px rgba(200, 168, 78, 0.05);
+        }
+      </style>
       <div class="flex flex-wrap justify-center gap-2 opacity-80">
-        <span class="px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#0a0e1a] bg-[#c8a84e] rounded-sm">ANTHROPIC MESSAGES API</span>
-        <span class="px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">NODE.JS / TYPESCRIPT</span>
-        <span class="px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">BULLMQ</span>
-        <span class="px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">OBSIDIAN VAULT</span>
-        <span class="px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">GCP CLOUD LOGGING</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--primary px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#0a0e1a] bg-[#c8a84e] rounded-sm">ANTHROPIC MESSAGES API</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">NODE.JS / TYPESCRIPT</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">BULLMQ</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">OBSIDIAN VAULT</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">GCP CLOUD LOGGING</span>
       </div>
+      <script>
+        (function () {
+          function initTechBadges() {
+            var badges = document.querySelectorAll('[data-tech-item]');
+            badges.forEach(function (badge) {
+              badge.addEventListener('touchstart', function () {
+                badge.classList.add('touch-active');
+              }, { passive: true });
+              badge.addEventListener('touchend', function () {
+                setTimeout(function () { badge.classList.remove('touch-active'); }, 300);
+              }, { passive: true });
+              badge.addEventListener('touchcancel', function () {
+                badge.classList.remove('touch-active');
+              }, { passive: true });
+            });
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initTechBadges);
+          } else {
+            initTechBadges();
+          }
+        })();
+      </script>
     </div>
 
     <div class="max-w-4xl mx-auto">
