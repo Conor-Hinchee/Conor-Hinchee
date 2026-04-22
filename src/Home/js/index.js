@@ -4,6 +4,8 @@ import initClickTheHexagon from "./components/clickTheHexagon.js";
 import initConsentBanner from "./components/consentBanner.js";
 import initGameOfLife from "./components/gameOfLife.js";
 import initRippleText from "./components/rippleText.js";
+import initRippleTextOdin from "./components/rippleTextOdin.js";
+import initGridBackground from "./components/gridBackground.js";
 
 initBanner();
 initBreadcrumb();
@@ -11,3 +13,6 @@ initClickTheHexagon();
 initConsentBanner();
 initGameOfLife();
 initRippleText();
+initRippleTextOdin();
+initGridBackground("#main-bg");
+initGridBackground("#footer-bg");
