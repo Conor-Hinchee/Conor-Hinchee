@@ -42,29 +42,29 @@ export default function initRippleTextOdin() {
 
   const sections = [
     {
-      text: "A Discord bot backed by 50+ tools, persistent memory in an Obsidian vault, and a cast of Norse-mythology agents that each play a distinct role in every turn.",
-      fontSize: 1.0,
+      text: "Odin is a self-hosted agent harness with memory, tool orchestration, and a self-improvement loop.",
+      fontSize: 1.125,
       align: "center",
       widthRatio: 0.8,
       marginBottom: 20
     },
     {
-      text: "He remembers what matters and never asks you to repeat yourself.",
-      fontSize: 1.0,
+      text: "It executes complex workflows autonomously by coordinating tools and maintaining context across tasks.",
+      fontSize: 1.125,
       align: "center",
       widthRatio: 0.8,
       marginBottom: 24
     },
     {
-      text: "What makes Odin different is the feedback loop. Every turn generates traces. Every trace feeds a nightly pipeline that proposes and applies changes to Odin's own prompts, skills, and classification models —",
-      fontSize: 1.0,
+      text: "Odin turns specs into pull requests, runs research tasks, and manages long-running work.",
+      fontSize: 1.125,
       align: "center",
       widthRatio: 0.8,
       marginBottom: 8
     },
     {
-      text: "autonomously patching itself overnight.",
-      fontSize: 1.0,
+      text: "Odin is a self-improving coding agent. It creates and patches its own skills, modifies its own prompts, and refines its behavior based on usage over time.",
+      fontSize: 1.125,
       align: "center",
       widthRatio: 0.8,
       italic: true,

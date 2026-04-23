@@ -281,11 +281,7 @@ const initGameOfLife = () => {
     resetButton.addEventListener("click", resetGame);
   }
 
-  // Attach pause/resume button handler
-  const pauseButton = document.querySelector("#gameOfLifePause");
-  if (pauseButton) {
-    pauseButton.addEventListener("click", toggleSimulation);
-  }
+  // Pause/resume is controlled by the IntersectionObserver only.
 };
 
 export default initGameOfLife;
