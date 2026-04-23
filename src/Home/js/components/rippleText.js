@@ -3,8 +3,8 @@ const REPEL_RADIUS = 150;
 const REPEL_STRENGTH = 80;
 const SPRING_STIFFNESS = 0.01;
 const DAMPING = 0.96;
-const TOUCH_BURST_RADIUS = 60;
-const TOUCH_BURST_STRENGTH = 12;
+const TOUCH_BURST_RADIUS = 30;
+const TOUCH_BURST_STRENGTH = 6;
 
 /**
  * Initialize ripple text effect on canvas
