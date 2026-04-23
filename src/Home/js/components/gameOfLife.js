@@ -6,16 +6,6 @@ let Game_Board = [];
 let gameSimulationInterval = null;
 let intersectionObserver = null;
 
-// Derived state: paused when gameSimulationInterval is null
-const isPaused = () => gameSimulationInterval === null;
-
-const syncPauseButton = () => {
-  const btn = document.querySelector("#gameOfLifePause");
-  if (!btn) return;
-  btn.textContent = isPaused() ? "Resume" : "Pause";
-  btn.setAttribute("aria-label", isPaused() ? "Resume Game of Life simulation" : "Pause Game of Life simulation");
-};
-
 const initCells = (totalCells) => {
   const array = new Uint8Array(totalCells);
   self.crypto.getRandomValues(array);
@@ -192,22 +182,12 @@ const pauseSimulation = () => {
   if (gameSimulationInterval !== null) {
     clearInterval(gameSimulationInterval);
     gameSimulationInterval = null;
-    syncPauseButton();
   }
 };
 
 const resumeSimulation = () => {
   if (gameSimulationInterval === null) {
     gameSimulationInterval = setInterval(play, TickRateMS);
-    syncPauseButton();
-  }
-};
-
-const toggleSimulation = () => {
-  if (isPaused()) {
-    resumeSimulation();
-  } else {
-    pauseSimulation();
   }
 };
 
@@ -272,7 +252,6 @@ const initGameOfLife = () => {
 
   // Don't start the simulation yet — IntersectionObserver will start it
   // only when the board enters the viewport, and pause it when it leaves.
-  syncPauseButton();
   initIntersectionObserver();
 
   // Attach reset button handler
