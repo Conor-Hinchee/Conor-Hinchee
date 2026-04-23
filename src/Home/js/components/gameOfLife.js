@@ -4,7 +4,6 @@ const TickRateMS = 250;
 const Seed = 4; // we use to seed the board 2 is 50%. 4 is 25%. 8 is 12.5 % ...
 let Game_Board = [];
 let gameSimulationInterval = null;
-let isSimulationPaused = false;
 let intersectionObserver = null;
 
 const initCells = (totalCells) => {
@@ -24,25 +23,25 @@ const initCells = (totalCells) => {
 const initNeighbors = (index, rows, columns) => {
   const row = Math.floor(index / columns);
   const col = index % columns;
-  
+
   const neighbors = [];
-  
+
   // Check all 8 directions with wrapping
   for (let dRow = -1; dRow <= 1; dRow++) {
     for (let dCol = -1; dCol <= 1; dCol++) {
       // Skip the center cell itself
       if (dRow === 0 && dCol === 0) continue;
-      
+
       // Calculate neighbor position with wrapping
       let neighborRow = (row + dRow + rows) % rows;
       let neighborCol = (col + dCol + columns) % columns;
-      
+
       // Convert back to index
       const neighborIndex = neighborRow * columns + neighborCol;
       neighbors.push(neighborIndex);
     }
   }
-  
+
   return neighbors;
 };
 
@@ -51,8 +50,9 @@ const drawBoard = () => {
   const boxHeight = box.clientHeight;
   const boxWidth = box.clientWidth;
 
-  const rows = Math.floor(boxHeight / Cell_Height + 2);
+  // Calculate columns first, then derive rows so every row is full-width
   const columns = Math.floor(boxWidth / Cell_Width);
+  const rows = Math.ceil(boxHeight / Cell_Height) + 1;
 
   const totalCells = rows * columns;
 
@@ -98,6 +98,17 @@ const drawBoard = () => {
     cell.neighbors = [...initNeighbors(index, rows, columns)];
     box.appendChild(div);
   });
+
+  // Full-width last row fix: append a flex spacer that grows to fill the
+  // remaining space in the last (possibly partial) row.
+  const lastRowCells = totalCells % columns;
+  if (lastRowCells !== 0) {
+    const spacer = document.createElement("div");
+    spacer.style.flexGrow = "1";
+    spacer.style.height = `${Cell_Height}px`;
+    spacer.style.pointerEvents = "none";
+    box.appendChild(spacer);
+  }
 };
 
 const totalAliveNeighbors = (neighbors) => {
@@ -112,7 +123,6 @@ const totalAliveNeighbors = (neighbors) => {
 };
 
 const paintBoard = () => {
-  console.log("painting board");
   Game_Board.forEach((cell) => {
     const { alive, age, domItem } = cell;
 
@@ -169,16 +179,15 @@ const play = () => {
 };
 
 const pauseSimulation = () => {
-  if (!isSimulationPaused && gameSimulationInterval !== null) {
+  if (gameSimulationInterval !== null) {
     clearInterval(gameSimulationInterval);
-    isSimulationPaused = true;
+    gameSimulationInterval = null;
   }
 };
 
 const resumeSimulation = () => {
-  if (isSimulationPaused) {
+  if (gameSimulationInterval === null) {
     gameSimulationInterval = setInterval(play, TickRateMS);
-    isSimulationPaused = false;
   }
 };
 
@@ -190,15 +199,14 @@ const resetGame = () => {
     clearInterval(gameSimulationInterval);
     gameSimulationInterval = null;
   }
-  isSimulationPaused = false;
 
   // Clear the board
   Game_Board = [];
   box.innerHTML = "<div class=\"sr-only\">Conway's Game Of Life</div>";
 
-  // Reinitialize the game
+  // Reinitialize the game and resume (IntersectionObserver already watching)
   drawBoard();
-  gameSimulationInterval = setInterval(play, TickRateMS);
+  resumeSimulation();
 };
 
 const initIntersectionObserver = () => {
@@ -208,7 +216,7 @@ const initIntersectionObserver = () => {
   // Configure observer to detect when element enters/leaves viewport
   const observerOptions = {
     root: null, // Use viewport as root
-    threshold: 0, // Trigger when any part of the element is visible
+    threshold: 0.1, // Trigger when 10% of the element is visible
   };
 
   // Create observer callback
@@ -242,10 +250,8 @@ const initGameOfLife = () => {
   if (!box) return;
   drawBoard();
 
-  // Start the simulation
-  gameSimulationInterval = setInterval(play, TickRateMS);
-
-  // Initialize viewport detection
+  // Don't start the simulation yet — IntersectionObserver will start it
+  // only when the board enters the viewport, and pause it when it leaves.
   initIntersectionObserver();
 
   // Attach reset button handler
@@ -253,6 +259,8 @@ const initGameOfLife = () => {
   if (resetButton) {
     resetButton.addEventListener("click", resetGame);
   }
+
+  // Pause/resume is controlled by the IntersectionObserver only.
 };
 
 export default initGameOfLife;

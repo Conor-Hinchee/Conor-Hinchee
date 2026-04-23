@@ -1,13 +1,15 @@
 <div class="flex flex-col gap-3 h-full">
-  <div id="gameOfLife" class="w-full flex-1 min-h-0 text-gray-500 dark:text-gray-400 flex flex-wrap cursor-crosshair overflow-hidden">
+  <div id="gameOfLife" class="w-full flex-1 min-h-0 text-gray-500 dark:text-gray-400 flex flex-wrap content-start cursor-crosshair overflow-hidden">
     <div class="sr-only">Conway's Game Of Life</div>
     <noscript>🤖🤖🤖🤖🤖🤖</noscript>
   </div>
-  <button
-    id="gameOfLifeReset"
-    class="mx-auto px-6 py-2 bg-gradient-to-r from-pink-500 to-rose-500 dark:from-pink-600 dark:to-rose-600 text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
-    aria-label="Reset Game of Life grid"
-  >
-    Reset Grid
-  </button>
+  <div class="flex gap-3 justify-center px-4 pb-4">
+    <button
+      id="gameOfLifeReset"
+      class="px-6 py-2 bg-gradient-to-r from-pink-500 to-rose-500 dark:from-pink-600 dark:to-rose-600 text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+      aria-label="Reset Game of Life grid"
+    >
+      Reset Grid
+    </button>
+  </div>
 </div>

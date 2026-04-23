@@ -10,18 +10,24 @@ const useLightMode = () => {
 };
 
 const updateBgGrid = (theme) => {
-  const mainElement = document.querySelector("main");
-  if (!mainElement) return;
-  
-  if (theme === "dark") {
-    if (mainElement.classList.contains("bgGridWhite")) {
-      mainElement.classList.replace("bgGridWhite", "bgGridDark");
+  const targets = [
+    document.querySelector("main"),
+    document.querySelector("footer")
+  ].filter(Boolean);
+
+  if (!targets.length) return;
+
+  targets.forEach((element) => {
+    if (theme === "dark") {
+      if (element.classList.contains("bgGridWhite")) {
+        element.classList.replace("bgGridWhite", "bgGridDark");
+      }
+    } else {
+      if (element.classList.contains("bgGridDark")) {
+        element.classList.replace("bgGridDark", "bgGridWhite");
+      }
     }
-  } else {
-    if (mainElement.classList.contains("bgGridDark")) {
-      mainElement.classList.replace("bgGridDark", "bgGridWhite");
-    }
-  }
+  });
 };
 
 const getOSPreference = () => {

@@ -14,15 +14,16 @@
   <!-- End Google Tag Manager (noscript) -->
   <module href="/components/banner.html"></module>
   <module href="/components/curl-only.html"></module>
-  <main class="bg-gray-50 dark:bg-gray-900 bgGridWhite">
-    <div id="app" class="w-5/6 m-auto transition-all origin-top">
+  <main class="bg-gray-50 dark:bg-gray-900 relative overflow-hidden" id="main-bg">
+    <div id="app" class="w-5/6 m-auto transition-all origin-top relative z-10">
       <module href="/components/breadcrumb-nav.html"></module>
       <module href="/components/about.html"></module>
       <module href="/components/odin-productivity-bot.html"></module>
       <module href="/components/random.html"></module>
+      <module href="/components/socials.html"></module>
     </div>
   </main>
-  <footer class="bg-gray-50 dark:bg-gray-900 bgGridWhite pt-16 pb-16 font-mono dark:text-white">
+  <footer class="bg-gray-50 dark:bg-gray-900 relative overflow-hidden pt-16 pb-16 font-mono dark:text-white" id="footer-bg">
     <module href="/components/footer.html"></module>
   </footer>
   <module href="/components/consent.html"></module>

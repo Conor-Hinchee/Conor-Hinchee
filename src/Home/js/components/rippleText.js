@@ -55,62 +55,11 @@ export default function initRippleText() {
   // widthRatio controls how much of the canvas width text can fill (like CSS w-3/4, w-1/2)
   const sections = [
     {
-      text: "OH HI THERE 👋!",
-      fontSize: 1.875, // text-3xl
-      align: "center",
-      widthRatio: 1,
-      marginBottom: 20
-    },
-    {
-      text: "I'm Conor Hinchee, a Senior Software Engineer based in Ohio, specializing in building engaging user experiences and transforming complex ideas into seamless, scalable applications.",
+      text: "I'm Conor and I build software systems and automation tools. My work spans React applications, GraphQL data fetching, building event-driven data pipelines, and TypeScript migrations. Lately, I've been building AI agents and orchestration tooling to automate real workflows.",
       fontSize: 1.125, // text-lg
       align: "center",
       widthRatio: 0.75,
       marginBottom: 24
-    },
-    {
-      text: "Bringing 3+ years of experience in e-commerce engineering and over 6 years of development experience, I have a proven track record of delivering innovative, performance-driven web applications.",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.75,
-      marginBottom: 24
-    },
-    {
-      text: "What Sets Me Apart:",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.5,
-      bold: true,
-      underline: true,
-      marginBottom: 12
-    },
-    {
-      text: "• Proven experience in leading projects, mentoring engineers, and contributing to open-source software.",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.5,
-      marginBottom: 16
-    },
-    {
-      text: "• Collaborative, with strong communication skills, and a history of delivering projects on time.",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.5,
-      marginBottom: 16
-    },
-    {
-      text: "• Committed to delivering accessible solutions, efficient code, and test driven development.",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.5,
-      marginBottom: 24
-    },
-    {
-      text: "I'm currently architecting AI-powered systems and building multi-agent orchestration platforms 🤖, with persistent memory and autonomous task execution 🚀.",
-      fontSize: 1.125,
-      align: "center",
-      widthRatio: 0.75,
-      marginBottom: 20
     }
   ];
 
