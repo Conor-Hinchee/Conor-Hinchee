@@ -30,7 +30,7 @@
         </svg>
       </div>
       <h2 id="odinSectionHeader" class="text-5xl md:text-6xl font-['Cinzel'] font-bold text-[#c8a84e] tracking-widest drop-shadow-md mb-3 uppercase">ODIN</h2>
-      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-6">Self-Aware Productivity Bot</p>
+      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-6">Self-Hosted Agent Runtime</p>
 
       <!-- Tech badges -->
       <style>
@@ -105,10 +105,10 @@
       <div id="ripple-text-odin-container" class="text-center mb-10 max-w-2xl mx-auto w-full">
         <h1 class="sr-only" aria-hidden="true">Odin</h1>
         <p class="sr-only" aria-hidden="true">
-          Odin is a self-hosted agent harness with memory, tool orchestration, and a self-improvement loop. It executes complex workflows autonomously by coordinating tools and maintaining context across tasks.
+          Odin is a self-hosted agent runtime with persistent memory, 50+ tools, and a nightly self-improvement loop. It coordinates multi-step workflows without user intervention, keeping context across the full task lifecycle.
         </p>
         <p class="sr-only" aria-hidden="true">
-          Odin turns specs into pull requests, runs research tasks, and manages long-running work. <span class="text-[#c8a84e] italic">Odin is a self-improving coding agent. It creates and patches its own skills, modifies its own prompts, and refines its behavior based on usage over time.</span>
+          Odin takes a spec and opens a pull request. It runs research, drafts reports, and handles work that spans hours or days. <span class="text-[#c8a84e] italic">Odin modifies its own prompts and generates new tool skills based on what it observes across sessions.</span>
         </p>
       </div>
 
@@ -126,7 +126,7 @@
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5765; Týr</div>
               <div class="text-[#e8e0d0] text-xs font-medium mb-1">Query Sharpening</div>
-              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Refines raw input into optimized vault retrieval signals before any memory is loaded.</div>
+              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Transforms raw user input into a targeted retrieval query before the memory load step.</div>
             </div>
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5768; Muninn</div>
@@ -136,7 +136,7 @@
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5792; Heimdall</div>
               <div class="text-[#e8e0d0] text-xs font-medium mb-1">Intent &amp; Planning</div>
-              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Classifies intent and produces structured plans with tool candidates before the main executor runs.</div>
+              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Classifies intent and generates a structured tool plan before the main executor starts.</div>
             </div>
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5800; Huginn</div>
@@ -146,7 +146,7 @@
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5816; Hermod</div>
               <div class="text-[#e8e0d0] text-xs font-medium mb-1">Autonomous Follow-Up</div>
-              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Runs up to 2 additional turns when work is left dangling, without waiting for user input.</div>
+              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Runs up to 2 additional turns when a task ends with loose threads, without prompting the user.</div>
             </div>
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-lg mb-1">&#5824; Norns</div>
@@ -177,7 +177,7 @@
             </div>
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-sm mb-1">Mímir</div>
-              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Synthesizes accumulated knowledge into a morning briefing.</div>
+              <div class="text-[#b0b8c8] text-xs font-light leading-relaxed">Distills the day's accumulated notes into a morning briefing.</div>
             </div>
             <div data-tech-item class="odin-pipeline-card border border-[#c8a84e]/15 p-3 rounded-sm bg-[#c8a84e]/[0.02]">
               <div class="text-[#c8a84e] font-['Cinzel'] text-sm mb-1">Kvasir</div>
@@ -204,7 +204,7 @@
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
             </svg>
-            GATHER WISDOM
+            READ THE DOCS
           </a>
         </div>
 
