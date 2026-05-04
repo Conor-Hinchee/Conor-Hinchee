@@ -55,7 +55,7 @@ export default function initRippleText() {
   // widthRatio controls how much of the canvas width text can fill (like CSS w-3/4, w-1/2)
   const sections = [
     {
-      text: "I'm Conor and I build software systems and automation tools. My work spans React applications, GraphQL data fetching, building event-driven data pipelines, and TypeScript migrations. Lately, I've been building AI agents and orchestration tooling to automate real workflows.",
+      text: "I'm Conor. I build software systems and automation tools. My work covers React frontends, GraphQL APIs, event-driven pipelines, and TypeScript migrations. More recently: AI agents and orchestration systems that run real workflows end-to-end.",
       fontSize: 1.125, // text-lg
       align: "center",
       widthRatio: 0.75,
