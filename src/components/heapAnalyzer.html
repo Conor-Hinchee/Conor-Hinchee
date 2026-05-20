@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-4 p-6 h-full">
+  <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+    A command-line tool for analyzing Node.js heap snapshots. Parses <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded text-xs">.heapsnapshot</code> files, surfaces the largest object allocations by type, and flags likely memory leaks — without needing Chrome DevTools open.
+  </p>
+
+  <div class="flex flex-wrap gap-2">
+    <span class="px-2 py-1 text-xs font-semibold bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded">Node.js</span>
+    <span class="px-2 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">JavaScript</span>
+    <span class="px-2 py-1 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">CLI</span>
+    <span class="px-2 py-1 text-xs font-semibold bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">Performance</span>
+  </div>
+
+  <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-none">
+    <li class="flex items-start gap-2">
+      <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
+      <span>Parses raw V8 heap snapshot JSON without loading it all into memory</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
+      <span>Groups allocations by constructor name and reports top offenders</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
+      <span>Outputs a ranked table to stdout — pipe it, grep it, diff it</span>
+    </li>
+  </ul>
+
+  <div class="mt-auto pt-2">
+    <a
+      href="https://github.com/Conor-Hinchee/heap-analyzer"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors duration-200"
+      aria-label="View heap-analyzer source on GitHub"
+    >
+      <module href="/components/icons/github-logo.svg"></module>
+      View on GitHub
+    </a>
+  </div>
+</div>
