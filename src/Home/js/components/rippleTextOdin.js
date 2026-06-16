@@ -39,6 +39,8 @@ export default function initRippleTextOdin() {
   const baseFontFamily = computedStyle.fontFamily;
   const emojiFontFamily = "\"Apple Color Emoji\", \"Segoe UI Emoji\", \"Noto Color Emoji\", sans-serif";
   const emojiRegex = /\p{Emoji_Presentation}|\p{Extended_Pictographic}/u;
+  const isMobileLike = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+  const renderScale = isMobileLike ? 1 : Math.max(1, window.devicePixelRatio || 1);
 
   const sections = [
     {
@@ -99,7 +101,7 @@ export default function initRippleTextOdin() {
 
   function layoutCharacters() {
     characters = [];
-    const pixelWidth = canvas.width / window.devicePixelRatio;
+    const pixelWidth = canvas.width / renderScale;
     let y = 24;
 
     for (const section of sections) {
@@ -142,10 +144,9 @@ export default function initRippleTextOdin() {
     canvas.style.display = "none";
     const rect = container.getBoundingClientRect();
     canvas.style.display = "";
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = Math.max(rect.width, 1) * dpr;
-    canvas.height = Math.max(rect.height, 1) * dpr;
-    ctx.scale(dpr, dpr);
+    canvas.width = Math.max(rect.width, 1) * renderScale;
+    canvas.height = Math.max(rect.height, 1) * renderScale;
+    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
     layoutCharacters();
   }
 
@@ -161,9 +162,9 @@ export default function initRippleTextOdin() {
     }
   }
 
-  function animate() {
-    const pixelWidth = canvas.width / window.devicePixelRatio;
-    const pixelHeight = canvas.height / window.devicePixelRatio;
+  function drawFrame() {
+    const pixelWidth = canvas.width / renderScale;
+    const pixelHeight = canvas.height / renderScale;
     ctx.clearRect(0, 0, pixelWidth, pixelHeight);
 
     for (const char of characters) {
@@ -195,24 +196,57 @@ export default function initRippleTextOdin() {
       ctx.textBaseline = "top";
       ctx.fillText(char.char, charX, charY);
     }
+  }
 
+  function animate() {
+    drawFrame();
     requestAnimationFrame(animate);
   }
 
-  resizeCanvas();
-  animate();
+  function redraw() {
+    drawFrame();
+  }
 
-  new ResizeObserver(() => resizeCanvas()).observe(container);
+  resizeCanvas();
+  if (isMobileLike) {
+    redraw();
+  } else {
+    animate();
+  }
+
+  new ResizeObserver(() => {
+    resizeCanvas();
+    redraw();
+  }).observe(container);
+
+  new MutationObserver(() => {
+    redraw();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
   canvas.addEventListener("pointermove", (e) => {
     const rect = canvas.getBoundingClientRect();
     cursor = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    if (isMobileLike) {
+      redraw();
+    }
   });
-  canvas.addEventListener("pointerleave", () => { cursor = null; });
+  canvas.addEventListener("pointerleave", () => {
+    cursor = null;
+    if (isMobileLike) {
+      redraw();
+    }
+  });
   canvas.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "touch") {
       const rect = canvas.getBoundingClientRect();
       applyTouchBurst(e.clientX - rect.left, e.clientY - rect.top);
+      if (isMobileLike) {
+        redraw();
+      }
     }
   });
+
+  if (isMobileLike) {
+    window.addEventListener("scroll", redraw, { passive: true });
+  }
 }

@@ -1,9 +1,26 @@
 // import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
 
+const playThemeTransition = (direction) => {
+    const overlay = document.createElement("div");
+    overlay.className = `theme-transition-overlay to-${direction}`;
+    document.body.appendChild(overlay);
+
+    // force reflow so the animation reliably starts
+    void overlay.offsetWidth;
+    overlay.classList.add("animate");
+
+    overlay.addEventListener("animationend", () => {
+        overlay.remove();
+    });
+};
+
 const changeTheme = (event = {}, override = "") => {
     const { setTheme } = event?.target?.dataset || "";
 
     if (override === "dark" || setTheme === "dark") {
+        if (setTheme === "dark") {
+            playThemeTransition("dark");
+        }
         document.documentElement.classList.add("dark");
         localStorage.setItem("theme", "dark");
 
@@ -33,6 +50,9 @@ const changeTheme = (event = {}, override = "") => {
     }
 
     if (override === "light" || setTheme === "light") {
+        if (setTheme === "light") {
+            playThemeTransition("light");
+        }
         document.documentElement.classList.remove("dark");
         localStorage.setItem("theme", "light");
 

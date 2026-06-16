@@ -104,11 +104,36 @@ const toggleBlogDropdown = () => {
   // }
 };
 
+const initNavBubbles = () => {
+  const bubbleEls = document.querySelectorAll(".nav-bubble");
+
+  bubbleEls.forEach((el) => {
+    const moveBubble = (clientX, clientY) => {
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty("--bubble-x", `${clientX - rect.left}px`);
+      el.style.setProperty("--bubble-y", `${clientY - rect.top}px`);
+    };
+
+    el.addEventListener("pointermove", (e) => moveBubble(e.clientX, e.clientY));
+
+    el.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      if (touch) moveBubble(touch.clientX, touch.clientY);
+      el.classList.add("bubble-active");
+    }, { passive: true });
+
+    const clearBubble = () => el.classList.remove("bubble-active");
+    el.addEventListener("touchend", clearBubble);
+    el.addEventListener("touchcancel", clearBubble);
+  });
+};
+
 const initBreadcrumb = () => {
   const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
 
   updateBreadcrumb();
   breadcrumbNavButton.addEventListener("click", toggleMainDropDown);
+  initNavBubbles();
 };
 
 export default initBreadcrumb;

@@ -773,3 +773,109 @@
 .worm {
   background-color: #292b2a !important;
 }
+
+/* Full-page gradient sweep on theme change */
+.theme-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.theme-transition-overlay.to-dark {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.9) 0%,
+    rgba(79, 70, 229, 0.85) 35%,
+    rgba(17, 24, 39, 0.95) 75%,
+    rgba(2, 6, 23, 1) 100%
+  );
+}
+
+.theme-transition-overlay.to-light {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.85) 0%,
+    rgba(236, 72, 153, 0.7) 35%,
+    rgba(165, 180, 252, 0.8) 75%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.theme-transition-overlay.animate {
+  animation: themeSweep 0.7s ease-in-out forwards;
+}
+
+@keyframes themeSweep {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  45% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  55% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition-overlay.animate {
+    animation: themeFade 0.4s ease-in-out forwards;
+  }
+  @keyframes themeFade {
+    0% { opacity: 0; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0; }
+  }
+}
+
+/* Gradient bubble effect for navigation buttons */
+.nav-bubble {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nav-bubble::before {
+  content: "";
+  position: absolute;
+  top: var(--bubble-y, 50%);
+  left: var(--bubble-x, 50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.55) 0%,
+    rgba(168, 85, 247, 0.45) 35%,
+    rgba(236, 72, 153, 0.35) 60%,
+    transparent 72%
+  );
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  z-index: -1;
+}
+
+.nav-bubble:hover::before,
+.nav-bubble:focus-visible::before,
+.nav-bubble:active::before,
+.nav-bubble.bubble-active::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-bubble::before {
+    transition: opacity 0.2s ease;
+  }
+}
