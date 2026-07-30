@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "browser-sync start --server \"dist\" --files \"dist\"",
+    "build:assets": "node ./scripts/copy-assets.js",
     "build:tailwind": "npx tailwindcss -i ./src/Home/css/main.css -o ./dist/Conor-Hinchee/main.css",
     "watch:tailwind": "npx tailwindcss -i ./src/Home/css/main.css -o ./dist/Conor-Hinchee/main.css -w",
     "build:js": "webpack --mode=production",
