@@ -14,7 +14,7 @@
     "location": {
       "address": "Zanesville, Ohio"
     },
-    "summary": "Software engineer with 6+ years building production systems across e-commerce, SaaS, and AI. Work spans React frontends, GraphQL APIs, event-driven pipelines, and TypeScript migrations. Most recently: designing and shipping Odin, a self-hosted multi-agent runtime with persistent memory, 50+ tools, and a nightly self-improvement loop — built on the Anthropic Messages API."
+    "summary": "Software engineer with 6+ years shipping production systems across e-commerce, SaaS, and AI, including React frontends, GraphQL APIs, and event-driven pipelines. Currently building storefront UI at Express; recently shipped Odin, a self-hosted multi-agent runtime with persistent memory, 50+ tools, and a nightly self-improvement loop on the Anthropic Messages API."
   },
   "skills": [
     {
@@ -48,15 +48,15 @@
       "position": "Ecommerce UI Engineer",
       "location": "Columbus, Ohio",
       "startDate": "June 2021",
-      "endDate": "March 2024",
+      "endDate": "Present",
       "highlights": [
         "Tech Stack: React, TypeScript, Webpack, Jest, React Testing Library, Apollo Server, Apollo Client, GCP, GitHub Actions, Adobe Launch, CommerceTools API",
-        "Rebuilt the product carousel from the ground up — optimized component architecture cut render cycles and improved core web vitals scores site-wide.",
-        "Led integration of Google Retail Search, replacing keyword matching with ML-ranked results and improving search-to-conversion rates.",
-        "Enforced 100% unit test coverage across owned components using Jest and React Testing Library, catching regressions before they reached staging.",
-        "Maintained the Express open-source project — triaged issues, reviewed PRs, and coordinated releases with external contributors.",
-        "Mentored junior engineers through code review and pairing, with two direct reports moving into independent feature ownership.",
-        "Held on-call rotation responsibilities, leading incident response and postmortem documentation for production issues."
+        "Own the product carousel, rebuilt from the ground up with an optimized component architecture that cut render cycles and improved core web vitals scores site-wide.",
+        "Lead integration of Google Retail Search, replacing keyword matching with ML-ranked results and improving search-to-conversion rates.",
+        "Enforce 100% unit test coverage across owned components using Jest and React Testing Library, catching regressions before they reach staging.",
+        "Maintain the Express open-source project, triaging issues, reviewing PRs, and coordinating releases with external contributors.",
+        "Mentor junior engineers through code review and pairing, with two direct reports moving into independent feature ownership.",
+        "Hold on-call rotation responsibilities, leading incident response and postmortem documentation for production issues."
       ]
     },
     {
@@ -79,7 +79,7 @@
       "startDate": "July 2017",
       "endDate": "March 2021",
       "highlights": [
-        "Handled high-volume inbound support for internet and cable services, consistently achieving top-tier customer satisfaction scores."
+        "Went beyond scripted troubleshooting to resolve high-volume inbound issues on the first call, walking non-technical and elderly customers through setup step by step and consistently earning top-tier customer satisfaction scores."
       ]
     }
   ],
