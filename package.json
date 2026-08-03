@@ -24,7 +24,8 @@
     "test-ui": "npx playwright test --ui",
     "lint": "npx prettier . --write && npx eslint .",
     "report": "npx playwright show-report",
-    "purge": "node ./scripts/clear-build.js && npm run build"
+    "purge": "node ./scripts/clear-build.js && npm run build",
+    "resume": "node ./scripts/build-resume.js"
   },
   "repository": {
     "type": "git",
