@@ -30,7 +30,8 @@
         </svg>
       </div>
       <h2 id="odinSectionHeader" class="text-5xl md:text-6xl font-['Cinzel'] font-bold text-[#c8a84e] tracking-widest drop-shadow-md mb-3 uppercase">ODIN</h2>
-      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-6">Self-Hosted Agent Runtime</p>
+      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-4">Self-Hosted Agent Runtime</p>
+      <p class="inline-block px-3 py-1 mb-6 text-[10px] font-['Cinzel'] uppercase tracking-[0.25em] text-[#c8a84e]/80 border border-[#c8a84e]/30 rounded-sm">Archived 2026</p>
 
       <!-- Tech badges -->
       <style>
@@ -102,13 +103,11 @@
     <div class="max-w-4xl mx-auto">
 
       <!-- Description -->
-      <div id="ripple-text-odin-container" class="text-center mb-10 max-w-2xl mx-auto w-full">
-        <h1 class="sr-only" aria-hidden="true">Odin</h1>
-        <p class="sr-only" aria-hidden="true">
-          Odin is a self-hosted agent runtime with persistent memory, 50+ tools, and a nightly self-improvement loop. It coordinates multi-step workflows without user intervention, keeping context across the full task lifecycle.
-        </p>
-        <p class="sr-only" aria-hidden="true">
-          Odin takes a spec and opens a pull request. It runs research, drafts reports, and handles work that spans hours or days. <span class="text-[#c8a84e] italic">Odin modifies its own prompts and generates new tool skills based on what it observes across sessions.</span>
+      <div class="text-center mb-10 max-w-2xl mx-auto w-full">
+        <p class="text-[#b0b8c8] leading-relaxed">
+          Odin was a self-hosted agent runtime: persistent memory, 50+ tools, a seven-agent
+          dispatch pipeline, and a nightly loop that read its own traces and rewrote its own
+          prompts. It took a spec and opened a pull request. It ran work that spanned days.
         </p>
       </div>
 
@@ -126,16 +125,34 @@
           <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[#c8a84e]"></div>
         </div>
 
-        <!-- CTAs -->
-        <div class="flex flex-col items-center gap-3 max-w-md mx-auto">
-          <a href="https://odin.conorhinchee.com" target="_blank" rel="noopener noreferrer"
-             class="flex items-center justify-center flex-1 px-6 py-3 text-sm font-['Cinzel'] font-bold tracking-wider text-[#c8a84e] border border-[#c8a84e]/30 rounded-sm hover:bg-[#c8a84e]/5 hover:border-[#c8a84e]/60 transition-all duration-300">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-            </svg>
-            READ THE DOCS
-          </a>
-        </div>
+        <h3 class="font-['Cinzel'] text-[#c8a84e] text-xs uppercase tracking-[0.25em] text-center mb-6 opacity-70">
+          What the vault kept
+        </h3>
+
+        <dl class="grid gap-6 sm:grid-cols-3 text-center">
+          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
+            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Muninn</dt>
+            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
+              Every turn wrote back to an Obsidian vault, so context outlived the process that made it.
+            </dd>
+          </div>
+          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
+            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Saga</dt>
+            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
+              Outcomes, errors and routing accuracy logged to JSONL and read back nightly.
+            </dd>
+          </div>
+          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
+            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Bragi</dt>
+            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
+              Weaknesses became versioned prompt patches, gated before anything applied itself.
+            </dd>
+          </div>
+        </dl>
+
+        <p class="mt-8 text-center text-xs font-['Cinzel'] tracking-[0.2em] text-[#b0b8c8] uppercase opacity-50">
+          Retired &middot; No live instance
+        </p>
 
       </div>
     </div>

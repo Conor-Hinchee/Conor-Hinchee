@@ -1,0 +1,140 @@
+<section
+  id="field"
+  data-section="field"
+  aria-labelledby="fieldSectionHeader"
+  class="relative font-mono text-[#e8e8e8] mt-8 bg-[#08090a] border-y border-[#e8e8e8]/15 py-20 overflow-hidden"
+>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#16181a] via-[#08090a] to-[#08090a] opacity-80 pointer-events-none"></div>
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#e8e8e8] to-transparent opacity-25"></div>
+  <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#e8e8e8] to-transparent opacity-25"></div>
+
+  <div class="relative z-10 container mx-auto px-4">
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 id="fieldSectionHeader" class="text-5xl md:text-6xl font-bold text-[#e8e8e8] tracking-[0.3em] mb-3 uppercase">Field</h2>
+      <p class="text-[#8a8f94] text-sm uppercase tracking-[0.3em] opacity-80 mb-6">Analog dashboard watch face &middot; Garmin Venu 4</p>
+
+      <div class="flex flex-wrap justify-center gap-2 opacity-80">
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">MONKEY C</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">CONNECT IQ</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">454x454 ROUND</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">ZERO PERMISSIONS</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">NO BITMAP ASSETS</span>
+      </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+
+      <div class="grid gap-10 md:grid-cols-2 md:items-center mb-12">
+        <figure class="mx-auto w-full max-w-[380px]">
+          <img
+            src="/images/field-on-device.jpg"
+            alt="The FIELD watch face running on a Garmin Venu 4, showing step count, weather, battery, heart rate and date sub-dials around analog hands"
+            width="1000" height="1000" loading="lazy" decoding="async"
+            class="w-full rounded-2xl border border-[#e8e8e8]/15 shadow-[0_0_40px_rgba(0,0,0,0.6)]"
+          />
+          <figcaption class="mt-4 text-center text-xs text-[#8a8f94] leading-relaxed">
+            Running on hardware. Heart rate reads two dashes because the watch is off wrist, and the
+            6 o&rsquo;clock slot is currently open.
+          </figcaption>
+        </figure>
+
+        <div class="text-left">
+          <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] mb-4">A test of UI under constraint</h3>
+          <p class="text-[#8a8f94] leading-relaxed mb-4">
+            Connect IQ is a deliberately small sandbox. A watch face gets one update call per minute
+            in normal use, a fixed 454 by 454 round canvas, a subset of the graphics API, and no
+            access to most of the sensors a full app can reach.
+          </p>
+          <p class="text-[#8a8f94] leading-relaxed mb-4">
+            That is what makes the Garmin SDK worth building against. The interesting work is not
+            adding features, it is fitting eight live readouts into one legible instrument that still
+            reads correctly when any one of them goes missing.
+          </p>
+          <p class="text-[#8a8f94] leading-relaxed">
+            Everything above is drawn imperatively in Monkey C. No layout XML, no UI framework, and
+            no bitmaps beyond the launcher icon.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-[#08090a]/60 backdrop-blur-sm rounded-sm border border-[#e8e8e8]/10 relative p-8 shadow-[0_0_30px_rgba(0,0,0,0.4)]">
+        <div class="absolute top-0 left-0 w-6 h-6 border-t border-l border-[#e8e8e8]/30"></div>
+        <div class="absolute top-0 right-0 w-6 h-6 border-t border-r border-[#e8e8e8]/30"></div>
+        <div class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-[#e8e8e8]/30"></div>
+        <div class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[#e8e8e8]/30"></div>
+
+        <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] text-center mb-8">
+          Eight live readouts, one instrument
+        </h3>
+
+        <dl class="grid gap-x-8 gap-y-4 sm:grid-cols-2 mb-8 text-sm">
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">12 o&rsquo;clock</dt>
+            <dd class="text-[#e8e8e8] text-right">Steps, distance, goal ring</dd>
+          </div>
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">2 &ndash; 3</dt>
+            <dd class="text-[#e8e8e8] text-right">Condition, temp, high and low</dd>
+          </div>
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">4 &ndash; 5</dt>
+            <dd class="text-[#e8e8e8] text-right">Battery with level ring</dd>
+          </div>
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">7 &ndash; 8</dt>
+            <dd class="text-[#e8e8e8] text-right">Live heart rate, pulsing glyph</dd>
+          </div>
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">9 &ndash; 10</dt>
+            <dd class="text-[#e8e8e8] text-right">Day, month, date</dd>
+          </div>
+          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
+            <dt class="text-[#8a8f94]">6 o&rsquo;clock</dt>
+            <dd class="text-[#e8e8e8] text-right">Open slot, swappable</dd>
+          </div>
+        </dl>
+
+        <div class="flex items-center gap-4 mb-8 opacity-20">
+          <div class="flex-1 h-px bg-gradient-to-r from-transparent to-[#e8e8e8]"></div>
+          <span class="text-[#e8e8e8] text-sm tracking-widest">&middot; &middot; &middot;</span>
+          <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[#e8e8e8]"></div>
+        </div>
+
+        <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] text-center mb-6">
+          Constraints that shaped the code
+        </h3>
+
+        <dl class="grid gap-6 sm:grid-cols-3">
+          <div>
+            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Every symbol is a polygon</dt>
+            <dd class="text-xs text-[#8a8f94] leading-relaxed">
+              No reliable icon font exists here, so cloud icons are filled silhouettes with an
+              eroded copy carved back out to fake an outline stroke.
+            </dd>
+          </div>
+          <div>
+            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Never size from live data</dt>
+            <dd class="text-xs text-[#8a8f94] leading-relaxed">
+              Labels scaled to the measured width of the date collapsed on single digit days. Every
+              text group now measures a worst case reference string instead.
+            </dd>
+          </div>
+          <div>
+            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Everything degrades to a dash</dt>
+            <dd class="text-xs text-[#8a8f94] leading-relaxed">
+              Heart rate falls back to the last valid history sample. A missing source renders two
+              dashes in the right slot and the rest of the face carries on.
+            </dd>
+          </div>
+        </dl>
+
+        <p class="mt-8 text-center text-xs tracking-[0.2em] text-[#8a8f94] uppercase opacity-50">
+          Running on hardware &middot; Tuning on-wrist typography and an always-on variant
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
