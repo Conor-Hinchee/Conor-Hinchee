@@ -1,53 +1,11 @@
-// import { Mobile_Width } from "../constants";
 import { DEBUG_LOG } from "../constants";
-
-const COOKIE_NAME = "cookie-consent";
-const COOKIE_EXPIRATION_DAYS = 180; 
-
-const CONSENT_DECLINED = {
-  ad_storage: "denied",
-  ad_user_data: "denied",
-  ad_personalization: "denied",
-  analytics_storage: "denied",
-};
-
-const CONSENT_ACCEPTED = {
-  ad_storage: "granted",
-  ad_user_data: "granted",
-  ad_personalization: "granted",
-  analytics_storage: "granted",
-};
-
-const setCookie = (name, value, days) => {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(
-    JSON.stringify(value)
-  )}; expires=${expires}; path=/; SameSite=Lax`;
-};
-
-const getCookie = (name) => {
-  const cookies = document.cookie.split("; ");
-  for (const cookie of cookies) {
-    const [key, val] = cookie.split("=");
-    if (key === name) return JSON.parse(decodeURIComponent(val));
-  }
-  return null;
-};
-
-const notifyGTM = (consent) => {
-  window.dataLayer = window.dataLayer || [];
-  
-  // Use GTM's consent mode API
-  window.dataLayer.push({
-    event: "consent_update",
-    ...consent,
-  });
-  
-  DEBUG_LOG({
-    logLevel: "info",
-    message: `Pushed consent update to GTM: ${JSON.stringify(consent)}`,
-  });
-};
+import {
+  GRANTED,
+  DENIED,
+  getStoredConsent,
+  clearLegacyConsent,
+  updateConsent,
+} from "../consent.js";
 
 const showConsentBannerBar = () => {
   const banner = document.getElementById("consentBanner");
@@ -183,21 +141,26 @@ const eventConductorSteve = (event) => {
 
 // ========== LISTENERS & LOGIC ========== //
 
+const recordChoice = (analyticsStorage) => {
+  updateConsent(analyticsStorage);
+  DEBUG_LOG({
+    logLevel: "info",
+    message: `Consent updated: analytics_storage=${analyticsStorage}`,
+  });
+  document.getElementById("consentBanner").style.display = "none";
+};
+
 const initConsentListeners = () => {
   const banner = document.querySelector("#consentBanner");
 
-  document.getElementById("cookieConsent").addEventListener("click", () => {
-    setCookie(COOKIE_NAME, CONSENT_ACCEPTED, COOKIE_EXPIRATION_DAYS);
-    localStorage.setItem("trackConsent", JSON.stringify(CONSENT_ACCEPTED));
-    notifyGTM(CONSENT_ACCEPTED);
-    banner.style.display = "none";
+  document.getElementById("cookieConsent").addEventListener("click", (event) => {
+    event.stopPropagation();
+    recordChoice(GRANTED);
   });
 
-  document.getElementById("cookieDecline").addEventListener("click", () => {
-    setCookie(COOKIE_NAME, CONSENT_DECLINED, COOKIE_EXPIRATION_DAYS);
-    localStorage.setItem("trackConsent", JSON.stringify(CONSENT_DECLINED));
-    notifyGTM(CONSENT_DECLINED);
-    banner.style.display = "none";
+  document.getElementById("cookieDecline").addEventListener("click", (event) => {
+    event.stopPropagation();
+    recordChoice(DENIED);
   });
 
   banner.addEventListener("click", showConsentBannerFull);
@@ -205,35 +168,22 @@ const initConsentListeners = () => {
   banner.addEventListener("consentBannerFull", eventConductorSteve);
 };
 
+// Consent defaults (and any stored choice) are already applied by blocking.js
+// before GTM loads. The banner only needs to ask visitors who haven't chosen.
 const initConsentBanner = () => {
-  window.dataLayer = window.dataLayer || [];
+  if (!document.getElementById("consentBanner")) return;
 
-  // 🧠 check if GTM template cookie exists
-  const cookieConsent = getCookie(COOKIE_NAME);
-  if (cookieConsent) {
+  clearLegacyConsent();
+
+  if (getStoredConsent()) {
     DEBUG_LOG({
       logLevel: "info",
-      message: `Loaded consent from cookie: ${JSON.stringify(cookieConsent)}`,
+      message: `Stored consent found: analytics_storage=${getStoredConsent()}`,
     });
-    localStorage.setItem("trackConsent", JSON.stringify(cookieConsent));
-    notifyGTM(cookieConsent);
     return;
   }
 
-  // fallback to localStorage or show banner
-  const localStorageConsent = localStorage.getItem("trackConsent");
-  if (localStorageConsent !== null) {
-    const consent = JSON.parse(localStorageConsent);
-    setCookie(COOKIE_NAME, consent, COOKIE_EXPIRATION_DAYS);
-    notifyGTM(consent);
-    return;
-  }
-
-  // default state
-  setCookie(COOKIE_NAME, CONSENT_DECLINED, COOKIE_EXPIRATION_DAYS);
-  notifyGTM(CONSENT_DECLINED);
   initConsentListeners();
-
 
   if (window.scrollY > 200) {
     showConsentBannerBar();

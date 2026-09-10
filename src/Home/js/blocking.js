@@ -1,4 +1,9 @@
 // THIS IS A BLOCKING SCRIPT ANYTHING ADDED HERE WILL ADD TO THE PAGE LOAD TIME
+import { setDefaultConsent } from "./consent.js";
+
+// Consent defaults must be in the dataLayer before GTM loads.
+setDefaultConsent();
+
 const useDarkMode = () => {
   document.documentElement.classList.add("dark");
   // localStorage.setItem("theme", "dark");

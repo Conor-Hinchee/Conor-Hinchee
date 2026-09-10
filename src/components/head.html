@@ -11,21 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet" />
 
-<script>
-  // Keep a list of callbacks waiting for consent changes
-  const consentListeners = [];
-
-  // GTM template will call this to subscribe
-  window.addConsentListenerExample = (callback) => {
-    consentListeners.push(callback);
-  };
-
-  // Your banner calls this when user updates consent
-  window.onConsentChange = (consent) => {
-    consentListeners.forEach((cb) => cb(consent));
-  };
-</script>
-
 <!-- Google Tag Manager -->
 <script>
   (function (w, d, s, l, i) {
