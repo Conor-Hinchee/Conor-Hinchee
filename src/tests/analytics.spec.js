@@ -81,16 +81,27 @@ test.describe("tracked link clicks", () => {
 
   test("social links fire social_click with the network", async ({ page }) => {
     await page.locator('#socials a[data-social-network="github"]').click();
-    await page.locator('#socials a[data-social-network="x"]').click();
     const events = await eventsNamed(page, "social_click");
-    expect(events.map((e) => e.social_network)).toEqual(["github", "x"]);
+    expect(events.map((e) => e.social_network)).toEqual(["github"]);
   });
 
-  test("project links fire project_click with the project", async ({ page }) => {
-    await page.locator('a[data-project="heap_analyzer"]').click();
-    const [event] = await eventsNamed(page, "project_click");
-    expect(event).toMatchObject({ project: "heap_analyzer", section: "random" });
+  test("the X link is gone", async ({ page }) => {
+    expect(await page.locator('a[href*="x.com"]').count()).toBe(0);
   });
+
+  for (const [project, section, repo] of [
+    ["heap_analyzer", "random", "heap-analyzer"],
+    ["tornado_simulator", "tornado", "Tornado-Simulator"],
+    ["field", "field", "FIELD"],
+  ]) {
+    test(`${project} repo link fires project_click`, async ({ page }) => {
+      const link = page.locator(`a[data-project="${project}"]`);
+      await expect(link).toHaveAttribute("href", `https://github.com/Conor-Hinchee/${repo}`);
+      await link.click();
+      const [event] = await eventsNamed(page, "project_click");
+      expect(event).toMatchObject({ project, section });
+    });
+  }
 
   test("middle click counts, right click doesn't", async ({ page }) => {
     const resume = page.locator('#socials a[data-track="resume_download"]');
