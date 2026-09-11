@@ -3,10 +3,12 @@ import { test, expect } from "@playwright/test";
 const BASE_URL = "http://127.0.0.1:3000";
 
 // Keep tests offline and deterministic: GTM and third-party assets never load,
-// so we assert on what the page pushes into the dataLayer.
+// so we assert on what the page pushes into the dataLayer. The browser-sync
+// client is blocked too, since its ghost mode mirrors clicks and scrolls
+// between parallel test browsers.
 const blockThirdParties = async (page) => {
   await page.route(
-    /googletagmanager\.com|fontawesome\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|jsdelivr\.net/,
+    /googletagmanager\.com|fontawesome\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|jsdelivr\.net|\/browser-sync\//,
     (route) => route.abort()
   );
 };
@@ -28,11 +30,15 @@ const consentCommands = (dataLayer, type) =>
 const consentCookie = async (context) =>
   (await context.cookies()).find((c) => c.name === "consent_v2");
 
+// The banner fades in with a CSS transition that can crawl on a busy machine,
+// so check the inline opacity the script sets instead of the animated value.
+const expectBannerShown = (page) =>
+  expect(page.locator("#consentBanner")).toHaveAttribute("style", /opacity:\s*1/);
+
 const openBanner = async (page) => {
   await page.mouse.wheel(0, 800);
-  const banner = page.locator("#consentBanner");
-  await expect(banner).toHaveCSS("opacity", "1");
-  await banner.click();
+  await expectBannerShown(page);
+  await page.locator("#consentBanner").click();
 };
 
 test.beforeEach(async ({ page }) => {
@@ -70,7 +76,7 @@ test.describe("consent defaults (before GTM loads)", () => {
   test("does not record a choice before the visitor makes one", async ({ page, context }) => {
     await page.goto(BASE_URL);
     await page.mouse.wheel(0, 800);
-    await expect(page.locator("#consentBanner")).toHaveCSS("opacity", "1");
+    await expectBannerShown(page);
 
     expect(consentCommands(await readDataLayer(page), "update")).toHaveLength(0);
     expect(await consentCookie(context)).toBeUndefined();
@@ -121,7 +127,7 @@ test.describe("returning visitors", () => {
 
       await page.mouse.wheel(0, 800);
       await page.waitForTimeout(1500);
-      await expect(page.locator("#consentBanner")).toHaveCSS("opacity", "0");
+      await expect(page.locator("#consentBanner")).not.toHaveAttribute("style", /opacity:\s*1/);
     });
   }
 
@@ -141,7 +147,7 @@ test.describe("returning visitors", () => {
 
     expect(consentCommands(await readDataLayer(page), "update")).toHaveLength(0);
     await page.mouse.wheel(0, 800);
-    await expect(page.locator("#consentBanner")).toHaveCSS("opacity", "1");
+    await expectBannerShown(page);
 
     const cookies = await context.cookies();
     expect(cookies.find((c) => c.name === "cookie-consent")).toBeUndefined();

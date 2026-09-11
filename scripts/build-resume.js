@@ -47,6 +47,28 @@ const has = (cmd, args) => {
     }
 };
 
+// Links from the PDF back to the site get UTM tags so GA credits those visits to
+// the resume instead of lumping them into "Direct". The campaign is the resume
+// name, so different versions can be told apart.
+const SITE_HOST = "conorhinchee.com";
+
+const withResumeUtm = (url) => {
+    let u;
+    try {
+        u = new URL(url);
+    } catch (_) {
+        return url;
+    }
+    if (u.hostname.replace(/^www\./, "") !== SITE_HOST) return url;
+    u.searchParams.set("utm_source", "resume");
+    u.searchParams.set("utm_medium", "pdf");
+    u.searchParams.set("utm_campaign", NAME.toLowerCase().replace(/[^a-z0-9]+/g, "_"));
+    return u.toString();
+};
+
+// Escape a URL for use inside \href when it sits in another command's argument.
+const escUrl = (url) => url.replace(/[\\#%&~_]/g, (c) => `\\${c}`);
+
 // --- tex generation --------------------------------------------------------
 
 const buildTex = (d) => {
@@ -71,7 +93,16 @@ const buildTex = (d) => {
     );
     if (b.phone) L.push(`\\phone[mobile]{${esc(b.phone)}}`);
     if (b.email) L.push(`\\email{${esc(b.email)}}`);
-    if (home) L.push(`\\homepage{${esc(home)}}`);
+    if (home) {
+        L.push(`\\homepage{${esc(home)}}`);
+        // moderncv renders \homepage through \httpslink; point it at the tagged URL
+        // while keeping the plain domain as the visible text.
+        L.push(
+            "\\makeatletter",
+            `\\renewcommand*{\\httpslink}[2][]{\\href{${escUrl(withResumeUtm(b.website))}}{#2}}`,
+            "\\makeatother",
+        );
+    }
     if (b.location && b.location.address) L.push(`\\address{${esc(b.location.address)}}{}{}`);
     L.push("\\microtypesetup{protrusion=true,expansion=false}");
     L.push("\\begin{document}", "\\makecvtitle");
@@ -106,7 +137,13 @@ const buildTex = (d) => {
         for (const p of d.projects) {
             let extra = "";
             if (p.keywords && p.keywords.length) extra += ` \\newline \\emph{${esc(p.keywords.join(", "))}}`;
-            if (p.url) extra += ` \\newline \\textit{${esc(p.url.replace(/^https?:\/\//, ""))}}`;
+            if (p.url) {
+                const label = esc(p.url.replace(/^https?:\/\//, ""));
+                const tagged = withResumeUtm(p.url);
+                // Only links to this site become clickable (and tagged); others stay plain text.
+                const text = tagged === p.url ? label : `\\href{${escUrl(tagged)}}{${label}}`;
+                extra += ` \\newline \\textit{${text}}`;
+            }
             L.push(`\\cventry{}{${esc(p.name)}}{}{}{}{${esc(p.description)}${extra}}`);
         }
     }
