@@ -5,3 +5,6 @@ node_modules
 /playwright/.cache/
 
 .DS_Store
+
+# Files the Claude desktop app saves when sharing screenshots
+Claude outputs/
