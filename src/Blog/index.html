@@ -85,6 +85,21 @@
           document.title = `Conor Hinchee | Blog | ${currentPost.title}`;
         }
         
+        // Analytics: which post was actually read (page_view only shows ?post=latest).
+        // Keys mirror EVENT_PARAMS in src/Home/js/analytics.js so stale values get cleared.
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'blog_post_view',
+          section: undefined,
+          link_url: undefined,
+          link_text: undefined,
+          social_network: undefined,
+          project: undefined,
+          demo: undefined,
+          post_id: actualPostIdToLoad,
+          post_title: currentPost.title,
+        });
+
         // Populate breadcrumb dropdown with all available posts
         if (breadcrumbBlogDropdownUL) {
           breadcrumbBlogDropdownUL.innerHTML = ''; // Clear any existing static/dynamic items

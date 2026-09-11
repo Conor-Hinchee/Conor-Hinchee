@@ -1,3 +1,4 @@
+import initAnalytics from "./analytics.js";
 import initBanner from "./components/banner.js";
 import initBreadcrumb from "./components/breadcrumb.js";
 import initClickTheHexagon from "./components/clickTheHexagon.js";
@@ -7,6 +8,7 @@ import initRippleText from "./components/rippleText.js";
 import initRippleTextOdin from "./components/rippleTextOdin.js";
 import initGridBackground from "./components/gridBackground.js";
 
+initAnalytics();
 initBanner();
 initBreadcrumb();
 initClickTheHexagon();
