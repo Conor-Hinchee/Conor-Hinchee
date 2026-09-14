@@ -61,15 +61,12 @@
 
       <div class="text-center mb-10 max-w-2xl mx-auto">
         <p class="text-[#dbe3e8] leading-relaxed mb-4">
-          A mobile game in active development where you play as a happy little tornado and grow
-          into a monster. Drag to steer, wander into everything, and watch the field come apart
-          behind you.
+          A mobile game where you are the tornado. Drag to steer, wreck the field, grow.
+          You get 150 seconds.
         </p>
         <p class="text-[#8fa3ad] leading-relaxed">
-          The environment is destructible and the destruction is the progression. You get 150
-          seconds before you rope out, and your EF rating is the worst thing you managed to
-          flatten, the way real ratings are assigned from surveyed damage rather than measured
-          wind.
+          Damage is the progression. Your EF rating is the worst thing you flattened, same as
+          real ratings, which come from surveyed damage rather than measured wind.
         </p>
       </div>
 
@@ -80,7 +77,7 @@
         <div class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[#4fd1a5]/40"></div>
 
         <h3 class="text-[#4fd1a5] text-xs uppercase tracking-[0.25em] text-center mb-8 opacity-70">
-          The progression is the physics
+          What you can flatten
         </h3>
 
         <!-- Wind ladder -->
@@ -108,9 +105,8 @@
         </ol>
 
         <p class="text-sm text-[#8fa3ad] leading-relaxed text-center mb-8">
-          A structure below its break wind takes zero damage. A house ignores you outright until
-          you have eaten enough trailers to raise your peak tangential velocity. There is no XP
-          bar and no unlock screen, only the wind you have actually earned.
+          Under a structure's threshold you do nothing to it. Houses ignore you until you have
+          eaten enough trailers. No XP bar, no unlock screen.
         </p>
 
         <div class="flex items-center gap-4 mb-8 opacity-20">
@@ -123,28 +119,25 @@
           <div>
             <dt class="text-[#4fd1a5] text-xs uppercase tracking-widest mb-2">Rankine vortex</dt>
             <dd class="text-xs text-[#8fa3ad] leading-relaxed">
-              Tangential wind climbs linearly to peak at the core edge, then decays as one over r
-              outside it.
+              Wind peaks at the core edge, then falls off as 1/r.
             </dd>
           </div>
           <div>
             <dt class="text-[#4fd1a5] text-xs uppercase tracking-widest mb-2">Updraft offset</dt>
             <dd class="text-xs text-[#8fa3ad] leading-relaxed">
-              Lift peaks just outside the core, so debris spirals out and up instead of collapsing
-              into the center.
+              Lift peaks outside the core, so debris spirals out and up.
             </dd>
           </div>
           <div>
-            <dt class="text-[#4fd1a5] text-xs uppercase tracking-widest mb-2">On the UI thread</dt>
+            <dt class="text-[#4fd1a5] text-xs uppercase tracking-widest mb-2">Off the JS bridge</dt>
             <dd class="text-xs text-[#8fa3ad] leading-relaxed">
-              The loop runs in worklets against a struct of arrays, so the simulation never touches
-              the JS bridge.
+              The loop runs in worklets over a struct of arrays.
             </dd>
           </div>
         </dl>
 
         <p class="mt-8 text-center text-xs tracking-[0.2em] text-[#8fa3ad] uppercase opacity-50">
-          In progress &middot; Next up: houses that shed a roof before they shed walls
+          Next up: houses that shed a roof before they shed walls
         </p>
 
       </div>
