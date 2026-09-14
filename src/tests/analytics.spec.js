@@ -89,19 +89,28 @@ test.describe("tracked link clicks", () => {
     expect(await page.locator('a[href*="x.com"]').count()).toBe(0);
   });
 
-  for (const [project, section, repo] of [
-    ["heap_analyzer", "random", "heap-analyzer"],
-    ["tornado_simulator", "tornado", "Tornado-Simulator"],
-    ["field", "field", "FIELD"],
+  for (const [project, section, repoUrl] of [
+    ["heap_analyzer", "random", "https://github.com/Conor-Hinchee/heap-analyzer"],
+    ["tornado_simulator", "tornado", "https://github.com/Conor-Hinchee/Tornado-Simulator"],
+    ["field", "field", "https://github.com/Conor-Hinchee/FIELD"],
+    ["pure_react_carousel", "random", "https://github.com/express-labs/pure-react-carousel"],
   ]) {
     test(`${project} repo link fires project_click`, async ({ page }) => {
-      const link = page.locator(`a[data-project="${project}"]`);
-      await expect(link).toHaveAttribute("href", `https://github.com/Conor-Hinchee/${repo}`);
+      const link = page.locator(`a[data-project="${project}"][href*="github.com"]`);
+      await expect(link).toHaveAttribute("href", repoUrl);
       await link.click();
       const [event] = await eventsNamed(page, "project_click");
       expect(event).toMatchObject({ project, section });
     });
   }
+
+  test("the npm link is tracked too", async ({ page }) => {
+    const link = page.locator('a[data-project="pure_react_carousel"][href*="npmjs.com"]');
+    await expect(link).toHaveAttribute("href", "https://www.npmjs.com/package/pure-react-carousel");
+    await link.click();
+    const [event] = await eventsNamed(page, "project_click");
+    expect(event).toMatchObject({ project: "pure_react_carousel", section: "random" });
+  });
 
   test("middle click counts, right click doesn't", async ({ page }) => {
     const resume = page.locator('#socials a[data-track="resume_download"]');
