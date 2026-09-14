@@ -52,9 +52,9 @@
       "highlights": [
         "Tech Stack: React, TypeScript, Webpack, Jest, React Testing Library, Apollo Server, Apollo Client, GCP, GitHub Actions, Adobe Launch, CommerceTools API",
         "Own the product carousel, rebuilt from the ground up with an optimized component architecture that cut render cycles and improved core web vitals scores site-wide.",
+        "npm maintainer for pure-react-carousel (express-labs): 1.7k stars, ~67k weekly downloads. Triaged issues, reviewed PRs, published releases.",
         "Lead integration of Google Retail Search, replacing keyword matching with ML-ranked results and improving search-to-conversion rates.",
         "Enforce 100% unit test coverage across owned components using Jest and React Testing Library, catching regressions before they reach staging.",
-        "Maintain the Express open-source project, triaging issues, reviewing PRs, and coordinating releases with external contributors.",
         "Mentor junior engineers through code review and pairing, with two direct reports moving into independent feature ownership.",
         "Hold on-call rotation responsibilities, leading incident response and postmortem documentation for production issues."
       ]
