@@ -1,7 +1,10 @@
 // THIS IS A BLOCKING SCRIPT ANYTHING ADDED HERE WILL ADD TO THE PAGE LOAD TIME
 import { setDefaultConsent } from "./consent.js";
+import initInternalTraffic from "./internalTraffic.js";
 
-// Consent defaults must be in the dataLayer before GTM loads.
+// Both of these have to run before GTM loads: the consent defaults go into the
+// dataLayer, and the opt-out flag stops gtag sending anything at all.
+initInternalTraffic();
 setDefaultConsent();
 
 const useDarkMode = () => {
