@@ -48,26 +48,20 @@
             class="w-full rounded-2xl border border-[#e8e8e8]/15 shadow-[0_0_40px_rgba(0,0,0,0.6)]"
           />
           <figcaption class="mt-4 text-center text-xs text-[#8a8f94] leading-relaxed">
-            Running on hardware. Heart rate reads two dashes because the watch is off wrist, and the
-            6 o&rsquo;clock slot is currently open.
+            On hardware. Heart rate shows two dashes because the watch is off wrist.
           </figcaption>
         </figure>
 
         <div class="text-left">
-          <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] mb-4">A test of UI under constraint</h3>
+          <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] mb-4">UI under constraint</h3>
           <p class="text-[#8a8f94] leading-relaxed mb-4">
-            Connect IQ is a deliberately small sandbox. A watch face gets one update call per minute
-            in normal use, a fixed 454 by 454 round canvas, a subset of the graphics API, and no
-            access to most of the sensors a full app can reach.
-          </p>
-          <p class="text-[#8a8f94] leading-relaxed mb-4">
-            That is what makes the Garmin SDK worth building against. The interesting work is not
-            adding features, it is fitting eight live readouts into one legible instrument that still
-            reads correctly when any one of them goes missing.
+            Connect IQ gives a watch face one update per minute, a 454 by 454 round canvas, part of
+            the graphics API, and few sensors. Eight readouts have to fit and stay legible when any
+            one of them drops out.
           </p>
           <p class="text-[#8a8f94] leading-relaxed">
-            Everything above is drawn imperatively in Monkey C. No layout XML, no UI framework, and
-            no bitmaps beyond the launcher icon.
+            Drawn by hand in Monkey C. No layout XML, no framework, no bitmaps past the launcher
+            icon.
           </p>
         </div>
       </div>
@@ -79,7 +73,7 @@
         <div class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[#e8e8e8]/30"></div>
 
         <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] text-center mb-8">
-          Eight live readouts, one instrument
+          The dial
         </h3>
 
         <dl class="grid gap-x-8 gap-y-4 sm:grid-cols-2 mb-8 text-sm">
@@ -115,36 +109,14 @@
           <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[#e8e8e8]"></div>
         </div>
 
-        <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] text-center mb-6">
-          Constraints that shaped the code
-        </h3>
-
-        <dl class="grid gap-6 sm:grid-cols-3">
-          <div>
-            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Every symbol is a polygon</dt>
-            <dd class="text-xs text-[#8a8f94] leading-relaxed">
-              No reliable icon font exists here, so cloud icons are filled silhouettes with an
-              eroded copy carved back out to fake an outline stroke.
-            </dd>
-          </div>
-          <div>
-            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Never size from live data</dt>
-            <dd class="text-xs text-[#8a8f94] leading-relaxed">
-              Labels scaled to the measured width of the date collapsed on single digit days. Every
-              text group now measures a worst case reference string instead.
-            </dd>
-          </div>
-          <div>
-            <dt class="text-[#e8e8e8] text-xs uppercase tracking-widest mb-2">Everything degrades to a dash</dt>
-            <dd class="text-xs text-[#8a8f94] leading-relaxed">
-              Heart rate falls back to the last valid history sample. A missing source renders two
-              dashes in the right slot and the rest of the face carries on.
-            </dd>
-          </div>
-        </dl>
+        <p class="text-sm text-[#8a8f94] leading-relaxed text-center max-w-2xl mx-auto">
+          Three things the sandbox forced: no icon font, so symbols are polygons with a smaller
+          copy carved out. Text sized from worst case strings, never from live data. Anything
+          missing degrades to a dash and the rest of the face carries on.
+        </p>
 
         <p class="mt-8 text-center text-xs tracking-[0.2em] text-[#8a8f94] uppercase opacity-50">
-          Running on hardware &middot; Tuning on-wrist typography and an always-on variant
+          Next up: an always-on variant
         </p>
 
       </div>

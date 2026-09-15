@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4 p-6 h-full">
   <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-    A command-line tool for analyzing Node.js heap snapshots. Parses <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded text-xs">.heapsnapshot</code> files, surfaces the largest object allocations by type, and flags likely memory leaks — without needing Chrome DevTools open.
+    A CLI for Node.js heap snapshots. Reads a <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded text-xs">.heapsnapshot</code>, ranks the biggest allocations by type, and flags likely leaks. No DevTools.
   </p>
 
   <div class="flex flex-wrap gap-2">
@@ -13,15 +13,15 @@
   <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-none">
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Parses raw V8 heap snapshot JSON without loading it all into memory</span>
+      <span>Streams the V8 JSON instead of loading it all</span>
     </li>
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Groups allocations by constructor name and reports top offenders</span>
+      <span>Groups by constructor, reports the top offenders</span>
     </li>
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Outputs a ranked table to stdout — pipe it, grep it, diff it</span>
+      <span>Ranked table on stdout: pipe it, grep it, diff it</span>
     </li>
   </ul>
 
