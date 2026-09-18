@@ -31,7 +31,6 @@
       </div>
       <h2 id="odinSectionHeader" class="text-5xl md:text-6xl font-['Cinzel'] font-bold text-[#c8a84e] tracking-widest drop-shadow-md mb-3 uppercase">ODIN</h2>
       <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-4">Self-Hosted Agent Runtime</p>
-      <p class="inline-block px-3 py-1 mb-6 text-[10px] font-['Cinzel'] uppercase tracking-[0.25em] text-[#c8a84e]/80 border border-[#c8a84e]/30 rounded-sm">Archived 2026</p>
 
       <!-- Tech badges -->
       <style>
@@ -106,7 +105,7 @@
       <div class="text-center mb-10 max-w-2xl mx-auto w-full">
         <p class="text-[#b0b8c8] leading-relaxed">
           A self-hosted agent runtime: persistent memory, 50+ tools, seven agents, and a nightly
-          loop that read its own traces and rewrote its own prompts. Give it a spec, get a pull
+          loop that reads its own traces and rewrites its own prompts. Give it a spec, get a pull
           request.
         </p>
       </div>
@@ -126,14 +125,14 @@
         </div>
 
         <h3 class="font-['Cinzel'] text-[#c8a84e] text-xs uppercase tracking-[0.25em] text-center mb-6 opacity-70">
-          What the vault kept
+          What the vault keeps
         </h3>
 
         <dl class="grid gap-6 sm:grid-cols-3 text-center">
           <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
             <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Muninn</dt>
             <dd class="text-xs text-[#b0b8c8] leading-relaxed">
-              Every turn written to an Obsidian vault, so context outlived the process.
+              Every turn is written to an Obsidian vault, so context outlives the process.
             </dd>
           </div>
           <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
@@ -145,14 +144,17 @@
           <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
             <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Bragi</dt>
             <dd class="text-xs text-[#b0b8c8] leading-relaxed">
-              Weak spots became versioned prompt patches, gated before they applied.
+              Weak spots become versioned prompt patches, gated before they apply.
             </dd>
           </div>
         </dl>
 
-        <p class="mt-8 text-center text-xs font-['Cinzel'] tracking-[0.2em] text-[#b0b8c8] uppercase opacity-50">
-          Retired &middot; No live instance
-        </p>
+        <div class="mt-8 text-center">
+          <a href="/odin"
+            class="inline-flex items-center gap-2 px-5 py-2 text-xs font-['Cinzel'] uppercase tracking-[0.25em] text-[#c8a84e] border border-[#c8a84e]/40 rounded-sm transition-all duration-200 hover:bg-[#c8a84e]/10 hover:border-[#c8a84e]/70 hover:shadow-[0_0_14px_rgba(200,168,78,0.25)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c8a84e]/60">
+            Enter the hall <span aria-hidden="true">&#5765;</span>
+          </a>
+        </div>
 
       </div>
     </div>

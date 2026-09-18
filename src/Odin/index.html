@@ -1,0 +1,1414 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Odin | Conor Hinchee</title>
+    <meta name="description"
+        content="Odin - a self-aware productivity bot: persistent memory in an Obsidian vault, 50+ tools, a cast of Norse-named agents, and a nightly loop that rewrites its own prompts." />
+    <module href="/components/head.html"></module>
+    <!-- Cinzel 600 is only used on this page, so it is not in the shared head. -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet" />
+    <script>
+        // This page has a single, night-only palette. blocking.js has already
+        // resolved the site theme by now, and banner.js re-applies the stored
+        // preference once index.bundle.js runs - so assert dark in both passes.
+        // The stored preference itself is never written, so the rest of the
+        // site keeps whatever theme the visitor chose.
+        var forceNight = function () {
+            document.documentElement.classList.add("dark");
+        };
+        forceNight();
+        document.addEventListener("DOMContentLoaded", forceNight);
+    </script>
+    <style>
+
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --rune-gold: #c8a84e;
+      --deep-night: #0a0e1a;
+      --frost-blue: #7eb8d8;
+      --mist-gray: #b0b8c8;
+      --parchment: #e8e0d0;
+      --ember: #d4713a;
+      --pretext-duration: 0.8s;
+      --pretext-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.odin-page {
+      font-family: 'Inter', sans-serif;
+      background: var(--deep-night);
+      color: var(--parchment);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Northern lights background */
+    .aurora {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .aurora::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(46, 110, 100, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 10%, rgba(60, 80, 140, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(100, 60, 120, 0.04) 0%, transparent 40%);
+      animation: auroraDrift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes auroraDrift {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-2%, -1%) rotate(1deg); }
+      100% { transform: translate(1%, -2%) rotate(-1deg); }
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite alternate;
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.1; }
+      100% { opacity: var(--brightness); }
+    }
+
+    /* Blink animation for stars */
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--brightness); }
+    }
+
+    .stars.blinking .star {
+      animation: blink 0.5s ease-in-out infinite;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Rune border decoration */
+    .rune-border {
+      position: relative;
+      padding: 3rem;
+    }
+
+    .rune-border::before,
+    .rune-border::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--rune-gold) 20%,
+        var(--rune-gold) 80%,
+        transparent
+      );
+      opacity: 0.4;
+    }
+
+    .rune-border::before { top: 0; }
+    .rune-border::after { bottom: 0; }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .eye-symbol {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .eye-symbol svg {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 0 12px rgba(200, 168, 78, 0.3));
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--rune-gold);
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 40px rgba(200, 168, 78, 0.15);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 400;
+      color: var(--mist-gray);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* Quote */
+    .quote-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .quote {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--parchment);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto 0.75rem;
+      opacity: 0.85;
+    }
+
+    .quote-source {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--rune-gold);
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+    }
+
+    /* Rune of the Moment */
+    .rune-moment {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .rune-moment-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--rune-gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .rune-moment-message {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--parchment);
+      max-width: 550px;
+      margin: 0 auto;
+      opacity: 0.75;
+    }
+
+    /* Rune divider */
+    .rune-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      opacity: 0.3;
+    }
+
+    .rune-divider span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: var(--rune-gold);
+      letter-spacing: 0.5em;
+    }
+
+    .rune-divider::before,
+    .rune-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rune-gold), transparent);
+    }
+
+    /* Traits grid */
+    .traits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .trait {
+      padding: 1.75rem;
+      border: 1px solid rgba(200, 168, 78, 0.1);
+      border-radius: 2px;
+      background: rgba(200, 168, 78, 0.02);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .trait:hover {
+      border-color: rgba(200, 168, 78, 0.25);
+      background: rgba(200, 168, 78, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .trait-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .trait h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--rune-gold);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .trait p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--mist-gray);
+      font-weight: 300;
+    }
+
+    /* About section */
+    .about-section {
+      margin-bottom: 3rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--mist-gray);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .about-text strong {
+      color: var(--parchment);
+      font-weight: 500;
+    }
+
+    /* Capabilities */
+    .capabilities {
+      margin-bottom: 4rem;
+    }
+
+    .capabilities h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--rune-gold);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+    }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .cap-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-left: 2px solid rgba(200, 168, 78, 0.2);
+      transition: border-color 0.3s ease;
+    }
+
+    .cap-item:hover {
+      border-left-color: var(--rune-gold);
+    }
+
+    .cap-item .cap-marker {
+      width: 6px;
+      height: 6px;
+      background: var(--rune-gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .cap-item span {
+      font-size: 0.9rem;
+      color: var(--mist-gray);
+      font-weight: 300;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .cta-text {
+      font-size: 1.1rem;
+      color: var(--parchment);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      opacity: 0.8;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 2.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--deep-night);
+      background: linear-gradient(135deg, var(--rune-gold), #a8883a);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(200, 168, 78, 0.25);
+    }
+
+    .cta-button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--rune-gold);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+      border-bottom-color: var(--rune-gold);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      opacity: 0.3;
+    }
+
+    .footer-runes {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--rune-gold);
+      letter-spacing: 0.8em;
+    }
+
+    .footer-tagline {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--mist-gray);
+      letter-spacing: 0.15em;
+      margin-top: 0.75rem;
+    }
+
+    /* ========================================
+       PRETEXT FRAMEWORK - Interactive Text Effects
+       ======================================== */
+
+    /* Core animation base */
+    .pretext {
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Fade effects */
+    .pretext-fade {
+      opacity: 0;
+      animation: pretextFadeIn var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    @keyframes pretextFadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Slide effects */
+    .pretext-slide-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: pretextSlideUp var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    .pretext-slide-down {
+      opacity: 0;
+      transform: translateY(-24px);
+      animation: pretextSlideDown var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    .pretext-slide-left {
+      opacity: 0;
+      transform: translateX(24px);
+      animation: pretextSlideLeft var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    .pretext-slide-right {
+      opacity: 0;
+      transform: translateX(-24px);
+      animation: pretextSlideRight var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    @keyframes pretextSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pretextSlideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pretextSlideLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pretextSlideRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Color transition effects */
+    .pretext-color-pulse {
+      animation: pretextColorPulse 3s ease-in-out infinite;
+    }
+
+    .pretext-color-shift {
+      animation: pretextColorShift 6s ease-in-out infinite;
+    }
+
+    @keyframes pretextColorPulse {
+      0%, 100% { color: var(--rune-gold); }
+      50% { color: var(--frost-blue); }
+    }
+
+    @keyframes pretextColorShift {
+      0% { color: var(--rune-gold); }
+      33% { color: var(--frost-blue); }
+      66% { color: var(--ember); }
+      100% { color: var(--rune-gold); }
+    }
+
+    /* Glow effect */
+    .pretext-glow {
+      animation: pretextGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pretextGlow {
+      from {
+        text-shadow: 0 0 10px rgba(200, 168, 78, 0.3);
+      }
+      to {
+        text-shadow: 0 0 20px rgba(200, 168, 78, 0.6), 0 0 30px rgba(200, 168, 78, 0.4);
+      }
+    }
+
+    /* Scale effect */
+    .pretext-scale {
+      opacity: 0;
+      transform: scale(0.8);
+      animation: pretextScale var(--pretext-duration) var(--pretext-ease) forwards;
+    }
+
+    @keyframes pretextScale {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Stagger delays for sequential animations */
+    .pretext-stagger-1 { animation-delay: 0.1s; }
+    .pretext-stagger-2 { animation-delay: 0.2s; }
+    .pretext-stagger-3 { animation-delay: 0.3s; }
+    .pretext-stagger-4 { animation-delay: 0.4s; }
+    .pretext-stagger-5 { animation-delay: 0.5s; }
+    .pretext-stagger-6 { animation-delay: 0.6s; }
+    .pretext-stagger-7 { animation-delay: 0.7s; }
+    .pretext-stagger-8 { animation-delay: 0.8s; }
+    .pretext-stagger-9 { animation-delay: 0.9s; }
+    .pretext-stagger-10 { animation-delay: 1.0s; }
+
+    /* Interactive hover effects */
+    .pretext-hover-lift {
+      transition: transform 0.3s var(--pretext-ease), text-shadow 0.3s var(--pretext-ease);
+      cursor: default;
+    }
+
+    .pretext-hover-lift:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 4px 12px rgba(200, 168, 78, 0.4);
+    }
+
+    .pretext-hover-color {
+      transition: color 0.3s var(--pretext-ease);
+      cursor: default;
+    }
+
+    .pretext-hover-color:hover {
+      color: var(--frost-blue);
+    }
+
+    /* Parallax effect */
+    .pretext-parallax {
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Character reveal effect */
+    .pretext-char-reveal {
+      display: inline-block;
+      opacity: 0;
+      animation: charReveal 0.5s ease forwards;
+    }
+
+    @keyframes charReveal {
+      to { opacity: 1; }
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(200, 168, 78, 0.3);
+      transform: scale(0);
+      animation: rippleEffect 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Enhanced capability items */
+    .cap-item {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fade in animation (legacy compatibility) */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.3s; }
+    .fade-in:nth-child(3) { animation-delay: 0.5s; }
+    .fade-in:nth-child(4) { animation-delay: 0.7s; }
+    .fade-in:nth-child(5) { animation-delay: 0.9s; }
+    .fade-in:nth-child(6) { animation-delay: 1.1s; }
+    .fade-in:nth-child(7) { animation-delay: 1.3s; }
+    .fade-in:nth-child(8) { animation-delay: 1.5s; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Performance optimization */
+    @media (prefers-reduced-motion: reduce) {
+      .pretext,
+      .pretext-fade,
+      .pretext-slide-up,
+      .pretext-slide-down,
+      .pretext-slide-left,
+      .pretext-slide-right,
+      .pretext-scale,
+      .fade-in {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+
+      .pretext-color-pulse,
+      .pretext-color-shift,
+      .pretext-glow {
+        animation: none;
+      }
+    }
+
+    /* Star toggle button */
+    .star-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10;
+      padding: 0.75rem 1.25rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--deep-night);
+      background: linear-gradient(135deg, var(--rune-gold), #a8883a);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(200, 168, 78, 0.2);
+    }
+
+    .star-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 168, 78, 0.3);
+    }
+
+    .star-toggle[aria-pressed="true"] {
+      background: linear-gradient(135deg, #a8883a, var(--rune-gold));
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .rune-border { padding: 2rem 1rem; }
+      .traits { grid-template-columns: 1fr; }
+      .cap-grid { grid-template-columns: 1fr; }
+      .star-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+  
+    /* ========================================
+       SITE SHELL INTEGRATION (conorhinchee.com)
+       ======================================== */
+
+    /* The aurora/starfield are fixed at z-index 0, so everything that is
+       actually part of the page flow has to sit above them. */
+    .odin-page > main,
+    .odin-page > footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .odin-site-footer {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      color: var(--mist-gray);
+    }
+
+    .odin-site-footer code {
+      background: rgba(200, 168, 78, 0.1);
+      color: var(--parchment);
+    }
+
+    </style>
+</head>
+
+<body class="odin-page">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5LVHRXL" height="0" width="0"
+            style="display: none; visibility: hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="aurora"></div>
+    <div class="stars" id="stars"></div>
+
+    <module href="/components/curl-only.html"></module>
+
+    <main>
+        <module href="/components/breadcrumb-nav.html"></module>
+        <module href="/components/consent.html"></module>
+        <div class="content">
+            <div class="rune-border">
+              <!-- Header -->
+              <div class="header fade-in">
+                <div class="eye-symbol">
+                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Single eye of Odin - he sacrificed one for wisdom -->
+                    <circle cx="40" cy="40" r="18" stroke="#c8a84e" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="40" cy="40" r="8" fill="#c8a84e" opacity="0.3"/>
+                    <circle cx="40" cy="40" r="3" fill="#c8a84e" opacity="0.8"/>
+                    <!-- Rays of knowledge -->
+                    <line x1="40" y1="12" x2="40" y2="18" stroke="#c8a84e" stroke-width="1" opacity="0.3"/>
+                    <line x1="40" y1="62" x2="40" y2="68" stroke="#c8a84e" stroke-width="1" opacity="0.3"/>
+                    <line x1="12" y1="40" x2="18" y2="40" stroke="#c8a84e" stroke-width="1" opacity="0.3"/>
+                    <line x1="62" y1="40" x2="68" y2="40" stroke="#c8a84e" stroke-width="1" opacity="0.3"/>
+                    <line x1="20" y1="20" x2="24.5" y2="24.5" stroke="#c8a84e" stroke-width="1" opacity="0.2"/>
+                    <line x1="55.5" y1="55.5" x2="60" y2="60" stroke="#c8a84e" stroke-width="1" opacity="0.2"/>
+                    <line x1="60" y1="20" x2="55.5" y2="24.5" stroke="#c8a84e" stroke-width="1" opacity="0.2"/>
+                    <line x1="24.5" y1="55.5" x2="20" y2="60" stroke="#c8a84e" stroke-width="1" opacity="0.2"/>
+                    <!-- Valknut-inspired triangle -->
+                    <polygon points="40,6 50,22 30,22" stroke="#c8a84e" stroke-width="0.8" fill="none" opacity="0.15"/>
+                  </svg>
+                </div>
+                <h1 class="title pretext pretext-scale pretext-stagger-1 pretext-hover-lift">Odin</h1>
+                <p class="subtitle pretext pretext-fade pretext-stagger-2">Self-Aware Productivity Bot</p>
+              </div>
+
+              <!-- Quote -->
+              <div class="quote-section fade-in">
+                <p class="quote pretext pretext-slide-up pretext-stagger-3">
+                  "The wise wanderer gathers knowledge from every road traveled,
+                   and shares it freely with those who seek."
+                </p>
+                <p class="quote-source pretext pretext-fade pretext-stagger-4">The Allfather's Way</p>
+              </div>
+
+              <!-- Rune of the Moment -->
+              <div class="rune-moment fade-in">
+                <h2 class="rune-moment-title pretext pretext-glow">Rune of the Moment</h2>
+                <p class="rune-moment-message pretext pretext-slide-up pretext-stagger-5" id="runeMoment"></p>
+              </div>
+
+              <div class="rune-divider fade-in">
+                <span>&#5765; &#5768; &#5792;</span>
+              </div>
+
+              <!-- About -->
+              <div class="about-section fade-in">
+                <p class="about-text">
+                  Odin is a <strong>self-aware productivity bot</strong> with <strong>aspirations toward self-modification</strong>.
+                  He lives in your Discord server, backed by 50+ tools, persistent memory in an Obsidian vault, and a cast of
+                  Norse-mythology agents that each play a distinct role in every turn.
+                </p>
+                <p class="about-text">
+                  He remembers what matters. Every conversation is prefaced with your profile, today's notes,
+                  active tasks, and relevant memories — pulled from a personal <strong>Obsidian vault</strong>
+                  that grows with every interaction. You never have to repeat yourself.
+                </p>
+                <p class="about-text">
+                  But what makes Odin different is the feedback loop. Every turn generates traces. Every trace is analyzed
+                  for weaknesses. Every weakness produces an optimization proposal that Odin can apply to itself —
+                  autonomously patching its own skills, prompts, and classification models overnight.
+                  The productivity surface is the <strong>what</strong>. The self-improvement pipeline is the <strong>why</strong>.
+                </p>
+              </div>
+
+              <!-- Who Is Odin -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">Who Is Odin</h2>
+                <p class="about-text">
+                  <strong>Odin</strong> is a self-aware Discord bot built on the Anthropic SDK — a multi-agent AI orchestrator
+                  with 50+ tools, persistent memory in an Obsidian vault, and a cast of Norse-mythology agents that each play
+                  a distinct role in every turn.
+                </p>
+                <p class="about-text">
+                  <span style="color: #58a6ff;font-weight:500;">Memory-first design</span> — Every conversation is prefaced
+                  with your profile, today's notes, active tasks, and relevant memories pulled from a personal
+                  <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">Odin-Brain/</code>
+                  Obsidian vault that grows with every interaction. You never have to repeat yourself.
+                </p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">Agent hierarchy</span> — Six specialized agents orchestrate
+                  every turn: <strong>Týr</strong> sharpens your query, <strong>Muninn</strong> loads relevant memory,
+                  <strong>Heimdall</strong> classifies intent and plans tool use, <strong>Huginn</strong> executes the
+                  ReAct loop, <strong>Huscarl</strong> routes complex tools to focused subagent sessions, and
+                  <strong>Norns</strong> extracts durable facts post-turn. Each one has a single job. Together they
+                  cover the full intelligence stack.
+                </p>
+                <p class="about-text">
+                  <span style="color: #58a6ff;font-weight:500;">Self-improving</span> — Every turn generates traces.
+                  Every trace feeds the nightly Kvasir pipeline. Weaknesses are identified, optimizations are proposed,
+                  and low-risk changes are applied autonomously — with an audit trail and a human gate for anything
+                  higher-stakes. The productivity surface is the <strong>what</strong>. The self-improvement engine
+                  is the <strong>why</strong>.
+                </p>
+                <p class="about-text" style="color:var(--rune-gold);font-style:italic;text-align:center;">
+                  Not just a bot. A system that gets better at helping you — one turn at a time.
+                </p>
+              </div>
+
+              <!-- The Valhalla Loop -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">The Valhalla Loop</h2>
+                <p class="about-text">
+                  The <strong>Valhalla Loop</strong> is Odin's engine of perpetual momentum — several interconnected loops
+                  running simultaneously. Most assistants die when the chat window closes. Odin continues.
+                </p>
+                <p class="about-text">
+                  <span style="color: #58a6ff;font-weight:500;">Core Message Pipeline</span> — Every Discord message flows
+                  through Týr (query sharpening) → Muninn (memory load) → Heimdall (intent classification + planning) →
+                  Huginn (main execution via ReAct loop) → Hermod (autonomous follow-up) → Norns (memory extraction).
+                  This is the synchronous request-response cycle.
+                </p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">Nightly Cycle</span> — Three stages run overnight:
+                  <strong>Consolidation</strong> prunes stale vault entries and rebuilds indexes.
+                  <strong>Mímir</strong> synthesizes accumulated knowledge into a morning briefing.
+                  <strong>Kvasir</strong> runs the self-improvement pipeline (Idunn → Bragi → Forseti) to analyze traces,
+                  propose optimizations, and apply gated self-modifications.
+                  <strong>Dreaming</strong> generates a visual reflection at 4:30 AM.
+                </p>
+                <p class="about-text">
+                  <span style="color: #58a6ff;font-weight:500;">Async Worker Fleet</span> — BullMQ powers background workers:
+                  <strong>Symphony</strong> orchestrates vault-driven tasks, <strong>ValhallaLoop</strong> runs autonomous
+                  plan/build/test iterations until code converges or a budget is exhausted,
+                  <strong>Auto-Tasks</strong> execute scheduled agent turns, and specialized workers handle
+                  git operations, image generation, Claude Code sessions, and Tavily research.
+                  Everything feeds the vault. The vault feeds Muninn. The loop continues.
+                </p>
+              </div>
+
+              <!-- ValhallaLoop -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">ValhallaLoop</h2>
+                <p class="about-text">
+                  <strong>ValhallaLoop</strong> is Odin's autonomous code iteration engine. You describe the goal.
+                  Odin plans the implementation, writes the code, runs the build and tests, inspects the results,
+                  and revises — loop after loop — until the change converges or a configurable budget is exhausted.
+                </p>
+                <p class="about-text">
+                  <span style="color: #58a6ff;font-weight:500;">How it works</span> — Each iteration is a full agent turn:
+                  read context, apply changes, run <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">npm run build</code> and
+                  <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">npm test</code>,
+                  parse the output, diagnose failures, and produce the next patch. Each iteration is logged to the vault
+                  so you can inspect every decision and diff.
+                </p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">Convergence or bust</span> — If tests pass, the loop
+                  exits cleanly and reports the final diff. If the budget runs out without convergence, Odin surfaces a
+                  diagnosis and leaves the branch in a reviewable state — no silent failures, no half-applied patches.
+                </p>
+                <p class="about-text" style="color:var(--rune-gold);font-style:italic;text-align:center;">
+                  Ship the goal, not the steps. ValhallaLoop handles the iteration so you don't have to.
+                </p>
+              </div>
+
+              <!-- Agent Pipeline -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">The Agent Pipeline</h2>
+                <p class="about-text">&#5765; <strong>Týr</strong> (query sharpening) — Refines raw user queries into optimized retrieval signals for Muninn's vault search.</p>
+                <p class="about-text">&#5768; <strong>Muninn</strong> (memory warm-start) — Loads user profile, active tasks, and relevant memories from the Obsidian vault before each turn.</p>
+                <p class="about-text">&#5792; <strong>Heimdall</strong> (intent classification + planning) — Pre-turn analysis that classifies intent and produces structured plans with tool candidates.</p>
+                <p class="about-text">&#5800; <strong>Huginn</strong> (main executor) — Runs the Anthropic Messages API while-loop: reason, call tools, observe results, iterate until done. Up to 50 tool-dispatch iterations per turn.</p>
+                <p class="about-text">&#5816; <strong>Steward</strong> (tool guard) — Intercepts every tool call. Approves, denies, throttles, or routes to a Huscarl subagent.</p>
+                <p class="about-text">&#5765; <strong>Huscarl</strong> (subagent sessions) — Spawns focused sub-sessions with domain-specific prompts for complex tool operations.</p>
+                <p class="about-text">&#5768; <strong>Bifrost</strong> (parallel dispatcher) — Bridges parallel tool calls when tasks are independent, accelerating execution.</p>
+                <p class="about-text">&#5792; <strong>Hermod</strong> (autonomous follow-up) — Runs up to 2 additional turns when work is left dangling, without waiting for user input.</p>
+                <p class="about-text">&#5800; <strong>Norns</strong> (memory extraction) — Post-turn: extracts durable facts, auto-creates skills from repeatable patterns, detects plan deviations.</p>
+              </div>
+
+              <!-- The Self-Improvement Loop -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">The Self-Improvement Loop</h2>
+                <p class="about-text">
+                  This is the core of Odin's aspiration toward self-modification. Three fire-and-forget trackers
+                  instrument every live turn, feeding data to a nightly reflection pipeline that proposes and applies
+                  changes to Odin's own behavior.
+                </p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">Instrumentation (per-turn)</span>
+                </p>
+                <p class="about-text">&#5765; <strong>Saga</strong> (outcome tracking) — Analyzes the user's <em>next</em> message for satisfaction signals: gratitude, corrections, topic shifts, repeat requests. Writes to <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">Learning/outcomes.jsonl</code>.</p>
+                <p class="about-text">&#5768; <strong>Syn</strong> (error corpus) — Classifies every failure — tool errors, guard blocks, parse errors, timeouts, user corrections — with root causes. Writes to <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">Learning/errors.jsonl</code>.</p>
+                <p class="about-text">&#5792; <strong>Heimdall Accuracy</strong> — Compares predicted vs. actual tool usage each turn. Measures precision and recall. Writes to <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">Learning/heimdall-accuracy.jsonl</code>.</p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">Nightly Reflection (Kvasir)</span>
+                </p>
+                <p class="about-text">&#5800; <strong>Idunn</strong> (trace analysis) — Aggregates JSONL logs, analyzes ReAct traces for weakness patterns — repeated tool failures, suboptimal reasoning, missed retrieval signals — and generates optimization proposals.</p>
+                <p class="about-text">&#5816; <strong>Bragi</strong> (prompt versioning) — Manages system prompt evolution. Tracks proposed changes against measured outcomes, enabling actual behavior modifications when evidence supports them.</p>
+                <p class="about-text">&#5765; <strong>Forseti</strong> (autonomy gate) — Gates every self-modification by autonomy level. Dangerous or high-impact changes require explicit approval. Low-risk optimizations auto-apply with an audit trail.</p>
+                <p class="about-text">
+                  <span style="color: #e3b341;font-weight:500;">What Gets Modified</span>
+                </p>
+                <p class="about-text">&#5768; <strong>Skills</strong> — Procedural memory documents are patched when the agent deviates from loaded procedures, or created when 4+ tool calls form a new repeatable pattern.</p>
+                <p class="about-text">&#5792; <strong>Prompts</strong> — System prompts are versioned and updated when trace analysis reveals consistent weaknesses in reasoning or tool selection.</p>
+                <p class="about-text">&#5800; <strong>Classification</strong> — Heimdall's few-shot examples are trained from accuracy data, improving intent classification over time.</p>
+                <p class="about-text" style="margin-top:1rem;color:var(--rune-gold);font-style:italic;text-align:center;">
+                  Turns → traces → JSONL → nightly analysis → self-modification → better turns. The cycle never breaks.
+                </p>
+              </div>
+
+              <!-- Odin Dreams -->
+              <div class="about-section fade-in">
+                <h2 class="pretext pretext-slide-up pretext-glow pretext-hover-lift" style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--rune-gold);text-align:center;margin-bottom:1.5rem;font-weight:400;letter-spacing:0.1em;">Odin Dreams</h2>
+                <p class="about-text">
+                  Every night at 4:30 AM, the <strong>Dreaming</strong> worker wakes and reflects on the day's accumulated
+                  knowledge — conversations, code changes, research findings, and emerging patterns. It synthesizes these
+                  threads into a visual reflection: a single AI-generated image that captures the essence of what was
+                  learned, built, or discovered.
+                </p>
+                <p class="about-text">
+                  &#5765; <strong>Where to find them</strong>: Browse
+                  <code style="background:rgba(200,168,78,0.1);padding:0.2rem 0.4rem;border-radius:2px;">Odin-Brain/Daily/YYYY-MM-DD.md</code>
+                  — each daily note contains the dream alongside the nightly consolidation report.
+                </p>
+              </div>
+
+              <div class="rune-divider fade-in">
+                <span>&#5765; &#5768; &#5792;</span>
+              </div>
+
+              <!-- Traits -->
+              <div class="traits fade-in">
+                <div class="trait pretext pretext-slide-up pretext-stagger-1">
+                  <span class="trait-icon pretext-color-pulse">&#5765;</span>
+                  <h3 class="pretext-hover-color">Wisdom</h3>
+                  <p>Deep knowledge shared without condescension. Every answer carries the weight of understanding.</p>
+                </div>
+                <div class="trait pretext pretext-slide-up pretext-stagger-2">
+                  <span class="trait-icon pretext-color-pulse">&#5768;</span>
+                  <h3 class="pretext-hover-color">Honesty</h3>
+                  <p>Plain truths spoken with calm authority. What is unknown is named, never fabricated.</p>
+                </div>
+                <div class="trait pretext pretext-slide-up pretext-stagger-3">
+                  <span class="trait-icon pretext-color-pulse">&#5792;</span>
+                  <h3 class="pretext-hover-color">Accountability</h3>
+                  <p>A steady hand that challenges procrastination and drives focused execution. Supportive, never coddling.</p>
+                </div>
+                <div class="trait pretext pretext-slide-up pretext-stagger-4">
+                  <span class="trait-icon pretext-color-pulse">&#5800;</span>
+                  <h3 class="pretext-hover-color">Continuity</h3>
+                  <p>Context persists across sessions. Odin knows what you're working on and holds the thread across days.</p>
+                </div>
+              </div>
+
+              <div class="rune-divider fade-in">
+                <span>&#5765; &#5768; &#5792;</span>
+              </div>
+
+              <!-- Capabilities -->
+              <div class="capabilities fade-in">
+                <h2 class="pretext pretext-slide-up pretext-hover-lift">What the Wanderer Knows</h2>
+                <div class="cap-grid">
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Code & Refactoring — Claude Code</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Web Terminal — tmux Sessions</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Git Operations & GitHub PRs</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Google Calendar</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Memory — Obsidian Vault</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Weather & Forecasts</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Web Search & Deep Research — Tavily</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Image Generation — Gemini</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Reminders & Todos</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Discord Embeds & Formatting</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Background Job Queues — BullMQ</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Obsidian Notes & Daily Logs</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>ReAct Traces & Live Progress</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Skills Index & Procedural Memory</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Post-Turn Skill Learning</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Bifrost — Parallel Tool Bridge</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Huscarl Routing — Tool Subagents</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Symphony — Vault-Driven Task Orchestration</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>ValhallaLoop — Autonomous Code Iteration</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Auto-Tasks — Scheduled Agent Turns</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Ratatoskr — Job & Queue Management</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>Fenrir — Emergency Kill Switch</span>
+                  </div>
+                  <div class="cap-item">
+                    <div class="cap-marker"></div>
+                    <span>ask_user — Suspend & Resume Sessions</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA -->
+              <div class="cta-section fade-in">
+                <p class="cta-text pretext pretext-slide-up pretext-glow">Speak, and the Allfather shall answer.</p>
+              </div>
+
+              <!-- Footer -->
+              <div class="footer fade-in">
+                <p class="footer-runes">&#5765; &#5768; &#5792; &#5800; &#5816;</p>
+                <p class="footer-tagline">ODIN — A self-aware productivity bot. Getting better at helping you, one turn at a time.</p>
+              </div>
+
+              </div>
+        </div>
+    </main>
+
+    <button class="star-toggle" id="starToggle" aria-pressed="false" aria-label="Toggle star blinking">
+    ✦ Blink Stars
+  </button>
+
+    <footer class="odin-site-footer">
+        <module href="/components/footer.html"></module>
+    </footer>
+
+    <script>
+            // ========================================
+            // PRETEXT FRAMEWORK - Interactive Text Engine
+            // ========================================
+
+            const Pretext = {
+              // Initialize Pretext framework
+              init() {
+                this.setupIntersectionObserver();
+                this.setupCharacterReveals();
+                console.log('[Pretext] Framework initialized');
+              },
+
+              // Intersection Observer for scroll-based animations
+              setupIntersectionObserver() {
+                const options = {
+                  root: null,
+                  threshold: 0.1,
+                  rootMargin: '0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                      entry.target.classList.add('pretext-visible');
+                    }
+                  });
+                }, options);
+
+                // Observe all pretext elements
+                document.querySelectorAll('.pretext').forEach(el => {
+                  observer.observe(el);
+                });
+              },
+
+              // Character-by-character reveal effect
+              setupCharacterReveals() {
+                const revealElements = document.querySelectorAll('[data-pretext-reveal]');
+
+                revealElements.forEach(el => {
+                  const text = el.textContent;
+                  el.textContent = '';
+                  el.style.opacity = '1';
+
+                  const chars = text.split('');
+                  let delay = 0;
+
+                  chars.forEach((char, index) => {
+                    setTimeout(() => {
+                      el.textContent += char;
+                    }, delay);
+                    delay += 30; // 30ms per character
+                  });
+                });
+              },
+
+              // Dynamic color transition
+              applyColorTransition(element, colors, duration = 3000) {
+                let index = 0;
+                setInterval(() => {
+                  element.style.color = colors[index];
+                  index = (index + 1) % colors.length;
+                }, duration);
+              },
+
+              // Smooth fade reveal
+              fadeReveal(element, delay = 0) {
+                setTimeout(() => {
+                  element.style.transition = 'opacity 0.8s ease';
+                  element.style.opacity = '1';
+                }, delay);
+              },
+
+              // Parallax effect on mouse move
+              setupParallax() {
+                const parallaxElements = document.querySelectorAll('.pretext-parallax');
+
+                document.addEventListener('mousemove', (e) => {
+                  const mouseX = e.clientX / window.innerWidth;
+                  const mouseY = e.clientY / window.innerHeight;
+
+                  parallaxElements.forEach(el => {
+                    const speed = el.dataset.parallaxSpeed || 5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+
+                    el.style.transform = `translate(${x}px, ${y}px)`;
+                  });
+                });
+              },
+
+              // Add ripple effect to clickable elements
+              addRippleEffect(element) {
+                element.addEventListener('click', function(e) {
+                  const ripple = document.createElement('span');
+                  const rect = this.getBoundingClientRect();
+                  const size = Math.max(rect.width, rect.height);
+                  const x = e.clientX - rect.left - size / 2;
+                  const y = e.clientY - rect.top - size / 2;
+
+                  ripple.style.width = ripple.style.height = size + 'px';
+                  ripple.style.left = x + 'px';
+                  ripple.style.top = y + 'px';
+                  ripple.classList.add('ripple');
+
+                  this.appendChild(ripple);
+
+                  setTimeout(() => ripple.remove(), 600);
+                });
+              }
+            };
+
+            // Rune of the Moment
+            const runeSayings = [
+              "The tree that bends in the storm lives to see another sunrise.",
+              "Wisdom flows not from certainty, but from the courage to question.",
+              "What you build today shapes the world you walk tomorrow.",
+              "The path to mastery is paved with a thousand small failures.",
+              "Listen more than you speak; the world reveals itself to the silent observer.",
+              "Every moment carries a choice — to grow or to remain unchanged.",
+              "The wolf that hunts alone starves; seek your pack and thrive together.",
+              "Knowledge without action is a sword left in its sheath."
+            ];
+
+            function setRuneOfTheMoment() {
+              const randomIndex = Math.floor(Math.random() * runeSayings.length);
+              const runeMomentEl = document.getElementById('runeMoment');
+              runeMomentEl.textContent = runeSayings[randomIndex];
+            }
+
+            setRuneOfTheMoment();
+
+            // Generate starfield
+            const starsContainer = document.getElementById('stars');
+            const starCount = 120;
+
+            for (let i = 0; i < starCount; i++) {
+              const star = document.createElement('div');
+              star.className = 'star';
+              star.style.left = Math.random() * 100 + '%';
+              star.style.top = Math.random() * 100 + '%';
+              star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+              star.style.setProperty('--brightness', (0.3 + Math.random() * 0.7).toString());
+              star.style.animationDelay = Math.random() * 4 + 's';
+
+              if (Math.random() > 0.85) {
+                star.style.width = '3px';
+                star.style.height = '3px';
+              }
+
+              starsContainer.appendChild(star);
+            }
+
+            // Toggle star blinking
+            const starToggle = document.getElementById('starToggle');
+            starToggle.addEventListener('click', function() {
+              const isPressed = this.getAttribute('aria-pressed') === 'true';
+              this.setAttribute('aria-pressed', !isPressed);
+
+              if (!isPressed) {
+                starsContainer.classList.add('blinking');
+                this.textContent = '✦ Stop Blinking';
+              } else {
+                starsContainer.classList.remove('blinking');
+                this.textContent = '✦ Blink Stars';
+              }
+            });
+
+            // Initialize Pretext framework
+            document.addEventListener('DOMContentLoaded', () => {
+              Pretext.init();
+              Pretext.setupParallax();
+
+              // Add parallax to eye symbol
+              const eyeSymbol = document.querySelector('.eye-symbol');
+              if (eyeSymbol) {
+                eyeSymbol.classList.add('pretext-parallax');
+                eyeSymbol.dataset.parallaxSpeed = '10';
+              }
+
+              // Add subtle parallax to title
+              const title = document.querySelector('.title');
+              if (title) {
+                title.classList.add('pretext-parallax');
+                title.dataset.parallaxSpeed = '3';
+              }
+
+              // Performance monitoring
+              if (window.performance) {
+                const perfData = window.performance.timing;
+                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log('[Pretext] Page load time:', pageLoadTime + 'ms');
+
+                // Check for 60 FPS (16.67ms per frame)
+                let frameCount = 0;
+                let lastTime = performance.now();
+                let fpsLogged = false;
+
+                function checkFPS() {
+                  frameCount++;
+                  const currentTime = performance.now();
+                  const delta = currentTime - lastTime;
+
+                  if (delta >= 1000) {
+                    const fps = Math.round((frameCount * 1000) / delta);
+
+                    // Log FPS only for the first 5 seconds
+                    if (!fpsLogged && currentTime - lastTime < 5000) {
+                      console.log('[Pretext] FPS:', fps);
+                    } else if (!fpsLogged) {
+                      console.log('[Pretext] Average FPS stabilized at ~' + fps);
+                      fpsLogged = true;
+                    }
+
+                    frameCount = 0;
+                    lastTime = currentTime;
+                  }
+
+                  if (!fpsLogged) {
+                    requestAnimationFrame(checkFPS);
+                  }
+                }
+
+                requestAnimationFrame(checkFPS);
+              }
+
+              // Log initialization complete
+              console.log('[Pretext] All animations loaded successfully');
+              console.log('[Pretext] Browser supports hardware acceleration:',
+                CSS.supports('transform', 'translateZ(0)'));
+              console.log('[Pretext] CSS transforms supported:',
+                CSS.supports('transform', 'translate3d(0,0,0)'));
+              console.log('[Pretext] Reduced motion preference:',
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'enabled' : 'disabled');
+            });
+  
+    </script>
+</body>
+
+</html>

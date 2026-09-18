@@ -30,9 +30,9 @@ const changeTheme = (event = {}, override = "") => {
         const mainElement = document.querySelector("main");
         const allOandI = document.querySelectorAll(".OandI");
 
-        mainElement.classList.replace("bgGridWhite", "bgGridDark");
+        mainElement?.classList.replace("bgGridWhite", "bgGridDark");
 
-        if (lightModeItem.classList.contains("hidden")) {
+        if (lightModeItem && darkModeItem && lightModeItem.classList.contains("hidden")) {
             lightModeItem.classList.toggle("hidden");
             lightModeItem.classList.toggle("flex");
             darkModeItem.classList.toggle("hidden");
@@ -62,9 +62,9 @@ const changeTheme = (event = {}, override = "") => {
         const mainElement = document.querySelector("main");
         const allOandI = document.querySelectorAll(".OandI");
 
-        mainElement.classList.replace("bgGridDark", "bgGridWhite");
+        mainElement?.classList.replace("bgGridDark", "bgGridWhite");
 
-        if (darkModeItem.classList.contains("hidden")) {
+        if (lightModeItem && darkModeItem && darkModeItem.classList.contains("hidden")) {
             lightModeItem.classList.toggle("hidden");
             lightModeItem.classList.toggle("flex");
             darkModeItem.classList.toggle("hidden");
@@ -189,18 +189,20 @@ const setClickListeners = () => {
     // tabletLayoutButton.addEventListener("click", handleTabletIconClick);
     // mobileLayoutButton.addEventListener("click", handleMobileIconClick);
 
+    // A page can opt out of the shared banner (/odin does), so there is not
+    // always a theme toggle to wire up.
     const darkModeItem = document.querySelector("#darkModeItem");
-    const darkModeButton = darkModeItem.firstElementChild;
-    darkModeButton.addEventListener("click", changeTheme);
-
     const lightModeItem = document.querySelector("#lightModeItem");
-    const lightModeButton = lightModeItem.firstElementChild;
-    lightModeButton.addEventListener("click", changeTheme);
+
+    if (!darkModeItem || !lightModeItem) return;
+
+    darkModeItem.firstElementChild?.addEventListener("click", changeTheme);
+    lightModeItem.firstElementChild?.addEventListener("click", changeTheme);
 };
 
 const hideBanner = () => {
     const banner = document.querySelector("header");
-    banner.style.display = "none";
+    if (banner) banner.style.display = "none";
 };
 
 const initBanner = () => {
