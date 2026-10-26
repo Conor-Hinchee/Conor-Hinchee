@@ -1,0 +1,30 @@
+name: Hosting Preview
+on:
+  pull_request:
+    branches: ["2026"]
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+jobs:
+  preview:
+    # Skip PRs from forks: they cannot read the service account secret.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Deploy preview channel 🔍
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ vars.GCP_PROJECT_ID }}
+          expires: 7d

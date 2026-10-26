@@ -7,6 +7,10 @@
 // opt-out flag (window["ga-disable-<measurement id>"]) before GTM loads, so
 // gtag never sends a hit. Nothing shows up in GA at all, not even a cookieless
 // ping, which is what makes it different from declining consent.
+//
+// This is only one of three layers. The IP-based GA4 internal traffic
+// filter and the report-time Zanesville exclusion live in
+// docs/ANALYTICS.md.
 
 const MEASUREMENT_ID = "G-0440Q7V3FG";
 const OPT_OUT_KEY = "analytics_opt_out";

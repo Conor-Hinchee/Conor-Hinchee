@@ -22,7 +22,19 @@ jobs:
       - name: Build 🔨
         run: npm run build
 
-      - name: Deploy 🚀
+      # Firebase Hosting is now the live target for www.conorhinchee.com.
+      - name: Deploy to Firebase Hosting 🔥
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: ${{ vars.GCP_PROJECT_ID }}
+
+      # Kept deliberately as a warm rollback target: GitHub Pages stays
+      # up to date, so reverting is a DNS change and nothing else.
+      # Delete this step once the Firebase cutover has settled.
+      - name: Deploy to GitHub Pages (rollback target) 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder the action should deploy.
+          folder: dist

@@ -1,0 +1,10 @@
+.git
+.github
+node_modules
+dist
+test-results
+playwright-report
+playwright/.cache
+Claude outputs
+**/.DS_Store
+*.log

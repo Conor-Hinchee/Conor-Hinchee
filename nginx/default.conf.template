@@ -1,0 +1,59 @@
+server {
+    listen       ${PORT};
+    server_name  _;
+    root         /usr/share/nginx/html;
+    index        index.html;
+
+    # Cloud Run terminates TLS at the edge; keep generated redirects relative
+    # so nginx never leaks the internal port into a Location header.
+    absolute_redirect off;
+
+    gzip              on;
+    gzip_vary         on;
+    gzip_min_length   256;
+    gzip_proxied      any;
+    gzip_types        text/plain text/css text/markdown application/json
+                      application/javascript application/pdf image/svg+xml;
+
+    # Default: HTML and anything without a more specific rule below.
+    # /blog and /now are directory indexes. Checking $uri/index.html before
+    # $uri/ serves them directly instead of 301-ing to add a trailing slash.
+    location / {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache, must-revalidate" always;
+        try_files $uri $uri/index.html $uri/ =404;
+    }
+
+    # The JS/CSS bundles are NOT content-hashed, so they cannot be cached hard.
+    # If webpack ever emits [contenthash] filenames, raise this to a year.
+    location /Conor-Hinchee/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=600, must-revalidate" always;
+    }
+
+    location /blog/content/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=300, must-revalidate" always;
+    }
+
+    location /images/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=86400" always;
+    }
+
+    # Blog posts are fetched as raw markdown by zero-md. Set the type in a
+    # location rather than a server-level `types` block, which would replace
+    # the whole inherited mime map and turn every asset into octet-stream.
+    location ~* \.md$ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=300, must-revalidate" always;
+        default_type text/markdown;
+        charset utf-8;
+    }
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+}
