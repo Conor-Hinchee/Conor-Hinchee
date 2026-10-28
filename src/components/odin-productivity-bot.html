@@ -30,8 +30,7 @@
         </svg>
       </div>
       <h2 id="odinSectionHeader" class="text-5xl md:text-6xl font-['Cinzel'] font-bold text-[#c8a84e] tracking-widest drop-shadow-md mb-3 uppercase">ODIN</h2>
-      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-4">Self-Hosted Agent Runtime</p>
-      <p class="inline-block px-3 py-1 mb-6 text-[10px] font-['Cinzel'] uppercase tracking-[0.25em] text-[#c8a84e]/80 border border-[#c8a84e]/30 rounded-sm">Archived 2026</p>
+      <p class="font-['Cinzel'] text-[#b0b8c8] text-sm uppercase tracking-[0.3em] opacity-70 mb-6">Claude Code Plugin</p>
 
       <!-- Tech badges -->
       <style>
@@ -69,11 +68,9 @@
         }
       </style>
       <div class="flex flex-wrap justify-center gap-2 opacity-80">
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">ANTHROPIC MESSAGES API</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">NODE.JS / TYPESCRIPT</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">BULLMQ</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">OBSIDIAN VAULT</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">GCP CLOUD LOGGING</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">CLAUDE CODE PLUGIN</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">PYTHON</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs font-['Cinzel'] tracking-wider text-[#e8e0d0] border border-[#c8a84e]/30 rounded-sm">GIT WORKTREES</span>
       </div>
       <script>
         (function () {
@@ -98,6 +95,19 @@
           }
         })();
       </script>
+
+      <a
+        href="https://github.com/Conor-Hinchee/odin"
+        data-track="project_click"
+        data-project="odin"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View Odin source on GitHub"
+        class="inline-flex items-center gap-2 mt-6 px-4 py-2 text-xs font-['Cinzel'] uppercase tracking-[0.25em] text-[#c8a84e] border border-[#c8a84e]/40 rounded-sm transition-colors duration-200 hover:bg-[#c8a84e]/10"
+      >
+        <svg aria-hidden="true" class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
     </div>
 
     <div class="max-w-4xl mx-auto">
@@ -105,56 +115,13 @@
       <!-- Description -->
       <div class="text-center mb-10 max-w-2xl mx-auto w-full">
         <p class="text-[#b0b8c8] leading-relaxed">
-          A self-hosted agent runtime: persistent memory, 50+ tools, seven agents, and a nightly
-          loop that read its own traces and rewrote its own prompts. Give it a spec, get a pull
-          request.
+          A Claude Code plugin for AI coding work: plan, execute, review, then sign-off, with a human
+          approval gate between each step. A local dashboard shows a live diff with a written
+          rationale. Anything that took more than one pass becomes a proposed fix to the
+          agent&rsquo;s own rules. Started as a self-hosted agent runtime; now a skill.
         </p>
       </div>
 
-      <div class="bg-[#0a0e1a]/50 backdrop-blur-sm rounded-sm border border-[#c8a84e]/10 relative p-8 shadow-[0_0_30px_rgba(0,0,0,0.3)]">
-        <!-- Rune corners -->
-        <div class="absolute top-0 left-0 w-6 h-6 border-t border-l border-[#c8a84e]/40"></div>
-        <div class="absolute top-0 right-0 w-6 h-6 border-t border-r border-[#c8a84e]/40"></div>
-        <div class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-[#c8a84e]/40"></div>
-        <div class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[#c8a84e]/40"></div>
-
-        <!-- Divider -->
-        <div class="flex items-center gap-4 mb-8 opacity-20">
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent to-[#c8a84e]"></div>
-          <span class="font-['Cinzel'] text-[#c8a84e] text-sm tracking-widest">&#5765; &#5768; &#5792;</span>
-          <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[#c8a84e]"></div>
-        </div>
-
-        <h3 class="font-['Cinzel'] text-[#c8a84e] text-xs uppercase tracking-[0.25em] text-center mb-6 opacity-70">
-          What the vault kept
-        </h3>
-
-        <dl class="grid gap-6 sm:grid-cols-3 text-center">
-          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
-            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Muninn</dt>
-            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
-              Every turn written to an Obsidian vault, so context outlived the process.
-            </dd>
-          </div>
-          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
-            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Saga</dt>
-            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
-              Outcomes, errors and routing accuracy in JSONL, read back nightly.
-            </dd>
-          </div>
-          <div class="odin-pipeline-card border border-[#c8a84e]/15 rounded-sm p-5">
-            <dt class="font-['Cinzel'] text-2xl text-[#c8a84e] mb-1">Bragi</dt>
-            <dd class="text-xs text-[#b0b8c8] leading-relaxed">
-              Weak spots became versioned prompt patches, gated before they applied.
-            </dd>
-          </div>
-        </dl>
-
-        <p class="mt-8 text-center text-xs font-['Cinzel'] tracking-[0.2em] text-[#b0b8c8] uppercase opacity-50">
-          Retired &middot; No live instance
-        </p>
-
-      </div>
     </div>
   </div>
 </section>

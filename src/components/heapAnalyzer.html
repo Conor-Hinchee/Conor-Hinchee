@@ -1,27 +1,27 @@
 <div class="flex flex-col gap-4 p-6 h-full">
   <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-    A CLI for Node.js heap snapshots. Reads a <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded text-xs">.heapsnapshot</code>, ranks the biggest allocations by type, and flags likely leaks. No DevTools.
+    A CLI wrapper around Facebook&rsquo;s memlab for finding memory leaks in Node.js apps. Take three heap snapshots, and it diffs them, traces what&rsquo;s keeping each leaked object alive, and shows how memory changes over time. On npm.
   </p>
 
   <div class="flex flex-wrap gap-2">
     <span class="px-2 py-1 text-xs font-semibold bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded">Node.js</span>
-    <span class="px-2 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">JavaScript</span>
+    <span class="px-2 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">TypeScript</span>
     <span class="px-2 py-1 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">CLI</span>
-    <span class="px-2 py-1 text-xs font-semibold bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">Performance</span>
+    <span class="px-2 py-1 text-xs font-semibold bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">memlab</span>
   </div>
 
   <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-none">
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Streams the V8 JSON instead of loading it all</span>
+      <span>Finds leaks by diffing three heap snapshots</span>
     </li>
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Groups by constructor, reports the top offenders</span>
+      <span>Traces why a leaked object is still in memory</span>
     </li>
     <li class="flex items-start gap-2">
       <span class="text-emerald-500 mt-0.5" aria-hidden="true">✓</span>
-      <span>Ranked table on stdout: pipe it, grep it, diff it</span>
+      <span>Monitors a running Node process and snapshots at a memory threshold</span>
     </li>
   </ul>
 
