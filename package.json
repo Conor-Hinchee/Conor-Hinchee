@@ -27,16 +27,15 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
     "@playwright/test": "1.53.2",
-    "autoprefixer": "^10.4.14",
+    "@tailwindcss/vite": "^4.3.3",
     "esbuild": "^0.28.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^9.1.0",
     "htmlnano": "^2.0.4",
-    "postcss": "^8.4.27",
     "posthtml": "^0.16.6",
     "posthtml-modules": "^0.9.1",
     "prettier": "3.3.3",
-    "tailwindcss": "^3.3.3",
+    "tailwindcss": "^4.3.3",
     "vite": "^8.3.5"
   },
   "type": "module"

@@ -1,5 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import {
   htmlPartials,
@@ -17,6 +18,7 @@ export default defineConfig({
   // Served at the site root and copied as-is: /images, /blog/content, resume
   publicDir: "assets",
   plugins: [
+    tailwindcss(),
     trailingSlash(),
     htmlPartials(root),
     inlineBlockingScript(root),
