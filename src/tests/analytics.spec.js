@@ -93,6 +93,7 @@ test.describe("tracked link clicks", () => {
     ["heap_analyzer", "random", "https://github.com/Conor-Hinchee/heap-analyzer"],
     ["tornado_simulator", "tornado", "https://github.com/Conor-Hinchee/Tornado-Simulator"],
     ["field", "field", "https://github.com/Conor-Hinchee/FIELD"],
+    ["odin", "odin", "https://github.com/Conor-Hinchee/odin"],
     ["pure_react_carousel", "random", "https://github.com/express-labs/pure-react-carousel"],
   ]) {
     test(`${project} repo link fires project_click`, async ({ page }) => {

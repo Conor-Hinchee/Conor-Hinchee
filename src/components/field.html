@@ -17,10 +17,7 @@
 
       <div class="flex flex-wrap justify-center gap-2 opacity-80">
         <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">MONKEY C</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">CONNECT IQ</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">454x454 ROUND</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">ZERO PERMISSIONS</span>
-        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">NO BITMAP ASSETS</span>
+        <span data-tech-item class="odin-tech-badge odin-tech-badge--outline px-3 py-1 text-xs tracking-wider text-[#e8e8e8] border border-[#e8e8e8]/25 rounded-sm">GARMIN CONNECT IQ</span>
       </div>
 
       <a
@@ -54,72 +51,14 @@
 
         <div class="text-left">
           <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] mb-4">UI under constraint</h3>
-          <p class="text-[#8a8f94] leading-relaxed mb-4">
-            Connect IQ gives a watch face one update per minute, a 454 by 454 round canvas, part of
-            the graphics API, and few sensors. Eight readouts have to fit and stay legible when any
-            one of them drops out.
-          </p>
           <p class="text-[#8a8f94] leading-relaxed">
-            Drawn by hand in Monkey C. No layout XML, no framework, no bitmaps past the launcher
-            icon.
+            A watch face for the Garmin Venu 4. It fits eight readouts on a small round screen,
+            including steps, weather, battery and heart rate. The watch only lets it refresh once
+            a minute, and it keeps working when a sensor drops out.
           </p>
         </div>
       </div>
 
-      <div class="bg-[#08090a]/60 backdrop-blur-sm rounded-sm border border-[#e8e8e8]/10 relative p-8 shadow-[0_0_30px_rgba(0,0,0,0.4)]">
-        <div class="absolute top-0 left-0 w-6 h-6 border-t border-l border-[#e8e8e8]/30"></div>
-        <div class="absolute top-0 right-0 w-6 h-6 border-t border-r border-[#e8e8e8]/30"></div>
-        <div class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-[#e8e8e8]/30"></div>
-        <div class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[#e8e8e8]/30"></div>
-
-        <h3 class="text-[#8a8f94] text-xs uppercase tracking-[0.25em] text-center mb-8">
-          The dial
-        </h3>
-
-        <dl class="grid gap-x-8 gap-y-4 sm:grid-cols-2 mb-8 text-sm">
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">12 o&rsquo;clock</dt>
-            <dd class="text-[#e8e8e8] text-right">Steps, distance, goal ring</dd>
-          </div>
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">2 &ndash; 3</dt>
-            <dd class="text-[#e8e8e8] text-right">Condition, temp, high and low</dd>
-          </div>
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">4 &ndash; 5</dt>
-            <dd class="text-[#e8e8e8] text-right">Battery with level ring</dd>
-          </div>
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">7 &ndash; 8</dt>
-            <dd class="text-[#e8e8e8] text-right">Live heart rate, pulsing glyph</dd>
-          </div>
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">9 &ndash; 10</dt>
-            <dd class="text-[#e8e8e8] text-right">Day, month, date</dd>
-          </div>
-          <div class="flex justify-between border-b border-[#e8e8e8]/10 pb-2">
-            <dt class="text-[#8a8f94]">6 o&rsquo;clock</dt>
-            <dd class="text-[#e8e8e8] text-right">Open slot, swappable</dd>
-          </div>
-        </dl>
-
-        <div class="flex items-center gap-4 mb-8 opacity-20">
-          <div class="flex-1 h-px bg-gradient-to-r from-transparent to-[#e8e8e8]"></div>
-          <span class="text-[#e8e8e8] text-sm tracking-widest">&middot; &middot; &middot;</span>
-          <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[#e8e8e8]"></div>
-        </div>
-
-        <p class="text-sm text-[#8a8f94] leading-relaxed text-center max-w-2xl mx-auto">
-          Three things the sandbox forced: no icon font, so symbols are polygons with a smaller
-          copy carved out. Text sized from worst case strings, never from live data. Anything
-          missing degrades to a dash and the rest of the face carries on.
-        </p>
-
-        <p class="mt-8 text-center text-xs tracking-[0.2em] text-[#8a8f94] uppercase opacity-50">
-          Next up: an always-on variant
-        </p>
-
-      </div>
     </div>
   </div>
 </section>
