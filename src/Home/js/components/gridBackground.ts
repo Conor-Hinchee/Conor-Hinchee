@@ -7,15 +7,25 @@ const DAMPING = 0.88;
 const TOUCH_BURST_RADIUS = 100;
 const TOUCH_BURST_STRENGTH = 8;
 
+type GridPoint = {
+  homeX: number;
+  homeY: number;
+  dx: number;
+  dy: number;
+  vx: number;
+  vy: number;
+};
+
 /**
  * Initialize interactive spacetime grid canvas background on a container element.
  * The container must have position: relative (or absolute/fixed).
  * The canvas is inserted as the first child, absolutely positioned to fill the container.
  * @param {string} selector - CSS selector for the container element
  */
-export default function initGridBackground(selector) {
-  const container = document.querySelector(selector);
-  if (!container) return;
+export default function initGridBackground(selector: string) {
+  const containerEl = document.querySelector(selector);
+  if (!(containerEl instanceof HTMLElement)) return;
+  const container = containerEl;
 
   const canvas = document.createElement("canvas");
   canvas.setAttribute("aria-hidden", "true");
@@ -29,18 +39,23 @@ export default function initGridBackground(selector) {
 
   // Make sure content above canvas stays on top
   for (const child of container.children) {
-    if (child !== canvas && !child.style.zIndex) {
+    if (
+      child !== canvas &&
+      (child instanceof HTMLElement || child instanceof SVGElement) &&
+      !child.style.zIndex
+    ) {
       child.style.position = "relative";
       child.style.zIndex = "1";
     }
   }
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  const context = canvas.getContext("2d");
+  if (!context) return;
+  const ctx = context;
 
   let isDarkMode = document.documentElement.classList.contains("dark");
-  let points = [];
-  let cursor = null;
+  let points: GridPoint[] = [];
+  let cursor: { x: number; y: number } | null = null;
   let cols = 0;
   let rows = 0;
 
@@ -77,7 +92,7 @@ export default function initGridBackground(selector) {
     buildGrid();
   }
 
-  function applyTouchBurst(cx, cy) {
+  function applyTouchBurst(cx: number, cy: number) {
     for (const p of points) {
       const dist = Math.hypot(p.homeX + p.dx - cx, p.homeY + p.dy - cy);
       if (dist < TOUCH_BURST_RADIUS) {
@@ -89,7 +104,7 @@ export default function initGridBackground(selector) {
     }
   }
 
-  function getPoint(r, c) {
+  function getPoint(r: number, c: number) {
     if (r < 0 || c < 0 || r >= rows || c >= cols) return null;
     return points[r * cols + c];
   }

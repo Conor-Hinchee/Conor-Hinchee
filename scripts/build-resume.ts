@@ -1,5 +1,3 @@
-"use strict";
-
 // Builds a resume PDF from its JSON source using LaTeX (moderncv), replacing the
 // old resumake.io website workflow. Reads src/assets/Conor-Hinchee/<name>.json,
 // renders a moderncv .tex, compiles it with pdflatex, and writes <name>.pdf back
@@ -12,12 +10,71 @@
 // fontawesome5 package is missing, a no-op icon shim is used so the build still
 // succeeds (contact/section icons are simply omitted).
 
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const { execFileSync } = require("child_process");
+import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 
-const ASSETS_DIR = path.join(__dirname, "..", "src", "assets", "Conor-Hinchee");
+// Shape of the resumake.io-style JSON this script reads. Only the fields used
+// below are typed; everything is optional since the source is hand-edited.
+interface ResumeLocation {
+    address?: string;
+}
+
+interface ResumeBasics {
+    name?: string;
+    phone?: string;
+    website?: string;
+    email?: string;
+    location?: ResumeLocation;
+    summary?: string;
+}
+
+interface ResumeHeadings {
+    work?: string;
+    projects?: string;
+    education?: string;
+    awards?: string;
+}
+
+interface ResumeSkill {
+    name?: string;
+    keywords?: string[];
+}
+
+interface ResumeWork {
+    company?: string;
+    position?: string;
+    location?: string;
+    startDate?: string;
+    endDate?: string;
+    highlights?: string[];
+}
+
+interface ResumeProject {
+    name?: string;
+    description?: string;
+    url?: string;
+    keywords?: string[];
+}
+
+interface ResumeEducation {
+    institution?: string;
+    studyType?: string;
+    location?: string;
+    endDate?: string;
+}
+
+interface Resume {
+    headings?: ResumeHeadings;
+    basics?: ResumeBasics;
+    skills?: ResumeSkill[];
+    work?: ResumeWork[];
+    projects?: ResumeProject[];
+    education?: ResumeEducation[];
+}
+
+const ASSETS_DIR = path.join(import.meta.dirname, "..", "src", "assets", "Conor-Hinchee");
 const NAME = process.argv[2] || "Conor Hinchee Resume 2026";
 const JSON_PATH = path.join(ASSETS_DIR, `${NAME}.json`);
 const PDF_PATH = path.join(ASSETS_DIR, `${NAME}.pdf`);
@@ -27,22 +84,22 @@ const HEADLINE = "Software Engineer";
 
 // --- helpers ---------------------------------------------------------------
 
-const esc = (s) => {
+const esc = (s: string | null | undefined): string => {
     if (s === undefined || s === null) return "";
-    let out = String(s).replace(/\\/g, "\\textbackslash{}");
-    const map = {
+    const out = String(s).replace(/\\/g, "\\textbackslash{}");
+    const map: Record<string, string> = {
         "&": "\\&", "%": "\\%", "$": "\\$", "#": "\\#",
         "_": "\\_", "{": "\\{", "}": "\\}",
         "~": "\\textasciitilde{}", "^": "\\textasciicircum{}",
     };
-    return out.replace(/[&%$#_{}~^]/g, (c) => map[c]);
+    return out.replace(/[&%$#_{}~^]/g, (c) => map[c] ?? c);
 };
 
-const has = (cmd, args) => {
+const has = (cmd: string, args: string[]): boolean => {
     try {
         execFileSync(cmd, args, { stdio: "ignore" });
         return true;
-    } catch (_) {
+    } catch {
         return false;
     }
 };
@@ -52,11 +109,11 @@ const has = (cmd, args) => {
 // name, so different versions can be told apart.
 const SITE_HOST = "conorhinchee.com";
 
-const withResumeUtm = (url) => {
-    let u;
+const withResumeUtm = (url: string): string => {
+    let u: URL;
     try {
         u = new URL(url);
-    } catch (_) {
+    } catch {
         return url;
     }
     if (u.hostname.replace(/^www\./, "") !== SITE_HOST) return url;
@@ -67,17 +124,17 @@ const withResumeUtm = (url) => {
 };
 
 // Escape a URL for use inside \href when it sits in another command's argument.
-const escUrl = (url) => url.replace(/[\\#%&~_]/g, (c) => `\\${c}`);
+const escUrl = (url: string): string => url.replace(/[\\#%&~_]/g, (c) => `\\${c}`);
 
 // --- tex generation --------------------------------------------------------
 
-const buildTex = (d) => {
-    const b = d.basics || {};
-    const h = d.headings || {};
+const buildTex = (d: Resume): string => {
+    const b: ResumeBasics = d.basics || {};
+    const h: ResumeHeadings = d.headings || {};
     const [first, ...rest] = (b.name || "").split(" ");
     const last = rest.join(" ");
     const home = (b.website || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
-    const L = [];
+    const L: string[] = [];
 
     L.push(
         "\\documentclass[11pt,a4paper,sans]{moderncv}",
@@ -93,7 +150,7 @@ const buildTex = (d) => {
     );
     if (b.phone) L.push(`\\phone[mobile]{${esc(b.phone)}}`);
     if (b.email) L.push(`\\email{${esc(b.email)}}`);
-    if (home) {
+    if (home && b.website) {
         L.push(`\\homepage{${esc(home)}}`);
         // moderncv renders \homepage through \httpslink; point it at the tagged URL
         // while keeping the plain domain as the visible text.
@@ -180,7 +237,7 @@ const STUB = `\\NeedsTeXFormat{LaTeX2e}
 
 // --- main ------------------------------------------------------------------
 
-const main = () => {
+const main = (): void => {
     if (!fs.existsSync(JSON_PATH)) {
         console.error(`Resume JSON not found: ${JSON_PATH}`);
         process.exit(1);
@@ -190,7 +247,7 @@ const main = () => {
         process.exit(1);
     }
 
-    const data = JSON.parse(fs.readFileSync(JSON_PATH, "utf8"));
+    const data = JSON.parse(fs.readFileSync(JSON_PATH, "utf8")) as Resume;
     const tex = buildTex(data);
 
     const buildDir = fs.mkdtempSync(path.join(os.tmpdir(), "resume-"));
@@ -215,7 +272,7 @@ const main = () => {
 
     fs.copyFileSync(path.join(buildDir, "resume.pdf"), PDF_PATH);
     fs.rmSync(buildDir, { recursive: true, force: true });
-    console.log(`Built: ${path.relative(path.join(__dirname, ".."), PDF_PATH)}`);
+    console.log(`Built: ${path.relative(path.join(import.meta.dirname, ".."), PDF_PATH)}`);
 };
 
 main();

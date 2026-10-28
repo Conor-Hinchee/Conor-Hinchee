@@ -1,11 +1,13 @@
 // THIS IS A BLOCKING SCRIPT ANYTHING ADDED HERE WILL ADD TO THE PAGE LOAD TIME
-import { setDefaultConsent } from "./consent.js";
-import initInternalTraffic from "./internalTraffic.js";
+import { setDefaultConsent } from "./consent";
+import initInternalTraffic from "./internalTraffic";
 
 // Both of these have to run before GTM loads: the consent defaults go into the
 // dataLayer, and the opt-out flag stops gtag sending anything at all.
 initInternalTraffic();
 setDefaultConsent();
+
+type Theme = "dark" | "light";
 
 const useDarkMode = () => {
   document.documentElement.classList.add("dark");
@@ -17,11 +19,11 @@ const useLightMode = () => {
   // localStorage.setItem("theme", "light");
 };
 
-const updateBgGrid = (theme) => {
+const updateBgGrid = (theme: Theme) => {
   const targets = [
     document.querySelector("main"),
     document.querySelector("footer")
-  ].filter(Boolean);
+  ].filter((element) => element !== null);
 
   if (!targets.length) return;
 
@@ -38,7 +40,7 @@ const updateBgGrid = (theme) => {
   });
 };
 
-const getOSPreference = () => {
+const getOSPreference = (): Theme => {
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
@@ -62,7 +64,7 @@ const watchOSTheme = () => {
 
 const initTheme = () => {
   try {
-    let currentTheme = "light";
+    let currentTheme: Theme = "light";
     
     if (localStorage.getItem("theme") === "dark") {
       useDarkMode();
@@ -70,7 +72,7 @@ const initTheme = () => {
     } else if (localStorage.getItem("theme") === "light") {
       useLightMode();
       currentTheme = "light";
-    } else if (window.matchMedia && !localStorage.getItem("theme")) {
+    } else if (typeof window.matchMedia === "function" && !localStorage.getItem("theme")) {
       const osPreference = getOSPreference();
       if (osPreference === "dark") {
         useDarkMode();

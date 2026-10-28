@@ -5,11 +5,18 @@ const Mobile_Width = 480;
 //SET DEBUG IF WE ARE ON LOCALHOST or a debug cookie is set
 const IS_DEBUG_MODE = window.location.hostname === "localhost" || document.cookie.includes("debug=true");
 
-const DEBUG_LOG = ({ logLevel = "info", message }) => {
-    const validTypes = ["log", "info", "warn", "error"];
+type LogLevel = "log" | "info" | "warn" | "error";
+
+interface DebugLogOptions {
+    logLevel?: LogLevel;
+    message: unknown;
+}
+
+const DEBUG_LOG = ({ logLevel = "info", message }: DebugLogOptions): void => {
+    const validTypes: LogLevel[] = ["log", "info", "warn", "error"];
 
     let validatedLogLevel = logLevel;
-    let validatedMessage = JSON.stringify(message);
+    const validatedMessage = JSON.stringify(message);
 
 
     if (!validTypes.includes(logLevel)) {
@@ -27,4 +34,5 @@ const DEBUG_LOG = ({ logLevel = "info", message }) => {
     }
 };
 
+export type { LogLevel, DebugLogOptions };
 export { Desktop_Width, Tablet_Width, Mobile_Width, IS_DEBUG_MODE, DEBUG_LOG };

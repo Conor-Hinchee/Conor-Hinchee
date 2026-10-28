@@ -6,13 +6,26 @@ const DAMPING = 0.96;
 const TOUCH_BURST_RADIUS = 30;
 const TOUCH_BURST_STRENGTH = 6;
 
+type OdinChar = {
+  char: string;
+  homeX: number;
+  homeY: number;
+  dx: number;
+  dy: number;
+  vx: number;
+  vy: number;
+  fontSize: number;
+  italic: boolean;
+};
+
 /**
  * Initialize Odin ripple text effect on canvas
  * @returns {void}
  */
 export default function initRippleTextOdin() {
-  const container = document.querySelector("#ripple-text-odin-container");
-  if (!container) return;
+  const containerEl = document.querySelector("#ripple-text-odin-container");
+  if (!(containerEl instanceof HTMLElement)) return;
+  const container = containerEl;
 
   const h1 = container.querySelector("h1");
   if (!h1) return;
@@ -32,8 +45,9 @@ export default function initRippleTextOdin() {
   canvas.style.height = "100%";
   container.insertBefore(canvas, container.firstChild);
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  const context = canvas.getContext("2d");
+  if (!context) return;
+  const ctx = context;
 
   const computedStyle = window.getComputedStyle(h1);
   const baseFontFamily = computedStyle.fontFamily;
@@ -75,24 +89,24 @@ export default function initRippleTextOdin() {
   ];
 
   const remToPx = 16;
-  let cursor = null;
-  let characters = [];
+  let cursor: { x: number; y: number } | null = null;
+  let characters: OdinChar[] = [];
 
-  function getFontSizePixels(remSize) {
+  function getFontSizePixels(remSize: number) {
     return remSize * remToPx;
   }
 
-  function wrapText(text, maxWidth) {
+  function wrapText(text: string, maxWidth: number): string[] {
     const words = text.split(" ");
-    const lines = [];
-    let currentLine = words[0];
+    const lines: string[] = [];
+    let currentLine = words[0] ?? "";
     for (let i = 1; i < words.length; i++) {
       const testLine = currentLine + " " + words[i];
       if (ctx.measureText(testLine).width <= maxWidth) {
         currentLine = testLine;
       } else {
         lines.push(currentLine);
-        currentLine = words[i];
+        currentLine = words[i] ?? "";
       }
     }
     lines.push(currentLine);
@@ -150,7 +164,7 @@ export default function initRippleTextOdin() {
     layoutCharacters();
   }
 
-  function applyTouchBurst(cx, cy) {
+  function applyTouchBurst(cx: number, cy: number) {
     for (const char of characters) {
       const dist = Math.hypot(char.homeX + char.dx - cx, char.homeY + char.dy - cy);
       if (dist < TOUCH_BURST_RADIUS) {

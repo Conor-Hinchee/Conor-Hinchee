@@ -15,33 +15,33 @@ const PARAM = "internal";
 const readFlag = () => {
   try {
     return localStorage.getItem(OPT_OUT_KEY) === "1";
-  } catch (e) {
+  } catch {
     // Private modes can throw on access; treat that as "not opted out".
     return false;
   }
 };
 
-const writeFlag = (optedOut) => {
+const writeFlag = (optedOut: boolean): void => {
   try {
     if (optedOut) {
       localStorage.setItem(OPT_OUT_KEY, "1");
     } else {
       localStorage.removeItem(OPT_OUT_KEY);
     }
-  } catch (e) {
+  } catch {
     // Nothing to persist to; the flag still applies to this page load.
   }
 };
 
 // "1", "true" and "yes" turn it on; "0", "false" and "no" turn it off.
-const readParam = () => {
+const readParam = (): boolean | null => {
   const value = new URLSearchParams(window.location.search).get(PARAM);
   if (value === null) return null;
   if (["0", "false", "no"].includes(value.toLowerCase())) return false;
   return true;
 };
 
-const initInternalTraffic = () => {
+const initInternalTraffic = (): boolean => {
   const requested = readParam();
   const optedOut = requested === null ? readFlag() : requested;
 

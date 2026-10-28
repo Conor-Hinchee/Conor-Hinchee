@@ -105,7 +105,7 @@ export const inlineBlockingScript = (root: string): Plugin => {
       order: "pre",
       handler: async (html) => {
         const matches = [...html.matchAll(INLINE_SCRIPT)];
-        for (const [tag, src] of matches) {
+        for (const [tag, src = ""] of matches) {
           const result = await esbuild({
             entryPoints: [path.join(root, src)],
             bundle: true,
@@ -118,7 +118,9 @@ export const inlineBlockingScript = (root: string): Plugin => {
           Object.keys(result.metafile.inputs).forEach((input) =>
             inputs.add(path.resolve(input)),
           );
-          const code = result.outputFiles[0].text
+          const [output] = result.outputFiles;
+          if (!output) throw new Error(`esbuild produced no output for ${src}`);
+          const code = output.text
             .trim()
             .replaceAll("</script", "<\\/script");
           html = html.replace(tag, `<script>${code}</script>`);

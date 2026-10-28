@@ -8,6 +8,7 @@ const hideJumpLinks = () => {
 
   // show home link
   const breadcrumbNavHome = document.querySelector("#breadcrumbNavHome");
+  if (!breadcrumbNavHome) return;
   breadcrumbNavHome.classList.remove("hidden");
   breadcrumbNavHome.classList.add("block");
 };
@@ -16,12 +17,14 @@ const showExtraSeparator = () => {
   const breadcrumbNavExtraSeperator = document.querySelector(
     "#breadcrumb-Nav-Separator"
   );
+  if (!breadcrumbNavExtraSeperator) return;
   breadcrumbNavExtraSeperator.classList.remove("hidden");
   breadcrumbNavExtraSeperator.classList.add("block");
 };
 
 const showBreadcrumbBlog = () => {
   const breadcrumbNavBlog = document.querySelector("#breadcrumb-Nav-blog");
+  if (!breadcrumbNavBlog) return;
   breadcrumbNavBlog.classList.remove("hidden");
   breadcrumbNavBlog.classList.add("block");
   breadcrumbNavBlog.addEventListener("click", toggleBlogDropdown);
@@ -47,6 +50,8 @@ const updateBreadcrumb = () => {
   const fullUrl = window.location.href;
   const id = fullUrl.split("#");
 
+  if (!breadcrumbNavButton) return;
+
   if (id.length > 1) {
     breadcrumbNavButton.innerHTML = "#" + id[1];
   } else if (path !== "/") {
@@ -67,14 +72,15 @@ const updateBreadcrumb = () => {
 const toggleMainDropDown = () => {
   const breadcrumbDropdown = document.querySelector("#breadcrumbNavDropdown");
   const body = document.querySelector("body");
+  if (!breadcrumbDropdown || !body) return;
   
   breadcrumbDropdown.classList.toggle("invisible");
   updateBreadcrumb();
 
   if (!breadcrumbDropdown.classList.contains("invisible")) {
     setTimeout(() => {
-      const bodyListener = (e) => {
-        if (!breadcrumbDropdown.contains(e.target)) {
+      const bodyListener = (e: MouseEvent) => {
+        if (!(e.target instanceof Node && breadcrumbDropdown.contains(e.target))) {
           breadcrumbDropdown.classList.add("invisible");
           body.removeEventListener("click", bodyListener);
         }
@@ -87,6 +93,7 @@ const toggleMainDropDown = () => {
 const toggleBlogDropdown = () => {
   const breadcrumbDropdown = document.querySelector("#breadcrumbBlogDropdown");
   // const body = document.querySelector("body");
+  if (!breadcrumbDropdown) return;
   
   breadcrumbDropdown.classList.toggle("invisible");
   // updateBreadcrumb();
@@ -105,10 +112,10 @@ const toggleBlogDropdown = () => {
 };
 
 const initNavBubbles = () => {
-  const bubbleEls = document.querySelectorAll(".nav-bubble");
+  const bubbleEls = document.querySelectorAll<HTMLElement>(".nav-bubble");
 
   bubbleEls.forEach((el) => {
-    const moveBubble = (clientX, clientY) => {
+    const moveBubble = (clientX: number, clientY: number) => {
       const rect = el.getBoundingClientRect();
       el.style.setProperty("--bubble-x", `${clientX - rect.left}px`);
       el.style.setProperty("--bubble-y", `${clientY - rect.top}px`);
@@ -132,6 +139,7 @@ const initBreadcrumb = () => {
   const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
 
   updateBreadcrumb();
+  if (!breadcrumbNavButton) return;
   breadcrumbNavButton.addEventListener("click", toggleMainDropDown);
   initNavBubbles();
 };

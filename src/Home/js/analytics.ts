@@ -23,22 +23,25 @@ const EVENT_PARAMS = [
   "demo",
   "post_id",
   "post_title",
-];
+] as const;
+
+type EventParam = (typeof EVENT_PARAMS)[number];
+type EventParams = Partial<Record<EventParam, string>>;
 
 const SECTION_VIEW_DWELL_MS = 1000;
 
-const track = (event, params = {}) => {
+const track = (event: string, params: EventParams = {}): void => {
   window.dataLayer = window.dataLayer || [];
-  const payload = { event };
+  const payload: Record<string, unknown> = { event };
   EVENT_PARAMS.forEach((key) => {
     payload[key] = params[key];
   });
   window.dataLayer.push(payload);
 };
 
-const sectionOf = (element) => element.closest("section[id]")?.id;
+const sectionOf = (element: Element): string | undefined => element.closest("section[id]")?.id;
 
-const linkText = (element) =>
+const linkText = (element: Element): string =>
   (element.getAttribute("aria-label") || element.textContent || "")
     .replace(/\s+/g, " ")
     .trim()
@@ -46,16 +49,18 @@ const linkText = (element) =>
 
 // ---------- clicks ---------- //
 
-const handleTrackedClick = (event) => {
+const handleTrackedClick = (event: MouseEvent) => {
   // Left click and Enter fire "click"; middle click fires "auxclick".
   if (event.type === "auxclick" && event.button !== 1) return;
 
-  const element = event.target.closest?.("[data-track]");
-  if (!element) return;
+  if (!(event.target instanceof Element)) return;
+  const element = event.target.closest("[data-track]");
+  if (!(element instanceof HTMLElement)) return;
 
-  track(element.dataset.track, {
+  track(element.dataset.track ?? "", {
     section: sectionOf(element),
-    link_url: element.href || undefined,
+    link_url:
+      element instanceof HTMLAnchorElement ? element.href || undefined : undefined,
     link_text: linkText(element),
     social_network: element.dataset.socialNetwork,
     project: element.dataset.project,
@@ -77,10 +82,10 @@ const initSectionViews = () => {
   );
   if (!sections.length) return;
 
-  const timers = new Map();
-  const seen = new Set();
+  const timers = new Map<string, ReturnType<typeof setTimeout>>();
+  const seen = new Set<string>();
 
-  const isMostlyVisible = (entry) => {
+  const isMostlyVisible = (entry: IntersectionObserverEntry): boolean => {
     if (!entry.isIntersecting) return false;
     const viewportHeight = entry.rootBounds?.height || window.innerHeight;
     // Tall sections can never be 50% visible, so also count a section that
@@ -124,6 +129,7 @@ const initSectionViews = () => {
 
 const initDemoInteractions = () => {
   document.querySelectorAll("[data-track-demo]").forEach((element) => {
+    if (!(element instanceof HTMLElement)) return;
     const demo = element.dataset.trackDemo;
     const controller = new AbortController();
     const onInteract = () => {
@@ -139,11 +145,12 @@ const initDemoInteractions = () => {
   });
 };
 
-const initAnalytics = () => {
+const initAnalytics = (): void => {
   initClickTracking();
   initSectionViews();
   initDemoInteractions();
 };
 
+export type { EventParam, EventParams };
 export { EVENT_PARAMS, track };
 export default initAnalytics;

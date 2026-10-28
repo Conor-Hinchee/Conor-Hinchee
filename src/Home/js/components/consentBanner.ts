@@ -5,10 +5,11 @@ import {
   getStoredConsent,
   clearLegacyConsent,
   updateConsent,
-} from "../consent.js";
+} from "../consent";
 
 const showConsentBannerBar = () => {
   const banner = document.getElementById("consentBanner");
+  if (!banner) return;
   banner.style.transitionDuration = "1s";
   banner.style.opacity = "1";
   banner.addEventListener(
@@ -24,9 +25,11 @@ const showConsentBannerBar = () => {
 const showConsentBannerFull = () => {
   const banner = document.getElementById("consentBanner");
   const consentTitle = document.getElementById("consentTitle");
+  if (!banner) return;
 
   banner.style.transition =
     "height 0.5s ease-in-out, background-color 0.3s, color 0.3s, border-color 0.3s";
+  if (!consentTitle) return;
   consentTitle.style.transitionDuration = "0.2s";
   consentTitle.style.opacity = "0";
   banner.style.height = "250px";
@@ -46,8 +49,10 @@ const showConsentBannerFull = () => {
 
 const showConsentContent = () => {
   const consentTitle = document.getElementById("consentTitle");
+  if (!consentTitle) return;
   consentTitle.style.display = "none";
   const consentContent = document.getElementById("consentContent");
+  if (!consentContent) return;
 
   consentContent.classList.remove("hidden");
   consentContent.style.transition = "opacity 0.4s ease-in";
@@ -62,6 +67,7 @@ let bannerIsExpanded = false;
 
 const setBannerToDarkMode = () => {
   const banner = document.getElementById("consentBanner");
+  if (!banner) return;
   banner.style.backgroundColor = "black";
   banner.style.color = "white";
   banner.style.borderColor = "white";
@@ -70,6 +76,7 @@ const setBannerToDarkMode = () => {
 
 const setBannerToLightMode = () => {
   const banner = document.getElementById("consentBanner");
+  if (!banner) return;
   banner.style.backgroundColor = "white";
   banner.style.color = "black";
   banner.style.borderColor = "black";
@@ -131,7 +138,7 @@ const scrollListener = () => {
   }
 };
 
-const eventConductorSteve = (event) => {
+const eventConductorSteve = (event: Event) => {
   DEBUG_LOG({
     logLevel: "info",
     message: `EVENT CONDUCTOR STEVE 🗣️ : Consent Banner State = ${event.type}`,
@@ -141,24 +148,29 @@ const eventConductorSteve = (event) => {
 
 // ========== LISTENERS & LOGIC ========== //
 
-const recordChoice = (analyticsStorage) => {
+const recordChoice = (analyticsStorage: typeof GRANTED | typeof DENIED) => {
   updateConsent(analyticsStorage);
   DEBUG_LOG({
     logLevel: "info",
     message: `Consent updated: analytics_storage=${analyticsStorage}`,
   });
-  document.getElementById("consentBanner").style.display = "none";
+  const banner = document.getElementById("consentBanner");
+  if (!banner) return;
+  banner.style.display = "none";
 };
 
 const initConsentListeners = () => {
   const banner = document.querySelector("#consentBanner");
+  const consentButton = document.getElementById("cookieConsent");
+  const declineButton = document.getElementById("cookieDecline");
+  if (!banner || !consentButton || !declineButton) return;
 
-  document.getElementById("cookieConsent").addEventListener("click", (event) => {
+  consentButton.addEventListener("click", (event) => {
     event.stopPropagation();
     recordChoice(GRANTED);
   });
 
-  document.getElementById("cookieDecline").addEventListener("click", (event) => {
+  declineButton.addEventListener("click", (event) => {
     event.stopPropagation();
     recordChoice(DENIED);
   });

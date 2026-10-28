@@ -11,30 +11,45 @@ const CONSENT_COOKIE_DAYS = 180;
 const GRANTED = "granted";
 const DENIED = "denied";
 
+type ConsentValue = typeof GRANTED | typeof DENIED;
+
+interface ConsentParams {
+  ad_storage?: ConsentValue;
+  ad_user_data?: ConsentValue;
+  ad_personalization?: ConsentValue;
+  analytics_storage?: ConsentValue;
+  region?: readonly string[];
+}
+
 // Opt-in regions: analytics stays off until the visitor consents.
 // EU-27 + EEA (IS, LI, NO) + UK + Switzerland.
 const OPT_IN_REGIONS = [
   "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU",
   "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES",
   "SE", "IS", "LI", "NO", "GB", "CH",
-];
+] as const;
 
 // No ads on this site, so ad-related storage is always denied.
 const ADS_DENIED = {
   ad_storage: DENIED,
   ad_user_data: DENIED,
   ad_personalization: DENIED,
-};
+} as const satisfies ConsentParams;
 
 // GTM only understands consent commands pushed as an `arguments` object,
 // so this must stay a regular function (no arrow function / rest params).
-function gtag() {
+function gtag(
+  command: "consent",
+  action: "default" | "update",
+  params: ConsentParams
+): void;
+function gtag(): void {
   window.dataLayer = window.dataLayer || [];
   // eslint-disable-next-line prefer-rest-params
   window.dataLayer.push(arguments);
 }
 
-const getStoredConsent = () => {
+const getStoredConsent = (): ConsentValue | null => {
   const match = document.cookie
     .split("; ")
     .find((cookie) => cookie.startsWith(`${CONSENT_COOKIE}=`));
@@ -43,7 +58,7 @@ const getStoredConsent = () => {
   return value === GRANTED || value === DENIED ? value : null;
 };
 
-const storeConsent = (analyticsStorage) => {
+const storeConsent = (analyticsStorage: ConsentValue): void => {
   const expires = new Date(
     Date.now() + CONSENT_COOKIE_DAYS * 864e5
   ).toUTCString();
@@ -55,14 +70,14 @@ const clearLegacyConsent = () => {
   document.cookie = `${LEGACY_CONSENT_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
   try {
     localStorage.removeItem(LEGACY_CONSENT_STORAGE_KEY);
-  } catch (e) {
+  } catch {
     // localStorage can throw in some privacy modes; nothing to clean up then.
   }
 };
 
 // Must run before the GTM snippet. Region-specific defaults win over the
 // global default, so opt-in regions start denied and everyone else granted.
-const setDefaultConsent = () => {
+const setDefaultConsent = (): void => {
   gtag("consent", "default", {
     ...ADS_DENIED,
     analytics_storage: DENIED,
@@ -79,11 +94,12 @@ const setDefaultConsent = () => {
   }
 };
 
-const updateConsent = (analyticsStorage) => {
+const updateConsent = (analyticsStorage: ConsentValue): void => {
   storeConsent(analyticsStorage);
   gtag("consent", "update", { analytics_storage: analyticsStorage });
 };
 
+export type { ConsentValue, ConsentParams };
 export {
   CONSENT_COOKIE,
   GRANTED,

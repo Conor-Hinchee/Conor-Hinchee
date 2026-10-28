@@ -1,0 +1,20 @@
+import initAnalytics from "./analytics";
+import initBanner from "./components/banner";
+import initBreadcrumb from "./components/breadcrumb";
+import initClickTheHexagon from "./components/clickTheHexagon";
+import initConsentBanner from "./components/consentBanner";
+import initGameOfLife from "./components/gameOfLife";
+import initRippleText from "./components/rippleText";
+import initRippleTextOdin from "./components/rippleTextOdin";
+import initGridBackground from "./components/gridBackground";
+
+initAnalytics();
+initBanner();
+initBreadcrumb();
+initClickTheHexagon();
+initConsentBanner();
+initGameOfLife();
+initRippleText();
+initRippleTextOdin();
+initGridBackground("#main-bg");
+initGridBackground("#footer-bg");

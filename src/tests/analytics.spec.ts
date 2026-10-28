@@ -1,6 +1,12 @@
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
-const BASE_URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
+// The page's dataLayer, as typed in src/types/global.d.ts (which this config
+// doesn't include). Only named properties are read here, so `arguments`
+// entries (gtag commands) just have no `event`.
+type GtmWindow = Window & { dataLayer?: Record<string, unknown>[] };
+
+type TrackedEvent = Record<string, unknown> & { event: string; keys: string[] };
 
 const EVENT_PARAMS = [
   "section",
@@ -20,7 +26,7 @@ const POSTS_FIXTURE = {
   ],
 };
 
-test.beforeEach(async ({ page, context }) => {
+test.beforeEach(async ({ page, context, baseURL }) => {
   // Offline + deterministic: no GTM or third-party assets. Also block the
   // browser-sync client, whose ghost mode mirrors clicks and scrolls between
   // parallel test browsers.
@@ -29,12 +35,12 @@ test.beforeEach(async ({ page, context }) => {
     (route) => route.abort()
   );
   // A stored choice keeps the consent banner from covering links.
-  await context.addCookies([{ name: "consent_v2", value: "granted", url: BASE_URL }]);
+  await context.addCookies([{ name: "consent_v2", value: "granted", url: baseURL }]);
   // Don't actually navigate, open tabs or mail clients when links are clicked.
   // Runs in the bubble phase, after the site's capture-phase listener.
   await page.addInitScript(() => {
-    const stop = (e) => {
-      if (e.target.closest && e.target.closest("a")) e.preventDefault();
+    const stop = (e: MouseEvent) => {
+      if (e.target instanceof Element && e.target.closest("a")) e.preventDefault();
     };
     window.addEventListener("click", stop);
     window.addEventListener("auxclick", stop);
@@ -43,30 +49,33 @@ test.beforeEach(async ({ page, context }) => {
 
 // Custom events only (not GTM internals or consent commands), with the list of
 // keys each push set, since undefined values don't survive serialization.
-const readEvents = (page) =>
+const readEvents = (page: Page): Promise<TrackedEvent[]> =>
   page.evaluate(() =>
-    (window.dataLayer || [])
-      .filter((e) => e && typeof e.event === "string" && !e.event.startsWith("gtm."))
+    ((window as GtmWindow).dataLayer || [])
+      .filter(
+        (e): e is Record<string, unknown> & { event: string } =>
+          e && typeof e.event === "string" && !e.event.startsWith("gtm.")
+      )
       .map((e) => ({ ...e, keys: Object.keys(e) }))
   );
 
-const eventsNamed = async (page, name) =>
+const eventsNamed = async (page: Page, name: string) =>
   (await readEvents(page)).filter((e) => e.event === name);
 
-const expectAllParamKeys = (entry) => {
-  for (const key of EVENT_PARAMS) expect(entry.keys).toContain(key);
+const expectAllParamKeys = (entry: TrackedEvent | undefined) => {
+  for (const key of EVENT_PARAMS) expect(entry?.keys).toContain(key);
 };
 
 test.describe("tracked link clicks", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto("/");
   });
 
   test("resume link fires resume_download", async ({ page }) => {
     await page.locator('#socials a[data-track="resume_download"]').click();
     const [event] = await eventsNamed(page, "resume_download");
     expect(event).toMatchObject({ section: "socials", link_text: "Resume" });
-    expect(event.link_url).toContain("Resume%202026.pdf");
+    expect(event?.link_url).toContain("Resume%202026.pdf");
     expectAllParamKeys(event);
   });
 
@@ -95,7 +104,7 @@ test.describe("tracked link clicks", () => {
     ["field", "field", "https://github.com/Conor-Hinchee/FIELD"],
     ["odin", "odin", "https://github.com/Conor-Hinchee/odin"],
     ["pure_react_carousel", "random", "https://github.com/express-labs/pure-react-carousel"],
-  ]) {
+  ] as const) {
     test(`${project} repo link fires project_click`, async ({ page }) => {
       const link = page.locator(`a[data-project="${project}"][href*="github.com"]`);
       await expect(link).toHaveAttribute("href", repoUrl);
@@ -125,14 +134,14 @@ test.describe("tracked link clicks", () => {
     await page.locator('#socials a[data-social-network="github"]').click();
     await page.locator('#socials a[href^="mailto:"]').click();
     const [contact] = await eventsNamed(page, "contact_click");
-    expect(contact.keys).toContain("social_network");
-    expect(contact.social_network).toBeUndefined();
+    expect(contact?.keys).toContain("social_network");
+    expect(contact?.social_network).toBeUndefined();
   });
 
   test("every resume, email and social link on the homepage is tagged", async ({ page }) => {
     const untagged = await page.evaluate(() =>
       [
-        ...document.querySelectorAll(
+        ...document.querySelectorAll<HTMLAnchorElement>(
           'a[href^="mailto:"], a[href$=".pdf"], a[href*="github.com"], a[href*="linkedin.com"], a[href*="x.com"]'
         ),
       ]
@@ -145,7 +154,7 @@ test.describe("tracked link clicks", () => {
 
 test.describe("section_view", () => {
   test("fires once per section after it's been on screen for a second", async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto("/");
 
     await expect
       .poll(async () => (await eventsNamed(page, "section_view")).map((e) => e.section))
@@ -170,15 +179,15 @@ test.describe("section_view", () => {
   });
 
   test("a section scrolled past quickly doesn't count", async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto("/");
     // Scroll to field, let the observer see it for two frames, then move on.
     // Done inside the page so test-runner latency can't stretch the dwell.
     await page.evaluate(async () => {
       const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-      document.querySelector("#field").scrollIntoView();
+      document.querySelector("#field")!.scrollIntoView();
       await nextFrame();
       await nextFrame();
-      document.querySelector("#socials").scrollIntoView();
+      document.querySelector("#socials")!.scrollIntoView();
     });
     await page.waitForTimeout(1500);
     const sections = (await eventsNamed(page, "section_view")).map((e) => e.section);
@@ -188,7 +197,7 @@ test.describe("section_view", () => {
 
 test.describe("demo_interact", () => {
   test("fires once on the first interaction with a demo", async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto("/");
     const demo = page.locator('[data-track-demo="game_of_life"]');
     await demo.click();
     await demo.click();
@@ -210,7 +219,7 @@ test.describe("blog_post_view", () => {
   });
 
   test("reports the post that ?post=latest resolved to", async ({ page }) => {
-    await page.goto(`${BASE_URL}/blog/?post=latest`);
+    await page.goto("/blog/?post=latest");
     await expect.poll(() => eventsNamed(page, "blog_post_view")).toHaveLength(1);
     const [event] = await eventsNamed(page, "blog_post_view");
     expect(event).toMatchObject({ post_id: "newest-post", post_title: "Newest Post" });
@@ -218,7 +227,7 @@ test.describe("blog_post_view", () => {
   });
 
   test("reports a specific post", async ({ page }) => {
-    await page.goto(`${BASE_URL}/blog/?post=older-post`);
+    await page.goto("/blog/?post=older-post");
     await expect.poll(() => eventsNamed(page, "blog_post_view")).toHaveLength(1);
     const [event] = await eventsNamed(page, "blog_post_view");
     expect(event).toMatchObject({ post_id: "older-post", post_title: "Older Post" });

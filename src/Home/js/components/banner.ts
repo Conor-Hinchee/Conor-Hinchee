@@ -1,6 +1,6 @@
 // import { Desktop_Width, Tablet_Width, Mobile_Width } from "../constants";
 
-const playThemeTransition = (direction) => {
+const playThemeTransition = (direction: string) => {
     const overlay = document.createElement("div");
     overlay.className = `theme-transition-overlay to-${direction}`;
     document.body.appendChild(overlay);
@@ -14,8 +14,15 @@ const playThemeTransition = (direction) => {
     });
 };
 
-const changeTheme = (event = {}, override = "") => {
-    const { setTheme } = event?.target?.dataset || "";
+const changeTheme = (
+    event: { target?: EventTarget | null } | null = {},
+    override: string | null = "",
+) => {
+    const target = event?.target;
+    const setTheme =
+        target instanceof HTMLElement || target instanceof SVGElement
+            ? target.dataset.setTheme
+            : undefined;
 
     if (override === "dark" || setTheme === "dark") {
         if (setTheme === "dark") {
@@ -29,6 +36,8 @@ const changeTheme = (event = {}, override = "") => {
         const darkModeItem = document.querySelector("#darkModeItem");
         const mainElement = document.querySelector("main");
         const allOandI = document.querySelectorAll(".OandI");
+
+        if (!mainElement || !lightModeItem || !darkModeItem) return;
 
         mainElement.classList.replace("bgGridWhite", "bgGridDark");
 
@@ -61,6 +70,8 @@ const changeTheme = (event = {}, override = "") => {
         const darkModeItem = document.querySelector("#darkModeItem");
         const mainElement = document.querySelector("main");
         const allOandI = document.querySelectorAll(".OandI");
+
+        if (!mainElement || !lightModeItem || !darkModeItem) return;
 
         mainElement.classList.replace("bgGridDark", "bgGridWhite");
 
@@ -190,16 +201,19 @@ const setClickListeners = () => {
     // mobileLayoutButton.addEventListener("click", handleMobileIconClick);
 
     const darkModeItem = document.querySelector("#darkModeItem");
-    const darkModeButton = darkModeItem.firstElementChild;
+    const darkModeButton = darkModeItem?.firstElementChild;
+    if (!darkModeButton) return;
     darkModeButton.addEventListener("click", changeTheme);
 
     const lightModeItem = document.querySelector("#lightModeItem");
-    const lightModeButton = lightModeItem.firstElementChild;
+    const lightModeButton = lightModeItem?.firstElementChild;
+    if (!lightModeButton) return;
     lightModeButton.addEventListener("click", changeTheme);
 };
 
 const hideBanner = () => {
     const banner = document.querySelector("header");
+    if (!banner) return;
     banner.style.display = "none";
 };
 

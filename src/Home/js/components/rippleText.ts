@@ -6,16 +6,40 @@ const DAMPING = 0.96;
 const TOUCH_BURST_RADIUS = 30;
 const TOUCH_BURST_STRENGTH = 6;
 
+type Section = {
+  text: string;
+  fontSize: number;
+  align: string;
+  widthRatio?: number;
+  marginBottom?: number;
+  bold?: boolean;
+  underline?: boolean;
+};
+
+type RippleChar = {
+  char: string;
+  homeX: number;
+  homeY: number;
+  dx: number;
+  dy: number;
+  vx: number;
+  vy: number;
+  fontSize: number;
+  bold: boolean;
+  underline: boolean;
+};
+
 /**
  * Initialize ripple text effect on canvas
  * @returns {void}
  */
 export default function initRippleText() {
   // Get target container
-  const container = document.querySelector("#ripple-text-container");
-  if (!container) {
+  const containerEl = document.querySelector("#ripple-text-container");
+  if (!(containerEl instanceof HTMLElement)) {
     return;
   }
+  const container = containerEl;
 
   // Get existing h1 for font styling
   const h1 = container.querySelector("h1");
@@ -40,10 +64,11 @@ export default function initRippleText() {
   canvas.style.height = "100%";
   container.insertBefore(canvas, container.firstChild);
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
+  const context = canvas.getContext("2d");
+  if (!context) {
     return;
   }
+  const ctx = context;
 
   // Get computed styles for font
   const computedStyle = window.getComputedStyle(h1);
@@ -53,7 +78,7 @@ export default function initRippleText() {
 
   // Text sections with styling metadata
   // widthRatio controls how much of the canvas width text can fill (like CSS w-3/4, w-1/2)
-  const sections = [
+  const sections: Section[] = [
     {
       text: "I'm Conor, a software engineer with 6+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and I'm familiar with troubleshooting production systems in real time using Google Cloud and TrackJS. Recently, I've been focused on building AI harnesses and tools that help developers get work done.",
       fontSize: 1.125, // text-lg
@@ -67,9 +92,9 @@ export default function initRippleText() {
   const remToPx = 16;
 
   // State
-  let cursor = null;
+  let cursor: { x: number; y: number } | null = null;
   let isDarkMode = document.documentElement.classList.contains("dark");
-  let characters = [];
+  let characters: RippleChar[] = [];
 
   /**
    * Get text color based on dark mode
@@ -81,17 +106,17 @@ export default function initRippleText() {
   /**
    * Calculate font size in pixels
    */
-  function getFontSizePixels(remSize) {
+  function getFontSizePixels(remSize: number) {
     return remSize * remToPx;
   }
 
   /**
    * Word-wrap text into lines that fit within maxWidth
    */
-  function wrapText(text, maxWidth) {
+  function wrapText(text: string, maxWidth: number): string[] {
     const words = text.split(" ");
-    const lines = [];
-    let currentLine = words[0];
+    const lines: string[] = [];
+    let currentLine = words[0] ?? "";
 
     for (let i = 1; i < words.length; i++) {
       const testLine = currentLine + " " + words[i];
@@ -99,7 +124,7 @@ export default function initRippleText() {
         currentLine = testLine;
       } else {
         lines.push(currentLine);
-        currentLine = words[i];
+        currentLine = words[i] ?? "";
       }
     }
     lines.push(currentLine);
@@ -192,7 +217,7 @@ export default function initRippleText() {
   /**
    * Apply touch burst effect
    */
-  function applyTouchBurst(cx, cy) {
+  function applyTouchBurst(cx: number, cy: number) {
     for (const char of characters) {
       const charX = char.homeX + char.dx;
       const charY = char.homeY + char.dy;
@@ -278,7 +303,7 @@ export default function initRippleText() {
   /**
    * Pointer move handler
    */
-  function handlePointerMove(e) {
+  function handlePointerMove(e: PointerEvent) {
     const rect = canvas.getBoundingClientRect();
     cursor = {
       x: e.clientX - rect.left,
@@ -296,7 +321,7 @@ export default function initRippleText() {
   /**
    * Pointer down handler for touch burst
    */
-  function handlePointerDown(e) {
+  function handlePointerDown(e: PointerEvent) {
     if (e.pointerType === "touch") {
       const rect = canvas.getBoundingClientRect();
       const cx = e.clientX - rect.left;
