@@ -33,11 +33,21 @@
     "overrides": [
         {
             "files": [
-                "scripts/*.js"
+                "scripts/*.js",
+                "scripts/*.cjs"
             ],
             "rules": {
                 "@typescript-eslint/no-var-requires": "off",
                 "no-undef": "off"
+            }
+        },
+        {
+            "files": [
+                "src/tests/**/*.js",
+                "playwright.config.js"
+            ],
+            "env": {
+                "node": true
             }
         }
     ]

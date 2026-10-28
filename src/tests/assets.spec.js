@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const BASE_URL = "http://127.0.0.1:3000";
+const BASE_URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
 
 // Every same-origin file a page references (favicons, stylesheets, scripts,
 // images) must exist in the build. Catches assets that are linked in the HTML

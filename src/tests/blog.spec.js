@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const BASE_URL = "http://127.0.0.1:3000";
+const BASE_URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
 
 // Blog content lives in src/assets/blog and is copied into dist by
 // build:assets. It used to live only in the tracked dist/ folder, so when dist/

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const BASE_URL = "http://127.0.0.1:3000";
+const BASE_URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
 
 // Keep tests offline and deterministic: GTM and third-party assets never load,
 // so we assert on what the page pushes into the dataLayer. The browser-sync
