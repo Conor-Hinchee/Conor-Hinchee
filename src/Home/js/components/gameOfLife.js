@@ -5,6 +5,10 @@ const Seed = 4; // we use to seed the board 2 is 50%. 4 is 25%. 8 is 12.5 % ...
 let Game_Board = [];
 let gameSimulationInterval = null;
 let intersectionObserver = null;
+let resizeObserver = null;
+let resizeTimer = null;
+let currentColumns = 0;
+const ResizeDebounceMS = 200;
 
 const initCells = (totalCells) => {
   const array = new Uint8Array(totalCells);
@@ -45,14 +49,17 @@ const initNeighbors = (index, rows, columns) => {
   return neighbors;
 };
 
+const measureGrid = (box) => {
+  // Calculate columns first, then derive rows so every row is full-width
+  const columns = Math.floor(box.clientWidth / Cell_Width);
+  const rows = Math.ceil(box.clientHeight / Cell_Height) + 1;
+  return { columns, rows };
+};
+
 const drawBoard = () => {
   const box = document.querySelector("#gameOfLife");
-  const boxHeight = box.clientHeight;
-  const boxWidth = box.clientWidth;
-
-  // Calculate columns first, then derive rows so every row is full-width
-  const columns = Math.floor(boxWidth / Cell_Width);
-  const rows = Math.ceil(boxHeight / Cell_Height) + 1;
+  const { columns, rows } = measureGrid(box);
+  currentColumns = columns;
 
   const totalCells = rows * columns;
 
@@ -191,22 +198,49 @@ const resumeSimulation = () => {
   }
 };
 
-const resetGame = () => {
+const rebuildBoard = () => {
   const box = document.querySelector("#gameOfLife");
-
-  // Stop any running simulation
-  if (gameSimulationInterval !== null) {
-    clearInterval(gameSimulationInterval);
-    gameSimulationInterval = null;
-  }
 
   // Clear the board
   Game_Board = [];
   box.innerHTML = "<div class=\"sr-only\">Conway's Game Of Life</div>";
 
-  // Reinitialize the game and resume (IntersectionObserver already watching)
   drawBoard();
+};
+
+const resetGame = () => {
+  pauseSimulation();
+  rebuildBoard();
+  // Resume (IntersectionObserver already watching)
   resumeSimulation();
+};
+
+const initResizeObserver = (box) => {
+  resizeObserver = new ResizeObserver(() => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Width only: the box's height follows its own rows of cells, so
+      // comparing rows would rebuild once more after every draw.
+      // Also absorbs the initial callback on observe().
+      const { columns } = measureGrid(box);
+      if (columns === currentColumns) return;
+
+      // Only resume if it was running; off-screen boards stay paused
+      const wasRunning = gameSimulationInterval !== null;
+      pauseSimulation();
+      rebuildBoard();
+      if (wasRunning) resumeSimulation();
+    }, ResizeDebounceMS);
+  });
+  resizeObserver.observe(box);
+};
+
+const cleanupResizeObserver = () => {
+  clearTimeout(resizeTimer);
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+    resizeObserver = null;
+  }
 };
 
 const initIntersectionObserver = () => {
@@ -253,6 +287,7 @@ const initGameOfLife = () => {
   // Don't start the simulation yet — IntersectionObserver will start it
   // only when the board enters the viewport, and pause it when it leaves.
   initIntersectionObserver();
+  initResizeObserver(box);
 
   // Attach reset button handler
   const resetButton = document.querySelector("#gameOfLifeReset");
@@ -264,4 +299,4 @@ const initGameOfLife = () => {
 };
 
 export default initGameOfLife;
-export { cleanupIntersectionObserver, pauseSimulation, resumeSimulation };
+export { cleanupIntersectionObserver, cleanupResizeObserver, pauseSimulation, resumeSimulation };
