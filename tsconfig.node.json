@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "node_modules/.tmp/tsconfig.node",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "include": [
+    "vite.config.ts",
+    "vite.plugins.ts",
+    "playwright.config.ts",
+    "eslint.config.ts",
+    "scripts",
+    "src/tests",
+    "src/Home/tests",
+    "src/types/node"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"]
+  },
+  "include": ["src/Home/js", "src/blog", "src/types"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
