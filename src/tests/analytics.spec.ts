@@ -44,6 +44,9 @@ test.beforeEach(async ({ page, context, baseURL }) => {
     };
     window.addEventListener("click", stop);
     window.addEventListener("auxclick", stop);
+    // No native context menu either: in WebKit it swallows the right click's
+    // mouseup, and the next click only dismisses it instead of reaching the page.
+    window.addEventListener("contextmenu", stop);
   });
 });
 
