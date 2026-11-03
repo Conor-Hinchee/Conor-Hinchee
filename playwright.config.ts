@@ -11,6 +11,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 const PORT = process.env.PORT || 3000;
 const BASE_URL = `http://127.0.0.1:${PORT}`;
+const PERF_SPEC = "**/mobile-performance.spec.ts";
 
 export default defineConfig({
   testDir: "./src/tests",
@@ -38,16 +39,26 @@ export default defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+      testIgnore: PERF_SPEC,
     },
 
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
+      testIgnore: PERF_SPEC,
     },
 
     {
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
+      testIgnore: PERF_SPEC,
+    },
+
+    /* Mobile performance budget. CPU throttling needs CDP, so Chromium only. */
+    {
+      name: "mobile-perf",
+      use: { ...devices["iPhone 13"], browserName: "chromium" },
+      testMatch: PERF_SPEC,
     },
 
     /* Test against mobile viewports. */

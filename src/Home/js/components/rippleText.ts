@@ -5,6 +5,8 @@ const SPRING_STIFFNESS = 0.01;
 const DAMPING = 0.96;
 const TOUCH_BURST_RADIUS = 30;
 const TOUCH_BURST_STRENGTH = 6;
+// Below this much total velocity (and, with no cursor, displacement) the loop stops
+const REST_THRESHOLD = 0.01;
 
 type Section = {
   text: string;
@@ -27,6 +29,7 @@ type RippleChar = {
   fontSize: number;
   bold: boolean;
   underline: boolean;
+  isEmoji: boolean;
 };
 
 /**
@@ -95,6 +98,7 @@ export default function initRippleText() {
   let cursor: { x: number; y: number } | null = null;
   let isDarkMode = document.documentElement.classList.contains("dark");
   let characters: RippleChar[] = [];
+  let running = false;
 
   /**
    * Get text color based on dark mode
@@ -178,7 +182,8 @@ export default function initRippleText() {
             vy: 0,
             fontSize: section.fontSize,
             bold: section.bold || false,
-            underline: section.underline || false
+            underline: section.underline || false,
+            isEmoji
           });
           x += charWidth;
         }
@@ -212,6 +217,7 @@ export default function initRippleText() {
     ctx.scale(dpr, dpr);
 
     layoutCharacters();
+    start();
   }
 
   /**
@@ -233,15 +239,22 @@ export default function initRippleText() {
   }
 
   /**
-   * Animation loop
+   * Animation loop. Runs only while characters are moving, then stops after
+   * drawing them at rest; start() wakes it again.
    */
   function animate() {
     const pixelWidth = canvas.width / window.devicePixelRatio;
     const pixelHeight = canvas.height / window.devicePixelRatio;
 
     // Clear canvas
-    ctx.fillStyle = "transparent";
     ctx.clearRect(0, 0, pixelWidth, pixelHeight);
+
+    const textColor = getTextColor();
+    ctx.fillStyle = textColor;
+    ctx.textBaseline = "top";
+    let currentFont = "";
+    let velocity = 0;
+    let offset = 0;
 
     // Physics and rendering
     for (const char of characters) {
@@ -269,26 +282,28 @@ export default function initRippleText() {
       // Integration
       char.dx += char.vx;
       char.dy += char.vy;
+      velocity += Math.abs(char.vx) + Math.abs(char.vy);
+      offset += Math.abs(char.dx) + Math.abs(char.dy);
 
       // Render character
       const charX = char.homeX + char.dx;
       const charY = char.homeY + char.dy;
 
-      // Use per-character font info
+      // Use per-character font info, only touching ctx.font when it changes
       const fontWeight = char.bold ? "bold " : "";
       const fontPixels = getFontSizePixels(char.fontSize);
-      const isEmoji = emojiRegex.test(char.char);
-      const fontFamily = isEmoji ? emojiFontFamily : baseFontFamily;
-
-      ctx.font = `${fontWeight}${fontPixels}px ${fontFamily}`;
-      ctx.fillStyle = getTextColor();
-      ctx.textBaseline = "top";
+      const fontFamily = char.isEmoji ? emojiFontFamily : baseFontFamily;
+      const font = `${fontWeight}${fontPixels}px ${fontFamily}`;
+      if (font !== currentFont) {
+        ctx.font = font;
+        currentFont = font;
+      }
       ctx.fillText(char.char, charX, charY);
 
       // Draw underline if needed
       if (char.underline) {
         const charWidth = ctx.measureText(char.char).width;
-        ctx.strokeStyle = getTextColor();
+        ctx.strokeStyle = textColor;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(charX, charY + fontPixels + 2);
@@ -297,6 +312,17 @@ export default function initRippleText() {
       }
     }
 
+    // A still cursor holds the text in a pushed-aside pose, which needs no more frames
+    if (velocity < REST_THRESHOLD && (cursor || offset < REST_THRESHOLD)) {
+      running = false;
+      return;
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
     requestAnimationFrame(animate);
   }
 
@@ -309,6 +335,7 @@ export default function initRippleText() {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
+    start();
   }
 
   /**
@@ -316,6 +343,7 @@ export default function initRippleText() {
    */
   function handlePointerLeave() {
     cursor = null;
+    start();
   }
 
   /**
@@ -327,6 +355,7 @@ export default function initRippleText() {
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
       applyTouchBurst(cx, cy);
+      start();
     }
   }
 
@@ -336,6 +365,7 @@ export default function initRippleText() {
   function setupDarkModeObserver() {
     const observer = new MutationObserver(() => {
       isDarkMode = document.documentElement.classList.contains("dark");
+      start();
     });
 
     observer.observe(document.documentElement, {
@@ -357,7 +387,6 @@ export default function initRippleText() {
 
   // Initialize
   resizeCanvas();
-  animate();
   setupDarkModeObserver();
   setupResizeObserver();
 
