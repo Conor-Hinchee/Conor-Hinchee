@@ -9,6 +9,7 @@
     "build": "npm run typecheck && vite build",
     "preview": "vite preview",
     "test": "playwright test",
+    "test:perf": "playwright test --project=mobile-perf --reporter=line",
     "test-ui": "playwright test --ui",
     "lint": "prettier . --write && eslint .",
     "report": "playwright show-report",
