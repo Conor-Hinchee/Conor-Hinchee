@@ -15,7 +15,7 @@ const reloadOnChange = (
   });
 };
 
-// GitHub Pages redirects /blog to /blog/. Vite's MPA mode 404s instead, so
+// GitHub Pages redirects /now to /now/. Vite's MPA mode 404s instead, so
 // mirror Pages in dev and preview.
 const redirectToDirectory =
   (dir: () => string): Connect.NextHandleFunction =>

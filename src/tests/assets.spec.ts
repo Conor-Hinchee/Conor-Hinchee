@@ -4,7 +4,7 @@ import { test, expect } from "@playwright/test";
 // images) must exist in the build. Catches assets that are linked in the HTML
 // but never make it into dist/, like the favicon that 404'd on every page.
 
-for (const path of ["/", "/blog/?post=latest", "/now/"]) {
+for (const path of ["/", "/now/"]) {
   test(`all local assets referenced by ${path} exist`, async ({ page, request }) => {
     await page.route(
       /googletagmanager\.com|fontawesome\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|jsdelivr\.net|\/browser-sync\//,
@@ -33,7 +33,7 @@ for (const path of ["/", "/blog/?post=latest", "/now/"]) {
 }
 
 test("favicons are declared on every page", async ({ request }) => {
-  for (const path of ["/", "/blog/", "/now/"]) {
+  for (const path of ["/", "/now/"]) {
     const html = await (await request.get(path)).text();
     expect(html, path).toMatch(/rel="?icon"?[^>]*odin-favicon\.svg/);
     expect(html, path).toMatch(/rel="?apple-touch-icon"?/);
