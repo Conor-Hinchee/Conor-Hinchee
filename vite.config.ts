@@ -15,7 +15,7 @@ const port = Number(process.env.PORT) || 3000;
 export default defineConfig({
   root,
   appType: "mpa",
-  // Served at the site root and copied as-is: /images, /blog/content, resume
+  // Served at the site root and copied as-is: /images, resume
   publicDir: "assets",
   plugins: [
     tailwindcss(),
@@ -32,7 +32,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: path.join(root, "index.html"),
-        blog: path.join(root, "blog/index.html"),
         now: path.join(root, "now/index.html"),
       },
     },

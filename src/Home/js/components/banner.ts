@@ -92,12 +92,6 @@ const changeTheme = (
         }
     }
 
-    // hard refresh the page on the blog to get the theme change
-    // TODO create an event around the user interacting with the page
-    if(window.location.href.includes("blog") && !!setTheme) {
-        window.location.reload();
-    }
-    
 };
 
 // const setLayoutIconAriaPressed = (layout) => {

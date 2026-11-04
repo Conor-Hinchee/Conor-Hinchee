@@ -8,11 +8,9 @@
 //                  (or filled half the viewport) for a second. Once per page.
 //   demo_interact  First pointer/keyboard interaction inside an element with
 //                  data-track-demo="<name>". Once per page.
-//   blog_post_view Pushed by the blog page's inline script.
 //
 // GTM keeps every key ever pushed in its data model, so each push sets all
 // params (unused ones to undefined) to stop values leaking between events.
-// If you add a param here, add it to the blog page's push too.
 
 const EVENT_PARAMS = [
   "section",
@@ -21,8 +19,6 @@ const EVENT_PARAMS = [
   "social_network",
   "project",
   "demo",
-  "post_id",
-  "post_title",
 ] as const;
 
 type EventParam = (typeof EVENT_PARAMS)[number];

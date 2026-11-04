@@ -64,7 +64,7 @@ test("?internal=0 turns it back on", async ({ page }) => {
 
 test("the opt-out applies on every page", async ({ page }) => {
   await page.goto("/?internal=1");
-  for (const path of ["/blog/", "/now/"]) {
+  for (const path of ["/now/"]) {
     await page.goto(path);
     const { disabled, disabledAtParse } = await state(page);
     expect(disabled, path).toBe(true);

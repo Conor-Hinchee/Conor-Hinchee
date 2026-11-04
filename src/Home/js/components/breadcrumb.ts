@@ -13,37 +13,6 @@ const hideJumpLinks = () => {
   breadcrumbNavHome.classList.add("block");
 };
 
-const showExtraSeparator = () => {
-  const breadcrumbNavExtraSeperator = document.querySelector(
-    "#breadcrumb-Nav-Separator"
-  );
-  if (!breadcrumbNavExtraSeperator) return;
-  breadcrumbNavExtraSeperator.classList.remove("hidden");
-  breadcrumbNavExtraSeperator.classList.add("block");
-};
-
-const showBreadcrumbBlog = () => {
-  const breadcrumbNavBlog = document.querySelector("#breadcrumb-Nav-blog");
-  if (!breadcrumbNavBlog) return;
-  breadcrumbNavBlog.classList.remove("hidden");
-  breadcrumbNavBlog.classList.add("block");
-  breadcrumbNavBlog.addEventListener("click", toggleBlogDropdown);
-};
-
-const handleBlogRouting = () => {
-  const path = window.location.pathname;
-  const searchParams = new URLSearchParams(window.location.search);
-  
-  if (path.includes("/blog/")) {
-    if (!searchParams.has("post")) {
-      const newUrl = "/blog?post=latest";
-      window.history.replaceState({}, "", newUrl);
-      return true; // indicate that redirect happened
-    }
-  }
-  return false;
-};
-
 const updateBreadcrumb = () => {
   const breadcrumbNavButton = document.querySelector("#breadcrumbNavButton");
   const path = window.location.pathname;
@@ -57,13 +26,6 @@ const updateBreadcrumb = () => {
   } else if (path !== "/") {
     breadcrumbNavButton.innerHTML = path.replaceAll("/", "");
     hideJumpLinks();
-
-    if(path.includes("/blog/")){
-      showExtraSeparator();
-      showBreadcrumbBlog();
-      handleBlogRouting();
-    }
-    
   } else {
     breadcrumbNavButton.innerHTML = DEFAULT_BREADCRUMB;
   }
@@ -88,27 +50,6 @@ const toggleMainDropDown = () => {
       body.addEventListener("click", bodyListener);
     }, 0);
   }
-};
-
-const toggleBlogDropdown = () => {
-  const breadcrumbDropdown = document.querySelector("#breadcrumbBlogDropdown");
-  // const body = document.querySelector("body");
-  if (!breadcrumbDropdown) return;
-  
-  breadcrumbDropdown.classList.toggle("invisible");
-  // updateBreadcrumb();
-
-  // if (!breadcrumbDropdown.classList.contains("invisible")) {
-  //   setTimeout(() => {
-  //     const bodyListener = (e) => {
-  //       if (!breadcrumbDropdown.contains(e.target)) {
-  //         breadcrumbDropdown.classList.add("invisible");
-  //         body.removeEventListener("click", bodyListener);
-  //       }
-  //     };
-  //     body.addEventListener("click", bodyListener);
-  //   }, 0);
-  // }
 };
 
 const initNavBubbles = () => {

@@ -15,16 +15,7 @@ const EVENT_PARAMS = [
   "social_network",
   "project",
   "demo",
-  "post_id",
-  "post_title",
 ];
-
-const POSTS_FIXTURE = {
-  posts: [
-    { id: "older-post", title: "Older Post", date: "2025-01-01" },
-    { id: "newest-post", title: "Newest Post", date: "2026-06-01" },
-  ],
-};
 
 test.beforeEach(async ({ page, context, baseURL }) => {
   // Offline + deterministic: no GTM or third-party assets. Also block the
@@ -208,31 +199,5 @@ test.describe("demo_interact", () => {
     expect(events).toHaveLength(1);
     expect(events[0]).toMatchObject({ demo: "game_of_life", section: "random" });
     expectAllParamKeys(events[0]);
-  });
-});
-
-test.describe("blog_post_view", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route("**/blog/content/posts.json", (route) =>
-      route.fulfill({ json: POSTS_FIXTURE })
-    );
-    await page.route("**/blog/content/*.md", (route) =>
-      route.fulfill({ body: "# Test post", contentType: "text/markdown" })
-    );
-  });
-
-  test("reports the post that ?post=latest resolved to", async ({ page }) => {
-    await page.goto("/blog/?post=latest");
-    await expect.poll(() => eventsNamed(page, "blog_post_view")).toHaveLength(1);
-    const [event] = await eventsNamed(page, "blog_post_view");
-    expect(event).toMatchObject({ post_id: "newest-post", post_title: "Newest Post" });
-    expectAllParamKeys(event);
-  });
-
-  test("reports a specific post", async ({ page }) => {
-    await page.goto("/blog/?post=older-post");
-    await expect.poll(() => eventsNamed(page, "blog_post_view")).toHaveLength(1);
-    const [event] = await eventsNamed(page, "blog_post_view");
-    expect(event).toMatchObject({ post_id: "older-post", post_title: "Older Post" });
   });
 });

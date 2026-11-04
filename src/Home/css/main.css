@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Blog posts and the resume JSON are content, not templates. */
+/* The resume JSON is content, not templates. */
 @source not "../../assets";
 
 @custom-variant dark (&:is(.dark *));
