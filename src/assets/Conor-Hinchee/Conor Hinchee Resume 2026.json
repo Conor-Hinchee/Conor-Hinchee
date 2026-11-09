@@ -45,16 +45,16 @@
     "work": [
         {
             "company": "Express",
-            "position": "Senior Ecommerce UI Engineer",
+            "position": "Senior Ecommerce UI Engineer (promoted Dec 2025)",
             "location": "Columbus, Ohio",
             "startDate": "June 2021",
             "endDate": "Present",
             "highlights": [
-                "Led the move to Google Retail Search, which replaced keyword matching with ML-ranked results and raised search-to-purchase conversion.",
+                "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results and raising search-to-purchase conversion.",
                 "Own the storefront product carousel. I rebuilt it from scratch with fewer re-renders, which improved Core Web Vitals across the site.",
                 "One of four npm maintainers on pure-react-carousel (express-labs), about 67k weekly downloads and 1.7k GitHub stars. I triage issues, review community PRs and publish releases.",
                 "Keep the components I own at 100% unit test coverage with Jest and React Testing Library, so regressions get caught before staging.",
-                "Mentor junior engineers through code review and pairing. Two of them now own features on their own.",
+                "Mentor junior engineers through code review and pairing. Two now own features independently.",
                 "Take on-call shifts: I troubleshoot production issues in real time with Google Cloud and TrackJS, lead the response and write the postmortem."
             ]
         },
