@@ -14,7 +14,7 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Drops into unfamiliar codebases and ships, even the Swift iOS app.",
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Drops into unfamiliar codebases and ships.",
         "profiles": [
             {
                 "network": "GitHub",
@@ -57,11 +57,10 @@
             "startDate": "Dec 2025",
             "endDate": "Present",
             "highlights": [
-                "Lead AI adoption on the frontend team: write the docs coding agents work from and teach developers to code with AI.",
-                "Built Quoth, an MCP server over our GraphQL and Java endpoints. Any Express developer can trace data end to end and get fast answers to questions like why a price or image isn't showing on a product.",
-                "Own the storefront's GA4 data layer and reporting pipeline.",
-                "Traced bad analytics data to a tracking bug in the Express iOS app and shipped the Swift fix through the iOS team's review, using AI to work in an unfamiliar codebase.",
-                "Co-maintain pure-react-carousel as one of four npm maintainers: about 67k weekly downloads and 1.7k GitHub stars.",
+                "Lead AI adoption on the frontend team: trained four developers, gave talks on how AI works and wrote the docs coding agents work from. Now building skills that automate code review.",
+                "Built Quoth, an MCP server over our GraphQL and Java endpoints that traces data end to end to answer questions like why a price isn't showing. Three of our core engineers use it.",
+                "Moved the storefront's analytics from Adobe to GA4 and own the data layer and reporting pipeline.",
+                "Traced bad analytics data to a bug in the Express iOS app and shipped the Swift fix, using AI in an unfamiliar codebase.",
                 "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
@@ -72,8 +71,10 @@
             "startDate": "June 2021",
             "endDate": "Dec 2025",
             "highlights": [
-                "Led five contract developers through a summer-long move from Unbxd to Google Retail Search: wrote the tickets, ran the meetings, reviewed the code and wired the storefront to the new API through GraphQL.",
-                "Rebuilt the storefront's carousel and began contributing to pure-react-carousel: triaged issues and reviewed PRs."
+                "Led five contract developers through a summer-long move from Unbxd to Google Retail Search: wrote the tickets, ran the meetings, reviewed the code and wired up the new API through GraphQL. Shipped before code freeze.",
+                "Rebuilt the storefront's carousel and became one of four maintainers of pure-react-carousel: 67k weekly downloads.",
+                "Built category page features, including a visual navigation filter, Shop My Store and buy online, pick up in store (BOPIS).",
+                "Cut unnecessary re-renders in the storefront header, which loads on every page."
             ]
         },
         {
