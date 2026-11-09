@@ -80,7 +80,7 @@ const JSON_PATH = path.join(ASSETS_DIR, `${NAME}.json`);
 const PDF_PATH = path.join(ASSETS_DIR, `${NAME}.pdf`);
 
 // Title shown under the name. moderncv has no dedicated JSON field for it.
-const HEADLINE = "Software Engineer";
+const HEADLINE = "Senior Software Engineer";
 
 // --- helpers ---------------------------------------------------------------
 
@@ -143,7 +143,7 @@ const buildTex = (d: Resume): string => {
         "\\usepackage[T1]{fontenc}",
         "\\usepackage[utf8]{inputenc}",
         "\\usepackage{lmodern}",
-        "\\usepackage[scale=0.8]{geometry}",
+        "\\usepackage[scale=0.85]{geometry}",
         "\\setlength{\\hintscolumnwidth}{2.6cm}",
         `\\name{${esc(first)}}{${esc(last)}}`,
         `\\title{${esc(HEADLINE)}}`,

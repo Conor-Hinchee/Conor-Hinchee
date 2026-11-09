@@ -14,25 +14,25 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Software engineer with 6+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and troubleshoot production systems in real time with Google Cloud and TrackJS. Lately I've been building AI harnesses and tools that help developers get work done."
+        "summary": "Senior software engineer with 5+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and troubleshoot production systems in real time with Google Cloud and TrackJS. Lately I've been building AI harnesses and tools that help developers get work done."
     },
     "skills": [
         {
             "name": "Frontend:",
             "keywords": [
-                "React, TypeScript, HTML, CSS, Tailwind CSS, Vite, Webpack, Storybook, Accessibility"
+                "React, TypeScript, Tailwind CSS, Vite, Webpack, Storybook"
             ]
         },
         {
             "name": "Backend & API:",
             "keywords": [
-                "Node.js, GraphQL, Apollo Server, Apollo Client, Express, GCP Cloud Functions, Firebase, Supabase, CommerceTools API"
+                "Node.js, GraphQL, Apollo Server, Apollo Client, Express.js, GCP Cloud Functions, Firebase, Supabase, CommerceTools API"
             ]
         },
         {
-            "name": "Testing & Observability:",
+            "name": "Testing & Ops:",
             "keywords": [
-                "Jest, React Testing Library, Playwright, GA4, Adobe Launch, TrackJS, Google Cloud Logging"
+                "Jest, React Testing Library, Playwright, GA4, TrackJS, Google Cloud Logging"
             ]
         },
         {
@@ -45,31 +45,17 @@
     "work": [
         {
             "company": "Express",
-            "position": "Ecommerce UI Engineer",
+            "position": "Senior Ecommerce UI Engineer",
             "location": "Columbus, Ohio",
             "startDate": "June 2021",
             "endDate": "Present",
             "highlights": [
-                "Tech Stack: React, TypeScript, GraphQL, Apollo, Jest, React Testing Library, GCP, GitHub Actions, GA4, Adobe Launch, TrackJS, CommerceTools API",
+                "Led the move to Google Retail Search, which replaced keyword matching with ML-ranked results and raised search-to-purchase conversion.",
                 "Own the storefront product carousel. I rebuilt it from scratch with fewer re-renders, which improved Core Web Vitals across the site.",
                 "One of four npm maintainers on pure-react-carousel (express-labs), about 67k weekly downloads and 1.7k GitHub stars. I triage issues, review community PRs and publish releases.",
-                "Led the move to Google Retail Search, which replaced keyword matching with ML-ranked results and raised search-to-purchase conversion.",
                 "Keep the components I own at 100% unit test coverage with Jest and React Testing Library, so regressions get caught before staging.",
                 "Mentor junior engineers through code review and pairing. Two of them now own features on their own.",
                 "Take on-call shifts: I troubleshoot production issues in real time with Google Cloud and TrackJS, lead the response and write the postmortem."
-            ]
-        },
-        {
-            "company": "Resolvve",
-            "position": "Web Application Developer",
-            "location": "Columbus, Ohio",
-            "startDate": "January 2019",
-            "endDate": "January 2021",
-            "highlights": [
-                "Tech Stack: React, Bootstrap, Node.js, TypeScript, Stripe, GCP, Firebase",
-                "Built the first version of the product: designed the data model, built the frontend and shipped the first paying customer's integration.",
-                "Wrote and deployed GCP Cloud Functions for payment webhooks, user lifecycle events and background jobs.",
-                "Set up Stripe subscription billing, including webhooks, failed payment recovery and plan upgrades."
             ]
         },
         {
@@ -79,14 +65,14 @@
             "startDate": "July 2017",
             "endDate": "March 2021",
             "highlights": [
-                "Solved high-volume inbound issues on the first call, often past the script, walking non-technical and elderly customers through setup step by step. Consistently earned top-tier satisfaction scores."
+                "Solved high-volume support issues on the first call for non-technical customers."
             ]
         }
     ],
     "projects": [
         {
             "name": "Odin, Claude Code Skill",
-            "description": "A Claude Code skill for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules. Started as a self-hosted agent runtime.",
+            "description": "A Claude Code skill for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules.",
             "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
                 "Claude Code",
@@ -96,23 +82,12 @@
         },
         {
             "name": "heap-analyzer",
-            "description": "A CLI wrapper around Facebook's memlab for finding memory leaks in Node.js apps. Take three heap snapshots and it diffs them, traces what's keeping each leaked object alive and shows how memory changes over time. On npm.",
+            "description": "A CLI wrapper around Facebook's memlab that finds memory leaks in Node.js apps. It diffs three heap snapshots and traces what keeps each leaked object alive.",
             "url": "https://github.com/Conor-Hinchee/heap-analyzer",
             "keywords": [
                 "Node.js",
                 "TypeScript",
                 "memlab"
-            ]
-        },
-        {
-            "name": "conorhinchee.com",
-            "description": "My personal site. Built with Vite, TypeScript and Tailwind CSS, with end-to-end tests in Playwright across Chromium, Firefox and WebKit. Also answers curl with a plain-text view.",
-            "url": "https://conorhinchee.com",
-            "keywords": [
-                "Vite",
-                "TypeScript",
-                "Tailwind CSS",
-                "Playwright"
             ]
         }
     ],
@@ -129,7 +104,7 @@
             "institution": "Clovis High School",
             "studyType": "High School Diploma",
             "location": "Clovis, NM",
-            "endDate": "May 2009"
+            "endDate": ""
         }
     ],
     "sections": [
