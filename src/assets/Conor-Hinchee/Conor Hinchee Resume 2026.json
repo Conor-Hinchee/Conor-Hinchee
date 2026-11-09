@@ -14,7 +14,7 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Drops into unfamiliar codebases and ships.",
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Builds the tools that help other developers ship.",
         "profiles": [
             {
                 "network": "GitHub",
@@ -57,10 +57,9 @@
             "startDate": "Dec 2025",
             "endDate": "Present",
             "highlights": [
-                "Lead AI adoption on the frontend team: trained four developers, gave talks on how AI works and wrote the docs coding agents work from. Now building skills that automate code review.",
-                "Built Quoth, an MCP server over our GraphQL and Java endpoints that traces data end to end to answer questions like why a price isn't showing. Three of our core engineers use it.",
-                "Moved the storefront's analytics from Adobe to GA4 and own the data layer and reporting pipeline.",
-                "Traced bad analytics data to a bug in the Express iOS app and shipped the Swift fix, using AI in an unfamiliar codebase.",
+                "Lead AI adoption on the frontend team: trained four developers, gave talks on how AI works and wrote our agent docs.",
+                "Built Quoth, an MCP server that serves data from our GraphQL and Java endpoints to agents, making it easier to trace data end to end and answer questions like why a price isn't showing.",
+                "Moved the storefront's analytics from Adobe to GA4 and now own the data layer and reporting pipeline.",
                 "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
@@ -74,7 +73,7 @@
                 "Led five contract developers through a summer-long move from Unbxd to Google Retail Search: wrote the tickets, ran the meetings, reviewed the code and wired up the new API through GraphQL. Shipped before code freeze.",
                 "Rebuilt the storefront's carousel and became one of four maintainers of pure-react-carousel: 67k weekly downloads.",
                 "Built category page features, including a visual navigation filter, Shop My Store and buy online, pick up in store (BOPIS).",
-                "Cut unnecessary re-renders in the storefront header, which loads on every page."
+                "Cut unnecessary re-renders and fixed memory leaks in the storefront header, which loads on every page."
             ]
         },
         {
