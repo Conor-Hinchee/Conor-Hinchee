@@ -137,12 +137,21 @@ const buildTex = (d: Resume): string => {
     const L: string[] = [];
 
     L.push(
-        "\\documentclass[11pt,a4paper,sans]{moderncv}",
+        "\\documentclass[11pt,a4paper,roman]{moderncv}",
         "\\moderncvstyle{classic}",
         "\\moderncvcolor{blue}",
         "\\usepackage[T1]{fontenc}",
         "\\usepackage[utf8]{inputenc}",
-        "\\usepackage{lmodern}",
+        "\\usepackage{ebgaramond}",
+        // Set every color after moderncvstyle/moderncvcolor: the style copies color1/color2
+        // when it loads, so changing the scheme alone leaves black rules and a faded first name.
+        "\\definecolor{cvname}{HTML}{1F3A5F}",
+        "\\definecolor{cvaccent}{HTML}{2F6DB5}",
+        "\\definecolor{cvmuted}{HTML}{4A5568}",
+        "\\colorlet{lastnamecolor}{cvname}\\colorlet{firstnamecolor}{cvname}\\colorlet{namecolor}{cvname}",
+        "\\colorlet{titlecolor}{cvaccent}\\colorlet{addresscolor}{cvmuted}\\colorlet{headrulecolor}{cvaccent}",
+        "\\colorlet{bodyrulecolor}{cvaccent}\\colorlet{sectioncolor}{cvname}\\colorlet{subsectioncolor}{cvname}",
+        "\\colorlet{hintstylecolor}{cvmuted}\\colorlet{color1}{cvaccent}\\colorlet{color2}{cvmuted}",
         "\\usepackage[scale=0.85]{geometry}",
         "\\setlength{\\hintscolumnwidth}{2.6cm}",
         `\\name{${esc(first)}}{${esc(last)}}`,
