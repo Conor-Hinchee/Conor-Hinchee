@@ -51,8 +51,8 @@
             "endDate": "Present",
             "highlights": [
                 "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results and raising search-to-purchase conversion.",
-                "Own the storefront product carousel. I rebuilt it from scratch with fewer re-renders, which improved Core Web Vitals across the site.",
-                "One of four npm maintainers on pure-react-carousel (express-labs), about 67k weekly downloads and 1.7k GitHub stars. I triage issues, review community PRs and publish releases.",
+                "Rebuilt the storefront product carousel from scratch with fewer re-renders, improving Core Web Vitals across the site.",
+                "Co-maintained pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triaged issues, reviewed community PRs and published releases.",
                 "Maintained 100% test coverage using React Testing Library and Jest.",
                 "Mentored junior engineers through code review and pairing.",
                 "Covered on-call rotations, troubleshooting production issues in real time with Google Cloud and TrackJS, leading incident response and writing postmortems."
