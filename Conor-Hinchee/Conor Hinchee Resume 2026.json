@@ -14,56 +14,66 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Software engineer with 6+ years shipping production systems across e-commerce, SaaS, and AI, including React frontends, GraphQL APIs, and event-driven pipelines. Currently building storefront UI at Express."
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript at Express, a storefront with about 5 million monthly users. Focused on making other developers faster, from shared libraries to the AI tooling the team now uses every day.",
+        "profiles": [
+            {
+                "network": "GitHub",
+                "username": "Conor-Hinchee",
+                "url": "https://github.com/Conor-Hinchee"
+            }
+        ]
     },
     "skills": [
         {
-            "name": "Backend & API:",
-            "keywords": [
-                "Node.js, TypeScript, GraphQL, Apollo Server, Apollo Client, Express, GCP Cloud Functions, Firebase, Supabase"
-            ]
-        },
-        {
             "name": "Frontend:",
             "keywords": [
-                "React, HTML5, CSS3, Tailwind CSS, Webpack, Storybook, Jest, React Testing Library, Accessibility (a11y)"
+                "React, TypeScript, JavaScript, Tailwind CSS, Vite, Webpack, Storybook"
             ]
         },
         {
-            "name": "Tools & Infrastructure:",
+            "name": "APIs:",
             "keywords": [
-                "Git, GitHub Actions, Google Cloud Platform, Docker, Discord.js, Anthropic SDK, Adobe Launch, CommerceTools API"
+                "GraphQL, Apollo Client, Apollo Server, Node.js, REST"
+            ]
+        },
+        {
+            "name": "Testing:",
+            "keywords": [
+                "Jest, React Testing Library, Playwright, test-driven development"
+            ]
+        },
+        {
+            "name": "Ops & AI:",
+            "keywords": [
+                "GA4, TrackJS, Google Cloud Logging, Claude Code, MCP servers"
             ]
         }
     ],
     "work": [
         {
             "company": "Express",
-            "position": "Ecommerce UI Engineer",
+            "position": "Senior Ecommerce UI Engineer",
             "location": "Columbus, Ohio",
-            "startDate": "June 2021",
+            "startDate": "Dec 2025",
             "endDate": "Present",
             "highlights": [
-                "Tech Stack: React, TypeScript, Webpack, Jest, React Testing Library, Apollo Server, Apollo Client, GCP, GitHub Actions, Adobe Launch, CommerceTools API",
-                "Own the product carousel, rebuilt from the ground up with an optimized component architecture that cut render cycles and improved core web vitals scores site-wide.",
-                "npm maintainer for pure-react-carousel (express-labs): 1.7k stars, ~67k weekly downloads. Triaged issues, reviewed PRs, published releases.",
-                "Lead integration of Google Retail Search, replacing keyword matching with ML-ranked results and improving search-to-conversion rates.",
-                "Enforce 100% unit test coverage across owned components using Jest and React Testing Library, catching regressions before they reach staging.",
-                "Mentor junior engineers through code review and pairing, with two direct reports moving into independent feature ownership.",
-                "Hold on-call rotation responsibilities, leading incident response and postmortem documentation for production issues."
+                "Lead frontend AI adoption: set up the team's AI tools, gave talks on how AI works and wrote the team's agent docs. The team now uses agents in daily work, and leadership asks for input on how the company documents code for AI.",
+                "Built Quoth, an MCP server that gives agents data from the storefront's GraphQL and Java endpoints. A missing price used to mean tracing three systems. Now an agent finds the cause, like an unset clearance flag.",
+                "Moved analytics from Adobe to GA4 to cut costs during restructuring, and now own the data layer and reporting.",
+                "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS and lead incident response. Wrote the on-call survival guide from two years of notes on past fixes."
             ]
         },
         {
-            "company": "Resolvve",
-            "position": "Web Application Developer",
+            "company": "Express",
+            "position": "Ecommerce UI Engineer",
             "location": "Columbus, Ohio",
-            "startDate": "January 2019",
-            "endDate": "January 2021",
+            "startDate": "June 2021",
+            "endDate": "Dec 2025",
             "highlights": [
-                "Tech Stack: React, Bootstrap, Stripe, Node.js, TypeScript, GCP, Firebase",
-                "Architected and delivered the initial product from zero — designed data models, built the frontend, and shipped the first paying customer integration.",
-                "Built, tested, and deployed GCP Cloud Functions handling payment webhooks, user lifecycle events, and async task processing.",
-                "Integrated Stripe for subscription billing including webhook handling, failed payment recovery, and plan upgrade flows."
+                "Led five contract developers moving search from Unbxd to Google Retail Search: wrote the tickets, reviewed the code and wired up the API through GraphQL. Shipped before code freeze. Searching red shirts now returns only red shirts.",
+                "Fixed open community issues and interaction bugs that hit express.com, and became one of four maintainers of pure-react-carousel: 67k weekly downloads.",
+                "Built Shop My Store, part of a company push to get online shoppers into stores by showing what's in stock nearby. Also built buy online, pick up in store (BOPIS) and a visual navigation filter for category pages.",
+                "Cut unnecessary re-renders and fixed memory leaks in the storefront header, which loads on every page."
             ]
         },
         {
@@ -73,35 +83,28 @@
             "startDate": "July 2017",
             "endDate": "March 2021",
             "highlights": [
-                "Went beyond scripted troubleshooting to resolve high-volume inbound issues on the first call, walking non-technical and elderly customers through setup step by step and consistently earning top-tier customer satisfaction scores."
+                "Solved high-volume support issues and explained complex technical problems to customers who aren't technical."
             ]
         }
     ],
     "projects": [
         {
-            "name": "Odin — Self-Hosted Agent Runtime",
-            "description": "Multi-agent AI orchestrator built on the Anthropic Messages API. Features a seven-agent pipeline (Týr → Muninn → Heimdall → Huginn → Hermod → Norns), BullMQ async job processing, persistent memory via an Obsidian vault, 50+ specialized tools, and a nightly Kvasir self-improvement loop that analyzes traces, versions prompts, and gates its own changes. Takes a spec and opens a pull request. Runs research tasks that span hours without user intervention.",
-            "url": "https://odin.conorhinchee.com",
+            "name": "Odin, Claude Code Skill",
+            "description": "Grew from a context-engineering experiment into a plan-to-PR pipeline for Claude Code with human approval gates. After each task, a look-back step proposes fixes to the skills and rules the agent follows, so the same mistake doesn't happen twice.",
+            "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
-                "TypeScript",
-                "Node.js",
-                "Anthropic Messages API",
-                "Discord.js",
-                "BullMQ",
-                "Redis",
-                "GCP Cloud Logging"
+                "Claude Code",
+                "Python"
             ]
         },
         {
-            "name": "conorhinchee.com",
-            "description": "Personal portfolio — static site built with Tailwind CSS, PostHTML component composition, and Webpack. Includes a custom ripple-text animation, mobile-first responsive layout, and dark mode support. Ships zero JavaScript frameworks.",
-            "url": "https://conorhinchee.com",
+            "name": "heap-analyzer",
+            "description": "Finds memory leaks in Node.js apps by diffing heap snapshots. Built on Facebook's memlab and published on npm.",
+            "url": "https://github.com/Conor-Hinchee/heap-analyzer",
             "keywords": [
-                "HTML5",
-                "Tailwind CSS",
-                "Webpack",
-                "PostHTML",
-                "Playwright"
+                "Node.js",
+                "TypeScript",
+                "memlab"
             ]
         }
     ],
@@ -118,7 +121,7 @@
             "institution": "Clovis High School",
             "studyType": "High School Diploma",
             "location": "Clovis, NM",
-            "endDate": "May 2009"
+            "endDate": ""
         }
     ],
     "sections": [
