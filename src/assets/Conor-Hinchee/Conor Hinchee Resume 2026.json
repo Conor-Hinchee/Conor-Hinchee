@@ -38,7 +38,7 @@
         {
             "name": "Tools & AI:",
             "keywords": [
-                "Git, GitHub Actions, Docker, Claude Code plugins, Anthropic SDK"
+                "Git, GitHub Actions, Docker, Claude Code skills, Anthropic SDK"
             ]
         }
     ],
@@ -85,8 +85,8 @@
     ],
     "projects": [
         {
-            "name": "Odin, Claude Code Plugin",
-            "description": "A Claude Code plugin for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules. Started as a self-hosted agent runtime; now a skill.",
+            "name": "Odin, Claude Code Skill",
+            "description": "A Claude Code skill for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules. Started as a self-hosted agent runtime.",
             "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
                 "Claude Code",
