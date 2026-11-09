@@ -58,7 +58,7 @@ export default function initRippleText() {
   canvas.setAttribute("role", "img");
   canvas.setAttribute(
     "aria-label",
-    "About Conor Hinchee: Senior Software Engineer based in Ohio, specializing in building engaging user experiences, with 3+ years e-commerce and 6+ years development experience. Currently architecting AI-powered systems and multi-agent orchestration platforms."
+    "About Conor Hinchee: Senior Software Engineer based in Ohio, specializing in building engaging user experiences, with 5+ years of ecommerce development experience. Currently architecting AI-powered systems and multi-agent orchestration platforms."
   );
   canvas.style.position = "absolute";
   canvas.style.top = "0";
@@ -83,7 +83,7 @@ export default function initRippleText() {
   // widthRatio controls how much of the canvas width text can fill (like CSS w-3/4, w-1/2)
   const sections: Section[] = [
     {
-      text: "I'm Conor, a software engineer with 6+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and I'm familiar with troubleshooting production systems in real time using Google Cloud and TrackJS. Recently, I've been focused on building AI harnesses and tools that help developers get work done.",
+      text: "I'm Conor, a software engineer with 5+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and I'm familiar with troubleshooting production systems in real time using Google Cloud and TrackJS. Recently, I've been focused on building AI harnesses and tools that help developers get work done.",
       fontSize: 1.125, // text-lg
       align: "center",
       widthRatio: 0.75,
