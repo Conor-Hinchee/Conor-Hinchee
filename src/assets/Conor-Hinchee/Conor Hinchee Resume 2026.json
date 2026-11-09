@@ -14,7 +14,7 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Comfortable reading, writing and reviewing code in unfamiliar codebases.",
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Drops into unfamiliar codebases and ships, even the Swift iOS app.",
         "profiles": [
             {
                 "network": "GitHub",
@@ -45,7 +45,7 @@
         {
             "name": "Ops & AI:",
             "keywords": [
-                "GA4, data layer, TrackJS, Google Cloud Logging, Claude Code, MCP servers"
+                "GA4, TrackJS, Google Cloud Logging, Claude Code, MCP servers"
             ]
         }
     ],
@@ -58,11 +58,10 @@
             "endDate": "Present",
             "highlights": [
                 "Lead AI adoption on the frontend team: write the docs coding agents work from and teach developers to code with AI.",
-                "Built Quoth, an MCP server over our GraphQL and Java endpoints that lets any of our 30 developers trace data end to end, like why a price isn't showing on a product.",
-                "Own the GA4 data layer and reporting pipeline since our move from Adobe. When reporting breaks, it comes to me.",
+                "Built Quoth, an MCP server over our GraphQL and Java endpoints. Any Express developer can trace data end to end and get fast answers to questions like why a price or image isn't showing on a product.",
+                "Own the storefront's GA4 data layer and reporting pipeline.",
                 "Traced bad analytics data to a tracking bug in the Express iOS app and shipped the Swift fix through the iOS team's review, using AI to work in an unfamiliar codebase.",
                 "Co-maintain pure-react-carousel as one of four npm maintainers: about 67k weekly downloads and 1.7k GitHub stars.",
-                "Write tests first where I can, in a codebase that requires 100% coverage in CI.",
                 "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
@@ -74,7 +73,7 @@
             "endDate": "Dec 2025",
             "highlights": [
                 "Led five contract developers through a summer-long move from Unbxd to Google Retail Search: wrote the tickets, ran the meetings, reviewed the code and wired the storefront to the new API through GraphQL.",
-                "Made search understand attributes like color, so “red shirts” returns red shirts instead of every shirt that comes in red. The project earned my promotion to senior."
+                "Rebuilt the storefront's carousel and began contributing to pure-react-carousel: triaged issues and reviewed PRs."
             ]
         },
         {
