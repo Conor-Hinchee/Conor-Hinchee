@@ -14,7 +14,7 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript, and analytics pipelines in GA4 and tag management. Leads search and storefront work at Express. Builds AI developer tooling that catches what coding agents miss.",
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript, and analytics pipelines in GA4 and tag management. Leads search and AI adoption on the frontend team at Express. Builds AI developer tooling that catches what coding agents miss.",
         "profiles": [
             {
                 "network": "GitHub",
@@ -45,7 +45,7 @@
         {
             "name": "Tools & AI:",
             "keywords": [
-                "Git, GitHub Actions, Docker, Claude Code skills, Anthropic SDK"
+                "Git, GitHub Actions, Docker, Claude Code skills, MCP servers, Anthropic SDK"
             ]
         }
     ],
@@ -58,10 +58,9 @@
             "endDate": "Present",
             "highlights": [
                 "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results to improve relevance and conversion.",
-                "Rebuilt the storefront product carousel from scratch with fewer re-renders and better accessibility.",
+                "Lead AI adoption on the frontend team: write the docs and harnesses coding agents work from, build internal MCP servers that help engineers find answers faster, and mentor developers on coding with AI.",
                 "Co-maintain pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triage issues, review community PRs and publish releases.",
                 "Keep the storefront's React app and GraphQL server at a CI-enforced 100% test coverage threshold (Jest, React Testing Library).",
-                "Mentor junior engineers through code review and pairing.",
                 "Serve on the production on-call rotation: troubleshoot issues in real time with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
