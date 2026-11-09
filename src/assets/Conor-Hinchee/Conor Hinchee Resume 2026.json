@@ -59,8 +59,9 @@
             "highlights": [
                 "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results to improve relevance and conversion.",
                 "Lead AI adoption on the frontend team: write the docs and harnesses coding agents work from, build internal MCP servers that help engineers find answers faster, and mentor developers on coding with AI.",
+                "Traced bad analytics data to a tracking bug in the Express iOS app and shipped the Swift fix through the iOS team's review, using AI to work in an unfamiliar codebase.",
                 "Co-maintain pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triage issues, review community PRs and publish releases.",
-                "Keep the storefront's React app and GraphQL server at a CI-enforced 100% test coverage threshold (Jest, React Testing Library).",
+                "Keep the storefront's React app and GraphQL server at a CI-enforced 100% test coverage threshold.",
                 "Serve on the production on-call rotation: troubleshoot issues in real time with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
@@ -87,7 +88,7 @@
         },
         {
             "name": "heap-analyzer",
-            "description": "Finds memory leaks in Node.js apps by diffing three heap snapshots and tracing what keeps each leaked object alive. Built on Facebook's memlab and published on npm.",
+            "description": "Finds memory leaks in Node.js apps by diffing heap snapshots. Built on Facebook's memlab and published on npm.",
             "url": "https://github.com/Conor-Hinchee/heap-analyzer",
             "keywords": [
                 "Node.js",
