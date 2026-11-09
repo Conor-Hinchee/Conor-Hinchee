@@ -28,6 +28,12 @@ interface ResumeBasics {
     email?: string;
     location?: ResumeLocation;
     summary?: string;
+    profiles?: ResumeProfile[];
+}
+
+interface ResumeProfile {
+    network?: string;
+    username?: string;
 }
 
 interface ResumeHeadings {
@@ -137,7 +143,7 @@ const buildTex = (d: Resume): string => {
     const L: string[] = [];
 
     L.push(
-        "\\documentclass[11pt,a4paper,roman]{moderncv}",
+        "\\documentclass[11pt,letterpaper,roman]{moderncv}",
         "\\moderncvstyle{classic}",
         "\\moderncvcolor{blue}",
         "\\usepackage[T1]{fontenc}",
@@ -152,20 +158,30 @@ const buildTex = (d: Resume): string => {
         "\\colorlet{titlecolor}{cvaccent}\\colorlet{addresscolor}{cvmuted}\\colorlet{headrulecolor}{cvaccent}",
         "\\colorlet{bodyrulecolor}{cvaccent}\\colorlet{sectioncolor}{cvname}\\colorlet{subsectioncolor}{cvname}",
         "\\colorlet{hintstylecolor}{cvmuted}\\colorlet{color1}{cvaccent}\\colorlet{color2}{cvmuted}",
-        "\\usepackage[scale=0.85]{geometry}",
+        "\\usepackage[scale=0.88]{geometry}",
+        // No hyphenation: justified Garamond split words like "re-sults". The emergency
+        // stretch lets TeX loosen a line instead of overflowing it.
+        "\\hyphenpenalty=10000\\exhyphenpenalty=10000\\setlength{\\emergencystretch}{3em}",
         "\\setlength{\\hintscolumnwidth}{2.6cm}",
         `\\name{${esc(first)}}{${esc(last)}}`,
         `\\title{${esc(HEADLINE)}}`,
     );
     if (b.phone) L.push(`\\phone[mobile]{${esc(b.phone)}}`);
     if (b.email) L.push(`\\email{${esc(b.email)}}`);
+    for (const p of b.profiles || []) {
+        const network = (p.network || "").toLowerCase();
+        if (p.username && ["github", "linkedin"].includes(network)) {
+            L.push(`\\social[${network}]{${esc(p.username)}}`);
+        }
+    }
     if (home && b.website) {
         L.push(`\\homepage{${esc(home)}}`);
-        // moderncv renders \homepage through \httpslink; point it at the tagged URL
-        // while keeping the plain domain as the visible text.
+        // moderncv renders \homepage and \social links through \httpslink. Point only the
+        // homepage at the tagged URL (plain domain as the visible text); other links keep
+        // their normal https://<link> target.
         L.push(
             "\\makeatletter",
-            `\\renewcommand*{\\httpslink}[2][]{\\href{${escUrl(withResumeUtm(b.website))}}{#2}}`,
+            `\\renewcommand*{\\httpslink}[2][]{\\ifthenelse{\\equal{#2}{${esc(home)}}}{\\href{${escUrl(withResumeUtm(b.website))}}{#2}}{\\href{https://#2}{\\ifthenelse{\\equal{#1}{}}{#2}{#1}}}}`,
             "\\makeatother",
         );
     }

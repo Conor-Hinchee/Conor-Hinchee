@@ -14,7 +14,14 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and troubleshoot production systems in real time with Google Cloud and TrackJS. Lately I've been building AI harnesses and tools that help developers get work done."
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript, and analytics pipelines in GA4 and tag management. Leads search and storefront work at Express. Builds AI developer tooling that catches what coding agents miss.",
+        "profiles": [
+            {
+                "network": "GitHub",
+                "username": "Conor-Hinchee",
+                "url": "https://github.com/Conor-Hinchee"
+            }
+        ]
     },
     "skills": [
         {
@@ -50,12 +57,12 @@
             "startDate": "June 2021",
             "endDate": "Present",
             "highlights": [
-                "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results and raising search-to-purchase conversion.",
-                "Rebuilt the storefront product carousel from scratch with fewer re-renders, improving Core Web Vitals across the site.",
-                "Co-maintained pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triaged issues, reviewed community PRs and published releases.",
-                "Maintained 100% test coverage using React Testing Library and Jest.",
-                "Mentored junior engineers through code review and pairing.",
-                "Covered on-call rotations, troubleshooting production issues in real time with Google Cloud and TrackJS, leading incident response and writing postmortems."
+                "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results to improve relevance and conversion.",
+                "Rebuilt the storefront product carousel from scratch with fewer re-renders and better accessibility.",
+                "Co-maintain pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triage issues, review community PRs and publish releases.",
+                "Keep the storefront's React app and GraphQL server at a CI-enforced 100% test coverage threshold (Jest, React Testing Library).",
+                "Mentor junior engineers through code review and pairing.",
+                "Serve on the production on-call rotation: troubleshoot issues in real time with Google Cloud and TrackJS, lead incident response and write postmortems."
             ]
         },
         {
@@ -72,17 +79,16 @@
     "projects": [
         {
             "name": "Odin, Claude Code Skill",
-            "description": "A Claude Code skill that runs a coding task through plan, execute, review and sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the skill's own rules.",
+            "description": "A Claude Code skill that catches what coding agents miss, like tests that fail silently or code that ignores the project's docs. After each task it proposes fixes to the harness (the skills, rules and scripts the agent follows) so the same mistake doesn't happen twice, with human approval gates between plan, build and sign-off.",
             "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
                 "Claude Code",
-                "Python",
-                "Git worktrees"
+                "Python"
             ]
         },
         {
             "name": "heap-analyzer",
-            "description": "A CLI wrapper around Facebook's memlab that finds memory leaks in Node.js apps. It diffs three heap snapshots and traces what keeps each leaked object alive.",
+            "description": "Finds memory leaks in Node.js apps by diffing three heap snapshots and tracing what keeps each leaked object alive. Built on Facebook's memlab and published on npm.",
             "url": "https://github.com/Conor-Hinchee/heap-analyzer",
             "keywords": [
                 "Node.js",
