@@ -14,7 +14,7 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript, and analytics pipelines in GA4 and tag management. Leads search and AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Builds AI developer tooling that catches what coding agents miss.",
+        "summary": "Senior software engineer with 5+ years building ecommerce applications in React, GraphQL and TypeScript. Owns the GA4 analytics code and leads AI adoption on the frontend team at Express, a storefront with about 5 million monthly users. Comfortable reading, writing and reviewing code in unfamiliar codebases.",
         "profiles": [
             {
                 "network": "GitHub",
@@ -27,42 +27,54 @@
         {
             "name": "Frontend:",
             "keywords": [
-                "React, TypeScript, Tailwind CSS, Vite, Webpack, Storybook"
+                "React, TypeScript, JavaScript, Tailwind CSS, Vite, Webpack, Storybook"
             ]
         },
         {
-            "name": "Backend & API:",
+            "name": "APIs:",
             "keywords": [
-                "Node.js, GraphQL, Apollo Server, Apollo Client, Express.js, GCP Cloud Functions, Firebase, Supabase, CommerceTools API"
+                "GraphQL, Apollo Client, Apollo Server, Node.js, REST"
             ]
         },
         {
-            "name": "Testing & Ops:",
+            "name": "Testing:",
             "keywords": [
-                "Jest, React Testing Library, Playwright, GA4, TrackJS, Google Cloud Logging"
+                "Jest, React Testing Library, Playwright, test-driven development"
             ]
         },
         {
-            "name": "Tools & AI:",
+            "name": "Ops & AI:",
             "keywords": [
-                "Git, GitHub Actions, Docker, Claude Code skills, MCP servers, Anthropic SDK"
+                "GA4, data layer, TrackJS, Google Cloud Logging, Claude Code, MCP servers"
             ]
         }
     ],
     "work": [
         {
             "company": "Express",
-            "position": "Senior Ecommerce UI Engineer (promoted Dec 2025)",
+            "position": "Senior Ecommerce UI Engineer",
             "location": "Columbus, Ohio",
-            "startDate": "June 2021",
+            "startDate": "Dec 2025",
             "endDate": "Present",
             "highlights": [
-                "Led five developers moving search to Google Retail Search, replacing keyword matching with ML-ranked results to improve relevance and conversion.",
-                "Lead AI adoption on the frontend team: write the docs and harnesses coding agents work from, build internal MCP servers that help engineers find answers faster, and mentor developers on coding with AI.",
+                "Lead AI adoption on the frontend team: write the docs coding agents work from and teach developers to code with AI.",
+                "Built Quoth, an MCP server over our GraphQL and Java endpoints that lets any of our 30 developers trace data end to end, like why a price isn't showing on a product.",
+                "Own the GA4 data layer and reporting pipeline since our move from Adobe. When reporting breaks, it comes to me.",
                 "Traced bad analytics data to a tracking bug in the Express iOS app and shipped the Swift fix through the iOS team's review, using AI to work in an unfamiliar codebase.",
-                "Co-maintain pure-react-carousel (express-labs) as one of four npm maintainers, about 67k weekly downloads and 1.7k GitHub stars. Triage issues, review community PRs and publish releases.",
-                "Keep the storefront's React app and GraphQL server at a CI-enforced 100% test coverage threshold.",
-                "Serve on the production on-call rotation: troubleshoot issues in real time with Google Cloud and TrackJS, lead incident response and write postmortems."
+                "Co-maintain pure-react-carousel as one of four npm maintainers: about 67k weekly downloads and 1.7k GitHub stars.",
+                "Write tests first where I can, in a codebase that requires 100% coverage in CI.",
+                "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS, lead incident response and write postmortems."
+            ]
+        },
+        {
+            "company": "Express",
+            "position": "Ecommerce UI Engineer",
+            "location": "Columbus, Ohio",
+            "startDate": "June 2021",
+            "endDate": "Dec 2025",
+            "highlights": [
+                "Led five contract developers through a summer-long move from Unbxd to Google Retail Search: wrote the tickets, ran the meetings, reviewed the code and wired the storefront to the new API through GraphQL.",
+                "Made search understand attributes like color, so “red shirts” returns red shirts instead of every shirt that comes in red. The project earned my promotion to senior."
             ]
         },
         {
@@ -79,7 +91,7 @@
     "projects": [
         {
             "name": "Odin, Claude Code Skill",
-            "description": "A Claude Code skill that catches what coding agents miss, like tests that fail silently or code that ignores the project's docs. After each task it proposes fixes to the harness (the skills, rules and scripts the agent follows) so the same mistake doesn't happen twice, with human approval gates between plan, build and sign-off.",
+            "description": "Grew from a context-engineering experiment into a plan-to-PR pipeline for Claude Code with human approval gates. After each task, a look-back step proposes fixes to the skills and rules the agent follows, so the same mistake doesn't happen twice.",
             "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
                 "Claude Code",

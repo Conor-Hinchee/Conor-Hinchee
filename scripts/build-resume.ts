@@ -158,7 +158,7 @@ const buildTex = (d: Resume): string => {
         "\\colorlet{titlecolor}{cvaccent}\\colorlet{addresscolor}{cvmuted}\\colorlet{headrulecolor}{cvaccent}",
         "\\colorlet{bodyrulecolor}{cvaccent}\\colorlet{sectioncolor}{cvname}\\colorlet{subsectioncolor}{cvname}",
         "\\colorlet{hintstylecolor}{cvmuted}\\colorlet{color1}{cvaccent}\\colorlet{color2}{cvmuted}",
-        "\\usepackage[scale=0.88]{geometry}",
+        "\\usepackage[scale=0.89]{geometry}",
         // No hyphenation: justified Garamond split words like "re-sults". The emergency
         // stretch lets TeX loosen a line instead of overflowing it.
         "\\hyphenpenalty=10000\\exhyphenpenalty=10000\\setlength{\\emergencystretch}{3em}",
