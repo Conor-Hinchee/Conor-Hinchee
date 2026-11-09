@@ -72,7 +72,7 @@
     "projects": [
         {
             "name": "Odin, Claude Code Skill",
-            "description": "A Claude Code skill for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules.",
+            "description": "A Claude Code skill that runs a coding task through plan, execute, review and sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the skill's own rules.",
             "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
                 "Claude Code",
