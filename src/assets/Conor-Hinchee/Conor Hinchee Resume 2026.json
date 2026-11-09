@@ -14,25 +14,31 @@
         "location": {
             "address": "Zanesville, Ohio"
         },
-        "summary": "Software engineer with 6+ years shipping production systems across e-commerce, SaaS, and AI, including React frontends, GraphQL APIs, and event-driven pipelines. Currently building storefront UI at Express."
+        "summary": "Software engineer with 6+ years of experience building ecommerce applications in React, GraphQL and TypeScript, and analytics in GA4. I've handled on-call rotations and troubleshoot production systems in real time with Google Cloud and TrackJS. Lately I've been building AI harnesses and tools that help developers get work done."
     },
     "skills": [
         {
-            "name": "Backend & API:",
-            "keywords": [
-                "Node.js, TypeScript, GraphQL, Apollo Server, Apollo Client, Express, GCP Cloud Functions, Firebase, Supabase"
-            ]
-        },
-        {
             "name": "Frontend:",
             "keywords": [
-                "React, HTML5, CSS3, Tailwind CSS, Webpack, Storybook, Jest, React Testing Library, Accessibility (a11y)"
+                "React, TypeScript, HTML, CSS, Tailwind CSS, Vite, Webpack, Storybook, Accessibility"
             ]
         },
         {
-            "name": "Tools & Infrastructure:",
+            "name": "Backend & API:",
             "keywords": [
-                "Git, GitHub Actions, Google Cloud Platform, Docker, Discord.js, Anthropic SDK, Adobe Launch, CommerceTools API"
+                "Node.js, GraphQL, Apollo Server, Apollo Client, Express, GCP Cloud Functions, Firebase, Supabase, CommerceTools API"
+            ]
+        },
+        {
+            "name": "Testing & Observability:",
+            "keywords": [
+                "Jest, React Testing Library, Playwright, GA4, Adobe Launch, TrackJS, Google Cloud Logging"
+            ]
+        },
+        {
+            "name": "Tools & AI:",
+            "keywords": [
+                "Git, GitHub Actions, Docker, Claude Code plugins, Anthropic SDK"
             ]
         }
     ],
@@ -44,13 +50,13 @@
             "startDate": "June 2021",
             "endDate": "Present",
             "highlights": [
-                "Tech Stack: React, TypeScript, Webpack, Jest, React Testing Library, Apollo Server, Apollo Client, GCP, GitHub Actions, Adobe Launch, CommerceTools API",
-                "Own the product carousel, rebuilt from the ground up with an optimized component architecture that cut render cycles and improved core web vitals scores site-wide.",
-                "npm maintainer for pure-react-carousel (express-labs): 1.7k stars, ~67k weekly downloads. Triaged issues, reviewed PRs, published releases.",
-                "Lead integration of Google Retail Search, replacing keyword matching with ML-ranked results and improving search-to-conversion rates.",
-                "Enforce 100% unit test coverage across owned components using Jest and React Testing Library, catching regressions before they reach staging.",
-                "Mentor junior engineers through code review and pairing, with two direct reports moving into independent feature ownership.",
-                "Hold on-call rotation responsibilities, leading incident response and postmortem documentation for production issues."
+                "Tech Stack: React, TypeScript, GraphQL, Apollo, Jest, React Testing Library, GCP, GitHub Actions, GA4, Adobe Launch, TrackJS, CommerceTools API",
+                "Own the storefront product carousel. I rebuilt it from scratch with fewer re-renders, which improved Core Web Vitals across the site.",
+                "One of four npm maintainers on pure-react-carousel (express-labs), about 67k weekly downloads and 1.7k GitHub stars. I triage issues, review community PRs and publish releases.",
+                "Led the move to Google Retail Search, which replaced keyword matching with ML-ranked results and raised search-to-purchase conversion.",
+                "Keep the components I own at 100% unit test coverage with Jest and React Testing Library, so regressions get caught before staging.",
+                "Mentor junior engineers through code review and pairing. Two of them now own features on their own.",
+                "Take on-call shifts: I troubleshoot production issues in real time with Google Cloud and TrackJS, lead the response and write the postmortem."
             ]
         },
         {
@@ -60,10 +66,10 @@
             "startDate": "January 2019",
             "endDate": "January 2021",
             "highlights": [
-                "Tech Stack: React, Bootstrap, Stripe, Node.js, TypeScript, GCP, Firebase",
-                "Architected and delivered the initial product from zero — designed data models, built the frontend, and shipped the first paying customer integration.",
-                "Built, tested, and deployed GCP Cloud Functions handling payment webhooks, user lifecycle events, and async task processing.",
-                "Integrated Stripe for subscription billing including webhook handling, failed payment recovery, and plan upgrade flows."
+                "Tech Stack: React, Bootstrap, Node.js, TypeScript, Stripe, GCP, Firebase",
+                "Built the first version of the product: designed the data model, built the frontend and shipped the first paying customer's integration.",
+                "Wrote and deployed GCP Cloud Functions for payment webhooks, user lifecycle events and background jobs.",
+                "Set up Stripe subscription billing, including webhooks, failed payment recovery and plan upgrades."
             ]
         },
         {
@@ -73,34 +79,39 @@
             "startDate": "July 2017",
             "endDate": "March 2021",
             "highlights": [
-                "Went beyond scripted troubleshooting to resolve high-volume inbound issues on the first call, walking non-technical and elderly customers through setup step by step and consistently earning top-tier customer satisfaction scores."
+                "Solved high-volume inbound issues on the first call, often past the script, walking non-technical and elderly customers through setup step by step. Consistently earned top-tier satisfaction scores."
             ]
         }
     ],
     "projects": [
         {
-            "name": "Odin — Self-Hosted Agent Runtime",
-            "description": "Multi-agent AI orchestrator built on the Anthropic Messages API. Features a seven-agent pipeline (Týr → Muninn → Heimdall → Huginn → Hermod → Norns), BullMQ async job processing, persistent memory via an Obsidian vault, 50+ specialized tools, and a nightly Kvasir self-improvement loop that analyzes traces, versions prompts, and gates its own changes. Takes a spec and opens a pull request. Runs research tasks that span hours without user intervention.",
-            "url": "https://odin.conorhinchee.com",
+            "name": "Odin, Claude Code Plugin",
+            "description": "A Claude Code plugin for AI coding work: plan, execute, review, then sign-off, with a human approval gate between each step. A local dashboard shows a live diff with a written rationale. Anything that took more than one pass becomes a proposed fix to the agent's own rules. Started as a self-hosted agent runtime; now a skill.",
+            "url": "https://github.com/Conor-Hinchee/odin",
             "keywords": [
-                "TypeScript",
+                "Claude Code",
+                "Python",
+                "Git worktrees"
+            ]
+        },
+        {
+            "name": "heap-analyzer",
+            "description": "A CLI wrapper around Facebook's memlab for finding memory leaks in Node.js apps. Take three heap snapshots and it diffs them, traces what's keeping each leaked object alive and shows how memory changes over time. On npm.",
+            "url": "https://github.com/Conor-Hinchee/heap-analyzer",
+            "keywords": [
                 "Node.js",
-                "Anthropic Messages API",
-                "Discord.js",
-                "BullMQ",
-                "Redis",
-                "GCP Cloud Logging"
+                "TypeScript",
+                "memlab"
             ]
         },
         {
             "name": "conorhinchee.com",
-            "description": "Personal portfolio — static site built with Tailwind CSS, PostHTML component composition, and Webpack. Includes a custom ripple-text animation, mobile-first responsive layout, and dark mode support. Ships zero JavaScript frameworks.",
+            "description": "My personal site. Built with Vite, TypeScript and Tailwind CSS, with end-to-end tests in Playwright across Chromium, Firefox and WebKit. Also answers curl with a plain-text view.",
             "url": "https://conorhinchee.com",
             "keywords": [
-                "HTML5",
+                "Vite",
+                "TypeScript",
                 "Tailwind CSS",
-                "Webpack",
-                "PostHTML",
                 "Playwright"
             ]
         }
