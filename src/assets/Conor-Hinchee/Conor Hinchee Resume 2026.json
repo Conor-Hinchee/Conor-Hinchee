@@ -45,7 +45,7 @@
         {
             "name": "Ops & AI:",
             "keywords": [
-                "GA4, TrackJS, Google Cloud Logging, Claude Code, MCP servers"
+                "GA4, TrackJS, Google Cloud Logging, Claude Code, MCP servers, Vertex AI"
             ]
         }
     ],
@@ -59,6 +59,7 @@
             "highlights": [
                 "Lead frontend AI adoption: set up the team's AI tools, gave talks on how AI works and wrote the team's agent docs. The team now uses agents in daily work, and leadership asks for input on how the company documents code for AI.",
                 "Built Quoth, an MCP server that gives agents data from the storefront's GraphQL and Java endpoints. A missing price used to mean tracing three systems. Now an agent finds the cause, like an unset clearance flag.",
+                "Built a Google Chat agent on Coupa's API so staff can look up purchase orders in chat. Ready to deploy on Vertex AI.",
                 "Moved analytics from Adobe to GA4 to cut costs during restructuring, and now own the data layer and reporting.",
                 "Serve on the production on-call rotation through peak traffic like Black Friday: troubleshoot live issues with Google Cloud and TrackJS and lead incident response. Wrote the on-call survival guide from two years of notes on past fixes."
             ]
@@ -72,7 +73,7 @@
             "highlights": [
                 "Led five contract developers moving search from Unbxd to Google Retail Search: wrote the tickets, reviewed the code and wired up the API through GraphQL. Shipped before code freeze. Searching red shirts now returns only red shirts.",
                 "Fixed open community issues and interaction bugs that hit express.com, and became one of four maintainers of pure-react-carousel: 67k weekly downloads.",
-                "Built Shop My Store, part of a company push to get online shoppers into stores by showing what's in stock nearby. Also built buy online, pick up in store (BOPIS) and a visual navigation filter for category pages.",
+                "Built Shop My Store, BOPIS and a visual navigation filter, part of a company push to bring online shoppers into stores.",
                 "Cut unnecessary re-renders and fixed memory leaks in the storefront header, which loads on every page."
             ]
         },
